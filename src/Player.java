@@ -8,6 +8,7 @@ public class Player
 {
 	private String name;
 	private int age;
+	private String gender;
 =======
 public class Player {
 
