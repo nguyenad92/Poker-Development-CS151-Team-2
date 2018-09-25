@@ -1,11 +1,8 @@
-<<<<<<< HEAD
-public class Player {
-=======
 /**
  * A class to create player and keep player's information
+ * it contains player's actions such as check, call, raise, fold and outGame
+ *
  */
-public class Player 
-{
-	private String name;
->>>>>>> ab6536ce67a37680c24d55aa64ffdbdbe9abc1b3
+public class Player {
+
 }
