@@ -1,5 +1,5 @@
 /**
- * A class will store the suit and number for a card
+ * A class will store the suits and numbers for a card
  */
 public class Card {
 
