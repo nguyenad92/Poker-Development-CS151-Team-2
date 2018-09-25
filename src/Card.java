@@ -1,6 +1,6 @@
 /**
- * A class to create a set 52 cards
- * 
+ * A class will store the suit and number for a card
  */
 public class Card {
+
 }
