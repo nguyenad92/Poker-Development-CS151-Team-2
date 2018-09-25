@@ -1,6 +1,6 @@
-/** A class to show information of players and dealer
- * 
- * 
+
+/** 
+ * A class to show information of players and dealer
  *
  */
 public class Table 
