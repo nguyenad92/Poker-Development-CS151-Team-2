@@ -1,8 +1,6 @@
 /**
- * This is a test
- * This class will do this fucntion
+ *
+ * This class will keep track the amount of each player put in
  */
 public class Pot {
-    
-
 }
