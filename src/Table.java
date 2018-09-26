@@ -5,4 +5,8 @@
  * announce the winner
  */
 public class Table {
+	
+	void funcA() {
+		
+	}
 }
