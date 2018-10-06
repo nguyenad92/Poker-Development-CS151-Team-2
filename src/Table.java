@@ -5,8 +5,23 @@
  * announce the winner
  */
 public class Table {
-	
-	void funcA() {
-		
-	}
+
+    private int totalMoney;
+    private Pot potContribution;
+
+    public Table() {
+
+    }
+
+    public void addMoneyToPot(int chip) {
+
+    }
+
+    public int getTotalMoney() {
+        return totalMoney;
+    }
+
+    public Pot getPotContribution() {
+        return potContribution;
+    }
 }
