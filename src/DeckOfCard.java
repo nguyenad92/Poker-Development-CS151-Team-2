@@ -28,7 +28,7 @@ public class DeckOfCard {
      */
 
     public Card shuffleCards() {
-        return Collections.shuffle(cards);
+
         }
 
     /**
