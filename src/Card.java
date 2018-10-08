@@ -4,8 +4,6 @@
 public class Card {
     public Value value;
     public Suits suit;
-    public enum Suits{SPADES, HEART, CLUBS, DIMONDS};
-    public enum Value{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, "J", "Q", "K" , "A"};
 
     /**
      * Construct a card object
@@ -20,6 +18,7 @@ public class Card {
      * @return its value.
      */
     public int getValue(){
+
         return value;
     }
 
