@@ -3,9 +3,12 @@ import java.util.ArrayList;
  * This PokerGame class will be the main loop to generate the game
  */
 public class PokerGame {
+
     private ArrayList<Player> playerList = new ArrayList<>();
     private Dealer dealer = new Dealer();
     private DeckOfCard deckOfCard = new DeckOfCard();
+    private Table table = new Table();
+
     /**
      * Main Function will run the whole program
      * @param args
@@ -13,10 +16,14 @@ public class PokerGame {
     public static void main(String[] args) {
         System.out.println("Hello");
     }
+
     public void addPlayer(Player p) {
+
     }
+
     public void addDealer(Dealer d) {
     }
+
     public void resetGame() {
     }
 }

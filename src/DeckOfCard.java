@@ -28,8 +28,8 @@ public class DeckOfCard {
      */
 
     public Card shuffleCards() {
-
-        }
+        return new Card();
+    }
 
     /**
      * Create a method that takes the top card
