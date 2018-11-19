@@ -10,6 +10,8 @@ public class Table {
     private Pot potContribution;
 
     public Table() {
+        potContribution = new Pot();
+        this.totalMoney = 0;
     }
 
     public void addMoneyToPot(Player p, int betMoney) {
@@ -22,5 +24,9 @@ public class Table {
 
     public Pot getPotContribution() {
         return potContribution;
+    }
+
+    public void setTotalMoney(int totalMoney) {
+        this.totalMoney = totalMoney;
     }
 }
