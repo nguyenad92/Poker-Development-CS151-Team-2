@@ -14,10 +14,6 @@ public class DeckOfCard {
      * Construct a DeckOfCard object
      */
     public DeckOfCard() {
-   //     cards = new Card[LIMIT];
-//        for (int i = 0; i < LIMIT; i++) {
-//            Card card = new Card();
-//            this.cards[i] = card;
 
         }
 
@@ -28,7 +24,7 @@ public class DeckOfCard {
      */
 
     public Card shuffleCards() {
-        return new Card();
+        return new Card("Diamond", 3);
     }
 
     /**
