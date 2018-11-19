@@ -10,11 +10,12 @@ public class Table {
     private Pot potContribution;
 
     public Table() {
-
+        potContribution = new Pot();
+        this.totalMoney = 0;
     }
 
-    public void addMoneyToPot(int chip) {
-
+    public void addMoneyToPot(Player p, int betMoney) {
+        potContribution.setCurrentBet(potContribution.getCurrentBet() + betMoney);
     }
 
     public int getTotalMoney() {
@@ -23,5 +24,9 @@ public class Table {
 
     public Pot getPotContribution() {
         return potContribution;
+    }
+
+    public void setTotalMoney(int totalMoney) {
+        this.totalMoney = totalMoney;
     }
 }

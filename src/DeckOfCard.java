@@ -52,7 +52,7 @@ public class DeckOfCard {
         }
         nextCardIndex = 0;
     }
-    
+
     /**
      * Resets the deck.
      * 

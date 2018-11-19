@@ -79,8 +79,13 @@ public class Player {
 	}
 
 	// getMoney has to be int
-	public String getMoney() {
-		return null;
+
+
+	public int getMoney() {
+		return money;
 	}
 
+	public  void resetHand() {
+
+	}
 }
