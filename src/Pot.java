@@ -19,4 +19,12 @@ public class Pot {
     public void addMoneyToPotContribution(Player p, int chip) {
 
     }
+
+    public void setCurrentBet(int currentBet) {
+        this.currentBet = currentBet;
+    }
+
+    public int getCurrentBet() {
+        return currentBet;
+    }
 }
