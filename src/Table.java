@@ -9,6 +9,9 @@ public class Table {
 
     private Pot potContribution;
     private List<Card> cards;
+    private String actionStatus;
+
+
     
     public Table() {
         potContribution = new Pot();
@@ -30,8 +33,6 @@ public class Table {
     {
     	return cards.size();
     }
-    
-   
 
     public void addMoneyToPot(Player p, int betMoney) {
         if (betMoney > potContribution.getCurrentBet()) {               // User Raise --> Set new currentBet
@@ -42,5 +43,14 @@ public class Table {
 
     public Pot getPotContribution() {
         return potContribution;
+    }
+
+    public void reset() {
+        potContribution.reset();
+        cards.clear();
+    }
+
+    public void setCurrentBet() {
+        potContribution.setCurrentBet(0);
     }
 }

@@ -101,42 +101,6 @@ public class DeckOfCard {
         return dealtCards;
     }
     
-    /**
-     * Deals a specific card.
-     * 
-     * @param rank
-     *            The card's rank.
-     * @param suit
-     *            The card's suit.
-     * 
-     * @return The card if available, otherwise null.
-     * 
-     * @throws IllegalStateException
-     *             If there are no cards left in the deck.
-     */
-    public Card deal(int rank, int suit) {
-        if (nextCardIndex + 1 >= NO_OF_CARDS) {
-            throw new IllegalStateException("No cards left in deck");
-        }
-        Card card = null;
-        int index = -1;
-        for (int i = nextCardIndex; i < NO_OF_CARDS; i++) {
-            if ((cards[i].getRank() == rank) && (cards[i].getSuit() == suit)) {
-                index = i;
-                break;
-            }
-        }
-        if (index != -1) {
-            if (index != nextCardIndex) {
-                Card nextCard = cards[nextCardIndex];
-                cards[nextCardIndex] = cards[index];
-                cards[index] = nextCard;
-            }
-            card = deal();
-        }
-        return card;
-    }
-    
     /** {@inheritDoc} */
     @Override
     public String toString() {
