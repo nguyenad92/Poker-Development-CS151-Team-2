@@ -45,6 +45,10 @@ public class Table {
         return potContribution;
     }
 
+    public int getTotalMoney() {
+        return potContribution.getTotalMoney();
+    }
+
     public void reset() {
         potContribution.reset();
         cards.clear();

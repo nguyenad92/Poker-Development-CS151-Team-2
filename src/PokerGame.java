@@ -17,7 +17,6 @@ public class PokerGame {
     private boolean isFlop, isTurn, isRiver;
     private Player actor;
 
-
     public PokerGame(Player p1, Player p2) {
         this.table = new Table();
         this.deckOfCard = new DeckOfCard();
@@ -106,7 +105,6 @@ public class PokerGame {
         }
     }
 
-
     /**
      * Adds a player.
      * @param player
@@ -152,7 +150,8 @@ public class PokerGame {
 
     public void rotatePosition() {
         dealerPosition++;
-        actorPosition = (actorPosition + 1) % activePlayers.size();
+        int playerPostion = currentPlayerToAct.getCurrentPositionOnTable();
+        playerPostion = (playerPostion + 1) % activePlayers.size();
         actor = activePlayers.get(actorPosition);
         for (Player player : players) {
             player.getClient().actorRotated(actor);
@@ -220,7 +219,6 @@ public class PokerGame {
     				
     		}
     	}
-
     }
 
     public int getCurrentPlayerPosition() {
