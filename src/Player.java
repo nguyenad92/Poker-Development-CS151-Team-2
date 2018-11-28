@@ -43,27 +43,9 @@ public class Player {
 
 	}
 
-	/**
-	 * do the action to call
-	 */
-	public void call() {
-
+	public void payMoney(int money) {
+		money =
 	}
-
-	/**
-	 * do the action to bet
-	 */
-	public void bet() {
-
-	}
-
-	/**
-	 * do the action to raise
-	 */
-	public void raise() {
-
-	}
-
 	/**
 	 * do the action to fold
 	 */
@@ -93,6 +75,7 @@ public class Player {
 		return money;
 	}
 
+
 	public int getCurrentBet() {
 		return currentBet;
 	}
@@ -102,6 +85,10 @@ public class Player {
 	}
 
 	public  void resetHand() {
+		money = 0;
+		currentBet = 0;
+		setCard().clear();
+
 		// Clear the PlayerHand
 	}
 
@@ -117,4 +104,15 @@ public class Player {
 		int newMoney = getMoney() + money;
 		this.money = newMoney;
 	}
+
+	public void setCard(Set<Card> cards) {
+		for (int i = 0; i < 7; i++) {
+			Set<Card>[i] = playerHands.getCard();
+		}
+	}
+
+	public void betting(int bet) {
+		currentBet = bet + currentBet;
+	}
+
 }
