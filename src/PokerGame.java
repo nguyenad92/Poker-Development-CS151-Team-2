@@ -18,7 +18,7 @@ public class PokerGame {
         this.table = new Table();
         this.deckOfCard = new DeckOfCard();
         this.playerList = new ArrayList<>();
-        this.handComparison = new RankedHand();
+//        this.handComparison = new RankedHand();
 
         // Add Player
         addPlayer(p1);
@@ -43,7 +43,6 @@ public class PokerGame {
 //        frame.setVisible(true);
 
 //        PokerGame main = new PokerGame();
-
     }
 
     private void start() {
@@ -88,7 +87,7 @@ public class PokerGame {
         // Deck deal Preflop
         // Player starts betting
 
-        while ()
+//        while ()
         // Deck deal Flop
         // Player starts betting
 
@@ -111,10 +110,36 @@ public class PokerGame {
 
 
     }
+    
+    /**
+     * deal two cards to players
+     */
+    
+    public void dealPreFlopCard()
+    {
+    	for(int i = 0; i < playerList.size(); i++)
+    		playerList.get(i).setCard(deckOfCard.deal(2));
+    }
+    
+    public void dealFlopCard()
+    {
+    	for(int i = 0; i < 3; i++)
+    		table.addCard(deckOfCard.deal());
+    }
+    
+    public void dealTurnCard()
+    {
+    	table.addCard(deckOfCard.deal());
+    }
+    
+    public void dealRiverCard()
+    {
+    	table.addCard(deckOfCard.deal());
+    }
 
-
-    public void betting() {
-
+    public void betting()
+    {
+    	
     }
 
     /**
@@ -135,4 +160,6 @@ public class PokerGame {
 
         // clear the card in the communityCardList
     }
+    
+    
 }

@@ -1,3 +1,4 @@
+import java.util.*;
 /**
  * A class to show information of players and dealer
  * add and remove players, add money
@@ -7,10 +8,30 @@
 public class Table {
 
     private Pot potContribution;
-
+    private List<Card> cards;
+    
     public Table() {
         potContribution = new Pot();
+        cards = new ArrayList<>();
     }
+    
+    
+    public void addCard(Card c)
+    {
+    	cards.add(c);
+    }
+    
+    public Card showCards(int i)
+    {
+    	return cards.get(i);
+    }
+    
+    public int sizeCard()
+    {
+    	return cards.size();
+    }
+    
+   
 
     public void addMoneyToPot(Player p, int betMoney) {
         if (betMoney > potContribution.getCurrentBet()) {               // User Raise --> Set new currentBet

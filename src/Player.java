@@ -1,3 +1,5 @@
+import java.util.Set;
+
 /**
  * A class to create player and keep player's information
  * it contains player's actions such as check, call, raise, fold and outGame
@@ -13,12 +15,14 @@ public class Player {
 	private int currentBet;							// current Bet of the Player
 	private int level;
 	private int country;
-	private PlayerHand[] playerHands;
+	private PlayerHand playerHands;
+	private boolean isWin;
+	private Set<Card> cards;
 
 	/**
 	 * Construct a player object
 	 */
-	public Player(String id, String name, int age, String gender, int money, int level, int country) {
+	public Player(String id, String name, int age, String gender, int money, int level, int country, boolean isWin, Set<Card> c) {
 		this.id = id;
 		this.name = name;
 		this.age = age;
@@ -26,8 +30,10 @@ public class Player {
 		this.money = money;
 		this.level = level;
 		this.country = country;
-		this.playerHands = new PlayerHand[2];
-		currentBet = 0;
+		cards = c;
+		this.playerHands = new PlayerHand(c);
+		this.isWin = isWin;
+		currentBet =0;
 	}
 
 	/**
@@ -99,4 +105,16 @@ public class Player {
 		// Clear the PlayerHand
 	}
 
+	public boolean isWin() {
+		return isWin;
+	}
+
+	public void setWin(boolean win) {
+		isWin = win;
+	}
+
+	public void setMoney(int money) {
+		int newMoney = getMoney() + money;
+		this.money = newMoney;
+	}
 }

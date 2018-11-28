@@ -5,20 +5,20 @@ import java.util.Set;
  *
  */
 public class PlayerHand {
-    private Player player;
+//    private Player player;
     Set<Card> cards;
 
     /**
      * Construct a playerHand object
      */
-    public PlayerHand(Player player, Set<Card> cards) {
-        this.player = player;
+    public PlayerHand(Set<Card> cards) {
+//        this.player = player;
         this.cards = cards;
     }
 
-    public Player getPlayer() {
-        return player;
-    }
+//    public Player getPlayer() {
+//        return player;
+//    }
 
     public Set<Card> getCard() {
         return cards;
