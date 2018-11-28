@@ -7,13 +7,11 @@ import java.util.*;
  */
 public class Table {
 
-    private int totalMoney;
     private Pot potContribution;
     private List<Card> cards;
     
     public Table() {
         potContribution = new Pot();
-        this.totalMoney = 0;
         cards = new ArrayList<>();
     }
     
@@ -36,18 +34,13 @@ public class Table {
    
 
     public void addMoneyToPot(Player p, int betMoney) {
-        potContribution.setCurrentBet(potContribution.getCurrentBet() + betMoney);
-    }
-
-    public int getTotalMoney() {
-        return totalMoney;
+        if (betMoney > potContribution.getCurrentBet()) {               // User Raise --> Set new currentBet
+            potContribution.setCurrentBet(betMoney);
+        }
+        potContribution.addMoneyToPotContribution(p, betMoney);
     }
 
     public Pot getPotContribution() {
         return potContribution;
-    }
-
-    public void setTotalMoney(int totalMoney) {
-        this.totalMoney = totalMoney;
     }
 }

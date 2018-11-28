@@ -7,19 +7,22 @@ import java.util.ArrayList;
 public class PokerGame {
 
     private ArrayList<Player> playerList;
-    private Dealer dealer;
+    private ArrayList<Card> communityCardList;
     private DeckOfCard deckOfCard;
     private Table table;
-    private Pot pot;
-    private int dealerPosition, currentPlayerPosition, bigBlind, bet;
+    private int dealerPosition, currentPlayerPosition, bigBlind;
+    private RankedHand handComparison;
 
-    public PokerGame(int bigBlind) {
+
+    public PokerGame(Player p1, Player p2) {
         this.table = new Table();
-        this.dealer = new Dealer();
         this.deckOfCard = new DeckOfCard();
         this.playerList = new ArrayList<>();
-        this.pot = new Pot();
-        this.bigBlind = bigBlind;
+//        this.handComparison = new RankedHand();
+
+        // Add Player
+        addPlayer(p1);
+        addPlayer(p2);
     }
 
 
@@ -29,32 +32,27 @@ public class PokerGame {
      * @param args
      */
     public static void main(String[] args) {
-        JFrame frame = new JFrame();
+//        JFrame frame = new JFrame();
+//
+//        JTextArea area = new JTextArea(20, 40); // 20 rows, 40 columns
+//        JScrollPane scroller = new JScrollPane(area);
+//        frame.add(scroller, BorderLayout.CENTER);
+//
+//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        frame.setSize(200, 200);
+//        frame.setVisible(true);
 
-        JTextArea area = new JTextArea(20, 40); // 20 rows, 40 columns
-        JScrollPane scroller = new JScrollPane(area);
-        frame.add(scroller, BorderLayout.CENTER);
-
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(200, 200);
-        frame.setVisible(true);
-
-
-
-
-
+//        PokerGame main = new PokerGame();
     }
 
-    private void run() {
-        for (Player player : playerList) {
-            addPlayer(player);
-        }
+    private void start() {
         dealerPosition = -1;
         currentPlayerPosition = -1;
+
         while (true) {
             int noOfActivePlayers = 0;
             for (Player player : playerList) {
-                if (player.getMoney() >= bigBlind) {
+                if (player.getMoney() >= 0) {
                     noOfActivePlayers++;
                 }
             }
@@ -65,10 +63,8 @@ public class PokerGame {
             }
         }
 
-        // Reset Everything when oneHand is finished
-//        table.clear();
-//        pots.clear();
-        table.setTotalMoney(0);
+        // Reset Everything when oneHand is finished or the other loses all Money
+        resetGame();
         for (Player player : playerList) {
             player.resetHand();
         }
@@ -77,7 +73,42 @@ public class PokerGame {
 
 
     private void playHand() {
-        // Dealer
+
+
+        // Set BigBlind and Small Blind
+
+
+
+        // Deck Shuffle
+
+
+
+
+        // Deck deal Preflop
+        // Player starts betting
+
+//        while ()
+        // Deck deal Flop
+        // Player starts betting
+
+
+        // Deck deal Turn
+        // Player starts betting
+
+
+        // Deck deal River
+        // Player starts betting
+
+
+        // ShowDown
+
+
+
+        // Done
+
+
+
+
     }
     
     /**
@@ -108,16 +139,6 @@ public class PokerGame {
 
     public void betting()
     {
-    	if (table.sizeCard() == 0)
-    	{
-    		bet = bigBlind;
-    	}
-    	
-    	else
-    	{
-    		currentPlayerPosition = dealerPosition;
-    		bet = 0;
-    	}
     	
     }
 
@@ -130,11 +151,14 @@ public class PokerGame {
         playerList.add(player);
     }
 
-    public void addDealer(Dealer d) {
-
-    }
 
     public void resetGame() {
+        // Clear the Pot Contribution
+
+        // reset Deck
+
+
+        // clear the card in the communityCardList
     }
     
     
