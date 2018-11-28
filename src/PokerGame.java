@@ -11,7 +11,7 @@ public class PokerGame {
     private DeckOfCard deckOfCard;
     private Table table;
     private Pot pot;
-    private int dealerPosition, currentPlayerPosition, bigBlind;
+    private int dealerPosition, currentPlayerPosition, bigBlind, bet;
 
     public PokerGame(int bigBlind) {
         this.table = new Table();
@@ -87,27 +87,37 @@ public class PokerGame {
     public void dealPreFlopCard()
     {
     	for(int i = 0; i < playerList.size(); i++)
-    		playerList.get(i).addCard(deckOfCard.deal(2));
+    		playerList.get(i).setCard(deckOfCard.deal(2));
     }
     
     public void dealFlopCard()
     {
     	for(int i = 0; i < 3; i++)
-    		table.add(deckOfCard.deal());
+    		table.addCard(deckOfCard.deal());
     }
     
     public void dealTurnCard()
     {
-    	table.add(deckOfCard.deal());
+    	table.addCard(deckOfCard.deal());
     }
     
     public void dealRiverCard()
     {
-    	table.add(deckOfCard.deal());
+    	table.addCard(deckOfCard.deal());
     }
 
     public void betting()
     {
+    	if (table.sizeCard() == 0)
+    	{
+    		bet = bigBlind;
+    	}
+    	
+    	else
+    	{
+    		currentPlayerPosition = dealerPosition;
+    		bet = 0;
+    	}
     	
     }
 

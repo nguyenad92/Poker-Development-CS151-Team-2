@@ -9,29 +9,31 @@ public class Table {
 
     private int totalMoney;
     private Pot potContribution;
-    public DeckOfCard deck;
-    public ArrayList<Player> player;
+    private List<Card> cards;
     
-    public Table()
-    {
-    	deck = new DeckOfCard();
-    	player = new ArrayList<>();
-    }
-    
-    /**
-     * deal two cards to players
-     */
-    
-    public void dealPreFlopCard()
-    {
-    	for(int i = 0; i < player.size(); i++)
-    		player.get(i).addCard(deck.deal(2));
-    }
-
     public Table() {
         potContribution = new Pot();
         this.totalMoney = 0;
+        cards = new ArrayList<>();
     }
+    
+    
+    public void addCard(Card c)
+    {
+    	cards.add(c);
+    }
+    
+    public Card showCards(int i)
+    {
+    	return cards.get(i);
+    }
+    
+    public int sizeCard()
+    {
+    	return cards.size();
+    }
+    
+   
 
     public void addMoneyToPot(Player p, int betMoney) {
         potContribution.setCurrentBet(potContribution.getCurrentBet() + betMoney);
