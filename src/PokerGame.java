@@ -79,6 +79,37 @@ public class PokerGame {
     private void playHand() {
         // Dealer
     }
+    
+    /**
+     * deal two cards to players
+     */
+    
+    public void dealPreFlopCard()
+    {
+    	for(int i = 0; i < playerList.size(); i++)
+    		playerList.get(i).addCard(deckOfCard.deal(2));
+    }
+    
+    public void dealFlopCard()
+    {
+    	for(int i = 0; i < 3; i++)
+    		table.add(deckOfCard.deal());
+    }
+    
+    public void dealTurnCard()
+    {
+    	table.add(deckOfCard.deal());
+    }
+    
+    public void dealRiverCard()
+    {
+    	table.add(deckOfCard.deal());
+    }
+
+    public void betting()
+    {
+    	
+    }
 
     /**
      * Adds a player.
@@ -95,4 +126,6 @@ public class PokerGame {
 
     public void resetGame() {
     }
+    
+    
 }

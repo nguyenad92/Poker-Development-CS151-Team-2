@@ -1,3 +1,4 @@
+import java.util.*;
 /**
  * A class to show information of players and dealer
  * add and remove players, add money
@@ -8,6 +9,24 @@ public class Table {
 
     private int totalMoney;
     private Pot potContribution;
+    public DeckOfCard deck;
+    public ArrayList<Player> player;
+    
+    public Table()
+    {
+    	deck = new DeckOfCard();
+    	player = new ArrayList<>();
+    }
+    
+    /**
+     * deal two cards to players
+     */
+    
+    public void dealPreFlopCard()
+    {
+    	for(int i = 0; i < player.size(); i++)
+    		player.get(i).addCard(deck.deal(2));
+    }
 
     public Table() {
         potContribution = new Pot();
