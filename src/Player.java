@@ -1,3 +1,4 @@
+import java.util.Calendar;
 import java.util.Set;
 
 /**
@@ -43,8 +44,9 @@ public class Player {
 
 	}
 
-	public void payMoney(int money) {
-		money =
+	public void payMoney(int bet) {
+		money = money - bet;
+		currentBet = currentBet + bet;
 	}
 	/**
 	 * do the action to fold
@@ -90,6 +92,9 @@ public class Player {
 		setCard().clear();
 
 		// Clear the PlayerHand
+	}
+
+	private Calendar setCard() {
 	}
 
 	public boolean isWin() {
