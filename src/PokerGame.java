@@ -150,7 +150,8 @@ public class PokerGame {
 
     public void rotatePosition() {
         dealerPosition++;
-        actorPosition = (actorPosition + 1) % activePlayers.size();
+        int playerPostion = currentPlayerToAct.getCurrentPositionOnTable();
+        playerPostion = (playerPostion + 1) % activePlayers.size();
         actor = activePlayers.get(actorPosition);
         for (Player player : players) {
             player.getClient().actorRotated(actor);
@@ -161,6 +162,7 @@ public class PokerGame {
     public int getDealerPosition() {
         return dealerPosition;
     }
+
     public void betting()
     {
     	int playerToAct = playerList.size();
@@ -169,8 +171,7 @@ public class PokerGame {
     		bet = bigBlind;
     	}
     	
-    	else
-    	{
+    	else {
     		currentPlayerPosition = dealerPosition;
     		bet = 0;
     	}

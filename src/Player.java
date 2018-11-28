@@ -17,6 +17,7 @@ public class Player {
 	private int country;
 	private PlayerHand playerHands;
 	private boolean isWin;
+	private int currentPositionOnTable;
 	private Set<Card> cards;
 
 	/**
@@ -34,6 +35,7 @@ public class Player {
 		this.playerHands = new PlayerHand(c);
 		this.isWin = isWin;
 		currentBet =0;
+		currentPositionOnTable = 0;
 	}
 
 	/**
@@ -115,4 +117,7 @@ public class Player {
 		currentBet = bet + currentBet;
 	}
 
+	public int getCurrentPositionOnTable() {
+		return currentPositionOnTable;
+	}
 }
