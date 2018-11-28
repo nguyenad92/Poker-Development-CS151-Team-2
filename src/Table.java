@@ -6,27 +6,20 @@
  */
 public class Table {
 
-    private int totalMoney;
     private Pot potContribution;
 
     public Table() {
         potContribution = new Pot();
-        this.totalMoney = 0;
     }
 
     public void addMoneyToPot(Player p, int betMoney) {
-        potContribution.setCurrentBet(potContribution.getCurrentBet() + betMoney);
-    }
-
-    public int getTotalMoney() {
-        return totalMoney;
+        if (betMoney > potContribution.getCurrentBet()) {               // User Raise --> Set new currentBet
+            potContribution.setCurrentBet(betMoney);
+        }
+        potContribution.addMoneyToPotContribution(p, betMoney);
     }
 
     public Pot getPotContribution() {
         return potContribution;
-    }
-
-    public void setTotalMoney(int totalMoney) {
-        this.totalMoney = totalMoney;
     }
 }

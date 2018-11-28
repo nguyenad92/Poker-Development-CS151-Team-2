@@ -9,7 +9,8 @@ public class Player {
 	private String name;
 	private int age;
 	private String gender;
-	private int money; // money is int
+	private int money; 								// total money of Player
+	private int currentBet;							// current Bet of the Player
 	private int level;
 	private int country;
 	private PlayerHand[] playerHands;
@@ -26,6 +27,7 @@ public class Player {
 		this.level = level;
 		this.country = country;
 		this.playerHands = new PlayerHand[2];
+		currentBet = 0;
 	}
 
 	/**
@@ -85,7 +87,16 @@ public class Player {
 		return money;
 	}
 
-	public  void resetHand() {
-
+	public int getCurrentBet() {
+		return currentBet;
 	}
+
+	public void setCurrentBet(int currentBet) {
+		this.currentBet = currentBet;
+	}
+
+	public  void resetHand() {
+		// Clear the PlayerHand
+	}
+
 }
