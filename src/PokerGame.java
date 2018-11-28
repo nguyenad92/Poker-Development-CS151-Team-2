@@ -15,7 +15,7 @@ public class PokerGame {
     private ArrayList<Player> activePlayer;
     private Player currentPlayerToAct;
     private boolean isFlop, isTurn, isRiver;
-
+    private Player actor;
 
     public PokerGame(Player p1, Player p2) {
         this.table = new Table();
@@ -105,11 +105,6 @@ public class PokerGame {
         }
     }
 
-
-    public void betting() {
-    	
-    }
-
     /**
      * Adds a player.
      * @param player
@@ -166,9 +161,63 @@ public class PokerGame {
     public int getDealerPosition() {
         return dealerPosition;
     }
-
-    public int getBigBlind() {
-        return bigBlind;
+    public void betting()
+    {
+    	int playerToAct = playerList.size();
+    	if (table.sizeCard() == 0)
+    	{
+    		bet = bigBlind;
+    	}
+    	
+    	else
+    	{
+    		currentPlayerPosition = dealerPosition;
+    		bet = 0;
+    	}
+    	
+    	if(playerToAct == 2)
+    	{
+    		currentPlayerPosition = dealerPosition;
+    	}
+    	
+    	lastBettor = null;
+    	raises = 0;
+    	updateTable();
+    	
+    	while(playerToAct > 0)
+    	{
+    		changeActor();
+    		Action action = null;
+    		if(actor.isALlIn)
+    		{
+    			action = Action.CHECK;
+    			playerToAct--;
+    		}
+    		else
+    		{
+    			playerToAct--;
+    			if(table.getStatus == check())
+    				{} //do nothing
+    			if(table.getStatus == call)
+    			{
+    				int betIncrement = pot.getCurrentBet() - actor.getBet;
+    				if(betIncrement > actor.getMoney())
+    					betIncrement = actor.getMoney();
+    				actor.setBet(actor.getBet() = betIncrement);
+    				pot.addMoneyToPotContribution(actor, actor.getBet());
+    			}
+    			if(table.getStatus = bet())
+    			{
+    				int amount = pot.getCurrentBet();
+    				actor.setBet(actor.getBet() = betIncrement);
+    				pot.addMoneyToPotContribution(actor, actor.getBet());
+    				
+    				
+    			}
+    				
+    				
+    		}
+    	}
     }
 
     public int getCurrentPlayerPosition() {
