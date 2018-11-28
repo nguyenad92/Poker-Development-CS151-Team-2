@@ -9,7 +9,7 @@ public class Table {
 
     private Pot potContribution;
     private List<Card> cards;
-    private String actionStatus;
+    private String currentActionStatus;
 
 
     
