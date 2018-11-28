@@ -7,21 +7,22 @@ import java.util.ArrayList;
 public class PokerGame {
 
     private ArrayList<Player> playerList;
-    private ArrayList<Card> communityCardList;
     private DeckOfCard deckOfCard;
+    private Dealer cardDealer;
     private Table table;
-    private int dealerPosition, currentPlayerPosition, bigBlind;
+    private int dealerPosition = 0, currentPlayerPosition = 0, bigBlind = 0;
     private RankedHand handComparison;
+    private ArrayList<Player> activePlayer;
+    private Player currentPlayerToAct;
+    private boolean isFlop, isTurn, isRiver;
     private Player actor;
-    private Pot pot;
-
 
     public PokerGame(Player p1, Player p2) {
         this.table = new Table();
         this.deckOfCard = new DeckOfCard();
         this.playerList = new ArrayList<>();
-//        this.handComparison = new RankedHand();
-
+        activePlayer = new ArrayList<>();
+        cardDealer = new Dealer(table, deckOfCard, playerList);
         // Add Player
         addPlayer(p1);
         addPlayer(p2);
@@ -66,7 +67,7 @@ public class PokerGame {
         }
 
         // Reset Everything when oneHand is finished or the other loses all Money
-        resetGame();
+        table.reset();
         for (Player player : playerList) {
             player.resetHand();
         }
@@ -75,70 +76,91 @@ public class PokerGame {
 
 
     private void playHand() {
-
+        resetHand();
 
         // Set BigBlind and Small Blind
+        if (activePlayer.size() > 1) {
+            rotatePosition();
+        }
+
+        setBigBlind();
+        setSmallBlind();
 
 
+        deckOfCard.shuffle();                           // Deck Shuffle
+        cardDealer.dealPreFlopCard();                  // Deck deal Preflop
+        betting();
 
-        // Deck Shuffle
-
-
-
-
-        // Deck deal Preflop
-        // Player starts betting
-
-//        while ()
-        // Deck deal Flop
-        // Player starts betting
-
-
-        // Deck deal Turn
-        // Player starts betting
-
-
-        // Deck deal River
-        // Player starts betting
-
-
-        // ShowDown
-
-
-
-        // Done
-
-
-
-
+        while (activePlayer.size() > 1) {
+            table.setCurrentBet();
+            if (isFlop) {
+                cardDealer.dealFlopCard();
+            } else if (isTurn) {
+                cardDealer.dealTurnCard();
+            } else if (isRiver) {
+                cardDealer.dealRiverCard();
+            }
+            betting();
+            if (isRiver) showDown();
+        }
     }
-    
+
     /**
-     * deal two cards to players
+     * Adds a player.
+     * @param player
+     *            The player.
      */
-    
-    public void dealPreFlopCard()
-    {
-    	for(int i = 0; i < playerList.size(); i++)
-    		playerList.get(i).setCard(deckOfCard.deal(2));
-    }
-    
-    public void dealFlopCard()
-    {
-    	for(int i = 0; i < 3; i++)
-    		table.addCard(deckOfCard.deal());
-    }
-    
-    public void dealTurnCard()
-    {
-    	table.addCard(deckOfCard.deal());
-    }
-    
-    public void dealRiverCard()
-    {
-    	table.addCard(deckOfCard.deal());
+    public void addPlayer(Player player) {
+        playerList.add(player);
     }
 
+
+    public void resetHand() {
+        table.reset();
+//        notifyBoardUpdated();
+
+        // Determine the active players.
+        activePlayer.clear();
+        for (Player player : playerList) {
+            player.resetHand();
+            if (player.getMoney() >= 0) {
+                activePlayer.add(player);
+            }
+        }
+
+        // Rotate the dealer button.
+        dealerPosition = (dealerPosition + 1) % activePlayer.size();
+        dealer = activePlayers.get(dealerPosition);
+
+        // Shuffle the deck.
+        deckOfCard.shuffle();
+
+        // Determine the first player to act.
+        actorPosition = dealerPosition;
+        actor = activePlayer.get(actorPosition);
+
+        // Set the initial bet to the big blind.
+        minBet = bigBlind;
+        bet = minBet;
+    }
+
+    public void showDown() {
+
+    }
+
+    public void rotatePosition() {
+        dealerPosition++;
+        actorPosition = (actorPosition + 1) % activePlayers.size();
+        actor = activePlayers.get(actorPosition);
+        for (Player player : players) {
+            player.getClient().actorRotated(actor);
+        }
+    }
+
+
+    public int getDealerPosition() {
+        return dealerPosition;
+    }
     public void betting()
     {
     	int playerToAct = playerList.size();
@@ -198,24 +220,11 @@ public class PokerGame {
     	}
     }
 
-    /**
-     * Adds a player.
-     * @param player
-     *            The player.
-     */
-    public void addPlayer(Player player) {
-        playerList.add(player);
+    public int getCurrentPlayerPosition() {
+        return currentPlayerPosition;
     }
 
+    public void getAllowedAction(String action) {
 
-    public void resetGame() {
-        // Clear the Pot Contribution
-
-        // reset Deck
-
-
-        // clear the card in the communityCardList
     }
-    
-    
 }
