@@ -9,7 +9,7 @@ public class Table {
 
     private Pot potContribution;
     private List<Card> cards;
-    private String actionStatus;
+    private String currentActionStatus;
 
 
     
@@ -43,6 +43,10 @@ public class Table {
 
     public Pot getPotContribution() {
         return potContribution;
+    }
+
+    public int getTotalMoney() {
+        return potContribution.getTotalMoney();
     }
 
     public void reset() {
