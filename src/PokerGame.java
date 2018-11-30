@@ -186,8 +186,10 @@ public class PokerGame {
     	
     	while(playerToAct > 0)
     	{
-    		changeActor();
+    		rotatePosition();
     		Action action = null;
+    		
+    		//current player ALL IN
     		if(actor.isALlIn)
     		{
     			action = Action.CHECK;
@@ -196,24 +198,29 @@ public class PokerGame {
     		else
     		{
     			playerToAct--;
+    			//current player CHECK
     			if(table.getStatus == check())
     				{} //do nothing
-    			if(table.getStatus == call)
+    			
+    			//current player CALL
+    			if(table.getStatus == call())
     			{
-    				int betIncrement = pot.getCurrentBet() - actor.getBet;
+    				int betIncrement = table.getTotalMoney() + actor.getCurrentBet();
     				if(betIncrement > actor.getMoney())
     					betIncrement = actor.getMoney();
-    				actor.setBet(actor.getBet() = betIncrement);
-    				pot.addMoneyToPotContribution(actor, actor.getBet());
+    				actor.setCurrentBet(actor.getCurrentBet() - betIncrement);
+    				table.addMoneyToPot(actor, actor.getCurrentBet());
     			}
+    			//current player BET
     			if(table.getStatus = bet())
     			{
-    				int amount = pot.getCurrentBet();
-    				actor.setBet(actor.getBet() = betIncrement);
-    				pot.addMoneyToPotContribution(actor, actor.getBet());
-    				
-    				
+    				int amount = table.getCurrentBet();
+    				actor.setBet(actor.getCurrentBet() - betIncrement);
+    				table.addMoneyToPot(actor, actor.getCurrentBet());
+    				bet = amount;
+    				playerToAct = playerList.size();
     			}
+    			//current player RAISE
     				
     				
     		}
