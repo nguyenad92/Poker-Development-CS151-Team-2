@@ -16,6 +16,7 @@ public class PokerGame {
     private Player currentPlayerToAct;
     private boolean isFlop, isTurn, isRiver;
     private Player actor;
+    private int bet, raises;
 
     public PokerGame(Player p1, Player p2) {
         this.table = new Table();
@@ -213,7 +214,7 @@ public class PokerGame {
     				table.addMoneyToPot(actor, actor.getCurrentBet());
     			}
     			//current player BET
-    			if(table.getStatus = bet())
+    			if(table.getStatus == bet())
     			{
     				int amount = table.getCurrentBet();
     				actor.setBet(actor.getCurrentBet() - betIncrement);
@@ -222,10 +223,49 @@ public class PokerGame {
     				playerToAct = playerList.size();
     			}
     			//current player RAISE
-    				
+    			if(table.getStatus == raises())
+    			{
+    				int amount = table.get
+    			}
+    			
+    			//current player FOLD
+    			if(table.getStatus == FOLD())
+    			{
+    				actor.setCard(null);
+    				activePlayer.remove(actor);
+    				currentPlayerPosition--;
+    				if(activePlayer.size() == 1)
+    				{
+    					updateTable();
+    					nextPlayerToAct();
+    					Player winner = activePlayer.get(0);
+    					int amount = table.getTotalMoney();
+    					winner.setMoney(amount);
+    					updateTable();
+    					playerToAct = 0;
+    				}
+    			}
     				
     		}
+    		if(playerToAct > 0)
+    		{
+    			updateTable();
+    			nextPlayerToAct();
+    		}
     	}
+    	//reset players' bet
+    	for(Player player: activePlayer)
+    		player.setCurrentBet(0);
+    	updateTable();
+    	
+    }
+    
+    //Notify observer that the tabel has been updated
+    private void updateTable()
+    {
+    	int pot = table.getTotalMoney();
+    	for(Player player: activePlayer)
+    		player.getObserver().tableUpdated(table, bet, pot);
     }
 
     public int getCurrentPlayerPosition() {
