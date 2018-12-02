@@ -355,7 +355,7 @@ table tr td dl, table tr td dl dt, table tr td dl dd {
     margin-bottom:1px;
 }
 /*
-Table styles
+edu.sjsu.cs.cs151.model.Table styles
 */
 .overviewSummary, .memberSummary, .typeSummary, .useSummary, .constantsSummary, .deprecatedSummary {
     width:100%;

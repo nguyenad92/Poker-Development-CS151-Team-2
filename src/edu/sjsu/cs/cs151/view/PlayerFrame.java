@@ -1,4 +1,4 @@
-package gui;
+package edu.sjsu.cs.cs151.view;
 
 import java.awt.Color;
 import java.awt.GridBagConstraints;
@@ -11,8 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
-import edu.sjsu.cs.cs151.Card;
-import edu.sjsu.cs.cs151.Player;
+import edu.sjsu.cs.cs151.model.*;
  
 
 /**

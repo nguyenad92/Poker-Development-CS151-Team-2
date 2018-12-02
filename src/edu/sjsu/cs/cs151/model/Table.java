@@ -1,3 +1,5 @@
+package edu.sjsu.cs.cs151.model;
+
 import java.util.*;
 /**
  * A class to show information of players and dealer
@@ -11,8 +13,6 @@ public class Table {
     private List<Card> cards;
     private String currentActionStatus;
 
-
-    
     public Table() {
         potContribution = new Pot();
         cards = new ArrayList<>();
@@ -52,6 +52,14 @@ public class Table {
     public void reset() {
         potContribution.reset();
         cards.clear();
+    }
+
+    public int getCurrentBet() {
+        return potContribution.getCurrentBet();
+    }
+
+    public String getCurrentActionStatus() {
+        return currentActionStatus;
     }
 
     public void setCurrentBet() {

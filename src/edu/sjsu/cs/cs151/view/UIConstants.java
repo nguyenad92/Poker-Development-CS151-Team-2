@@ -1,4 +1,4 @@
-package gui;
+package edu.sjsu.cs.cs151.view;
 
 import java.awt.Color;
 

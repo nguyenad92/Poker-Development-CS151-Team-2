@@ -1,4 +1,4 @@
-package gui;
+package edu.sjsu.cs.cs151.view;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -10,7 +10,7 @@ import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import edu.sjsu.cs.cs151.Card;
+import edu.sjsu.cs.cs151.model.*;
 /**
  * it shows community cards, amount of pots, current actions, messages
  * it needs to update informations when pot increases or player do betting,...
@@ -39,9 +39,7 @@ public class TableFrame extends JPanel
     
     /**
      * Constructor.
-     * 
-     * @param controlPanel
-     *            The control panel.
+     * The control panel.
      */
     public TableFrame(ActionListener actionListener) {
         this.actionListener = actionListener;
@@ -64,7 +62,7 @@ public class TableFrame extends JPanel
         gc.insets = new Insets(0, 5, 0, 5);
         add(label, gc);
         
-        label = new JLabel("Pot");
+        label = new JLabel("edu.sjsu.cs.cs151.model.Pot");
         label.setForeground(Color.GREEN);
         gc.gridx = 3;
         gc.gridy = 0;
