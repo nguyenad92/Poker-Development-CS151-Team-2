@@ -4,7 +4,7 @@ public class Dealer {
 
     private Table table;
     private DeckOfCard deck;
-    private ArrayList playerList;
+    private ArrayList<Player> playerList;
 
     public Dealer(Table table, DeckOfCard deck, ArrayList<Player> playerList) {
         this.table = table;
@@ -17,8 +17,10 @@ public class Dealer {
      */
 
     public void dealPreFlopCard() {
-        for(int i = 0; i < playerList.size(); i++)
+        for(int i = 0; i < playerList.size(); i++) {
             playerList.get(i).addCard(deck.deal(2));
+        }
+
     }
 
     public void dealFlopCard() {

@@ -15,14 +15,16 @@ public class PokerGame {
     private ArrayList<Player> activePlayer;
     private Player currentPlayerToAct;
     private boolean isFlop, isTurn, isRiver;
-    private Player actor;
+    private Player actor, dealerPlayer;
 
-    public PokerGame(Player p1, Player p2) {
+    public PokerGame(Player p1, Player p2, int bigBlind) {
         this.table = new Table();
         this.deckOfCard = new DeckOfCard();
         this.playerList = new ArrayList<>();
         activePlayer = new ArrayList<>();
         cardDealer = new Dealer(table, deckOfCard, playerList);
+        this.bigBlind = bigBlind;
+
         // Add Player
         addPlayer(p1);
         addPlayer(p2);
@@ -75,6 +77,9 @@ public class PokerGame {
     }
 
 
+    /**
+     * Before play a new hand, need to reset everything back to original
+     */
     private void playHand() {
         resetHand();
 
@@ -83,8 +88,7 @@ public class PokerGame {
             rotatePosition();
         }
 
-        setBigBlind();
-        setSmallBlind();
+        currentPlayerToAct.setBlind(bigBlind);
 
 
         deckOfCard.shuffle();                           // Deck Shuffle
@@ -117,9 +121,10 @@ public class PokerGame {
 
     public void resetHand() {
         table.reset();
+        deckOfCard.shuffle();                           // Shuffle the deck.
+
 //        notifyBoardUpdated();
 
-        // Determine the active players.
         activePlayer.clear();
         for (Player player : playerList) {
             player.resetHand();
@@ -130,14 +135,12 @@ public class PokerGame {
 
         // Rotate the dealer button.
         dealerPosition = (dealerPosition + 1) % activePlayer.size();
-        dealer = activePlayers.get(dealerPosition);
+        dealerPlayer = activePlayer.get(dealerPosition);
 
-        // Shuffle the deck.
-        deckOfCard.shuffle();
 
         // Determine the first player to act.
-        actorPosition = dealerPosition;
-        actor = activePlayer.get(actorPosition);
+        currentPlayerToAct.setCurrentPositionOnTable(dealerPosition);
+        actor = activePlayer.get(currentPlayerToAct.getCurrentPositionOnTable());
 
         // Set the initial bet to the big blind.
         minBet = bigBlind;
@@ -151,11 +154,8 @@ public class PokerGame {
     public void rotatePosition() {
         dealerPosition++;
         int playerPostion = currentPlayerToAct.getCurrentPositionOnTable();
-        playerPostion = (playerPostion + 1) % activePlayers.size();
-        actor = activePlayers.get(actorPosition);
-        for (Player player : players) {
-            player.getClient().actorRotated(actor);
-        }
+        playerPostion = (playerPostion + 1) % activePlayer.size();
+        actor = activePlayer.get(playerPostion);
     }
 
 
