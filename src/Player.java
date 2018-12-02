@@ -112,6 +112,11 @@ public class Player {
 			Set<Card>[i] = playerHands.getCard();
 		}
 	}
+	
+	public Card[] getCards()
+	{
+		return playerHands.getCard();
+	}
 
 	public void betting(int bet) {
 		currentBet = bet + currentBet;
