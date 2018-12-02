@@ -1,3 +1,5 @@
+package edu.sjsu.cs.cs151.model;
+
 /**
  * A generic game card in a deck 
  * 

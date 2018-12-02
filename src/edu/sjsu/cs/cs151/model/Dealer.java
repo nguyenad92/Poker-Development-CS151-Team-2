@@ -1,3 +1,5 @@
+package edu.sjsu.cs.cs151.model;
+
 import java.util.ArrayList;
 
 public class Dealer {
