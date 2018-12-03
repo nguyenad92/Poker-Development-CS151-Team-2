@@ -157,11 +157,9 @@ public class PokerGame {
         return dealerPosition;
     }
 
-    public void betting()
-    {
+    public void betting() {
     	int playerToAct = playerList.size();
-    	if (table.sizeCard() == 0)
-    	{
+    	if (table.sizeCard() == 0) {
     		bet = bigBlind;
     	}
     	
@@ -170,8 +168,7 @@ public class PokerGame {
     		bet = 0;
     	}
     	
-    	if(playerToAct == 2)
-    	{
+    	if(playerToAct == 2) {
     		currentPlayerPosition = dealerPosition;
     	}
     	
@@ -179,26 +176,22 @@ public class PokerGame {
     	raises = 0;
     	updateTable();
     	
-    	while(playerToAct > 0)
-    	{
+    	while(playerToAct > 0) {
     		rotatePosition();
     		Action action = null;
     		
     		//current player ALL IN
-    		if(actor.isALlIn)
-    		{
+    		if(actor.isALlIn) {
     			action = Action.CHECK;
     			playerToAct--;
     		}
-    		else
-    		{
+    		else {
     			playerToAct--;
     			//current player CHECK
     			if(table.getCurrentActionStatus().equals("CHECK")) {} //do nothing
 
     			//current player CALL
-    			if(table.getCurrentActionStatus().equals("CALL"))
-    			{
+    			if(table.getCurrentActionStatus().equals("CALL")) {
     				int betIncrement = table.getTotalMoney() + actor.getCurrentBet();
     				if(betIncrement > actor.getMoney())
     					betIncrement = actor.getMoney();
@@ -206,8 +199,7 @@ public class PokerGame {
     				table.addMoneyToPot(actor, actor.getCurrentBet());
     			}
     			//current player BET
-    			if(table.getCurrentActionStatus().equals("BET"))
-    			{
+    			if(table.getCurrentActionStatus().equals("BET")) {
     				int amount = table.getCurrentBet();
     				actor.payMoney(amount - actor.getCurrentBet());
     				table.addMoneyToPot(actor, actor.getCurrentBet());
@@ -220,13 +212,11 @@ public class PokerGame {
     			}
 
     			//current player FOLD
-    			if(table.getCurrentActionStatus().equals("FOLD"))
-    			{
+    			if(table.getCurrentActionStatus().equals("FOLD")) {
     				actor.resetHand();
     				activePlayerList.remove(actor);
     				currentPlayerPosition--;
-    				if(activePlayerList.size() == 1)
-    				{
+    				if(activePlayerList.size() == 1) {
     					updateTable();
     					nextPlayerToAct();
     					Player winner = activePlayerList.get(0);
