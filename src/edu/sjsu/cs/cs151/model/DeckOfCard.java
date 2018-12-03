@@ -1,112 +1,91 @@
 package edu.sjsu.cs.cs151.model;
 
-import java.security.SecureRandom;
+
 import java.util.ArrayList;
 import java.util.Random;
 
 /**
- * A standard, generic deck of game cards without jokers. <br />
- * <br />
- *
- * <b>NOTE:</b> This class is implemented with the focus on performance (instead of clean design).
- * 
- * @author Oscar Stigter
+ * A standard, generic deck of game cards
+ 
  */
 public class DeckOfCard {
     
-    /** The number of cards in a deck. */
+    /** The number of cards in a deck = 52. */
     private static final int NO_OF_CARDS = Card.NO_OF_RANKS * Card.NO_OF_SUITS;
     
     /** The cards in the deck. */
     private Card[] cards;
     
     /** The index of the next card to deal. */
-    private int nextCardIndex = 0;
+    private int nextCard = 0;
     
-    /** Random number generator (crypographical quality). */
-    private Random random = new SecureRandom();
+    /** Random number generator  */
+    private Random random = new Random();
 
     /**
      * Constructor.
-     * 
-     * Starts as a full, ordered deck.
      */
-    public DeckOfCard() {
+    public DeckOfCard() 
+    {
         cards = new Card[NO_OF_CARDS];
         int index = 0;
-        for (int suit = Card.NO_OF_SUITS - 1; suit >= 0; suit--) {
-            for (int rank = Card.NO_OF_RANKS - 1; rank >= 0 ; rank--) {
-                cards[index++] = new Card(rank, suit);
-            }
-        }
+        for (int suit = Card.NO_OF_SUITS - 1; suit >= 0; suit--) 
+            for (int rank = Card.NO_OF_RANKS - 1; rank >= 0 ; rank--) 
+                cards[index++] = new Card(rank, suit);        
     }
     
     /**
      * Shuffles the deck.
      */
-    public void shuffle() {
-        for (int oldIndex = 0; oldIndex < NO_OF_CARDS; oldIndex++) {
-            int newIndex = random.nextInt(NO_OF_CARDS);
-            Card tempCard = cards[oldIndex];
-            cards[oldIndex] = cards[newIndex];
-            cards[newIndex] = tempCard;
-        }
-        nextCardIndex = 0;
+    public void shuffle() 
+    {
+    	for(int oldValue = 0; oldValue < NO_OF_CARDS; oldValue++)
+    	{
+    		int newValue = random.nextInt(NO_OF_CARDS);
+    		Card tempCard = cards[oldValue];
+    		cards[oldValue] = cards[newValue];
+    		cards[newValue] = tempCard;
+    	}
+       
+    	nextCard = 0;
     }
 
     /**
      * Resets the deck.
      * 
-     * Does not re-order the cards.
      */
-    public void reset() {
-        nextCardIndex = 0;
+    public void reset() 
+    {
+        nextCard = 0;
     }
     
     /**
      * Deals a single card.
-     *
-     * @return  the card dealt
      */
-    public Card deal() {
-        if (nextCardIndex + 1 >= NO_OF_CARDS) {
-            throw new IllegalStateException("No cards left in deck");
-        }
-        return cards[nextCardIndex++];
+    public Card deal() 
+    {
+        return cards[nextCard++];
     }
     
     /**
-     * Deals multiple cards at once.
-     * 
-     * @param noOfCards
-     *            The number of cards to deal.
-     * 
-     * @return The cards.
-     * 
-     * @throws IllegalArgumentException
-     *             If the number of cards is invalid.
-     * @throws IllegalStateException
-     *             If there are no cards left in the deck.
+     * Deals multiple cards at once or to deal community cards.
      */
-    public ArrayList<Card> deal(int noOfCards) {
-        if (noOfCards < 1) {
-            throw new IllegalArgumentException("noOfCards < 1");
-        }
-        if (nextCardIndex + noOfCards >= NO_OF_CARDS) {
-            throw new IllegalStateException("No cards left in deck");
-        }
-        ArrayList<Card> dealtCards = new ArrayList<Card>();
+    public ArrayList<Card> deal(int noOfCards) 
+    {
+        ArrayList<Card> communityCards = new ArrayList<Card>();
         for (int i = 0; i < noOfCards; i++) {
-            dealtCards.add(cards[nextCardIndex++]);
+        	communityCards.add(cards[nextCard++]);
         }
-        return dealtCards;
+        return communityCards;
     }
     
-    /** {@inheritDoc} */
+    /** to string value of cards */
     @Override
-    public String toString() {
+    public String toString() 
+    {
         StringBuilder sb = new StringBuilder();
-        for (Card card : cards) {
+        for (Card card : cards) 
+        {
             sb.append(card);
             sb.append(' ');
         }

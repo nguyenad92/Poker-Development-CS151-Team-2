@@ -15,7 +15,7 @@ public class Card implements Comparable<Card> {
     /** The number of suits in a deck. */
     public static final int NO_OF_SUITS = 4;
     
-    // The ranks.
+    // The ranks with its integer values.
     public static final int ACE      = 12;
     public static final int KING     = 11;
     public static final int QUEEN    = 10;
@@ -30,18 +30,18 @@ public class Card implements Comparable<Card> {
     public static final int THREE    = 1;
     public static final int DEUCE    = 0;
     
-    // The suits.
+    // The suits with integer values.
     public static final int SPADES   = 3;
     public static final int HEARTS   = 2;
     public static final int CLUBS    = 1;
     public static final int DIAMONDS = 0;
     
-    /** The rank symbols. */
+    //The rank according to string
     public static final String[] RANK_SYMBOLS = {
         "2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A"
     };
     
-    /** The suit symbols. */
+    //The suits according to character
     public static final char[] SUIT_SYMBOLS = { 'd', 'c', 'h', 's' };
 
     /** The rank. */
@@ -51,128 +51,81 @@ public class Card implements Comparable<Card> {
     private final int suit;
     
     /**
-     * Constructor based on rank and suit.
-     * 
-     * @param rank
-     *            The rank.
-     * @param suit
-     *            The suit.
-     * 
-     * @throws IllegalArgumentException
-     *             If the rank or suit is invalid.
+     * Constructor rank and suit based on its integer value.
      */
-    public Card(int rank, int suit) {
-        if (rank < 0 || rank > NO_OF_RANKS - 1) {
-            throw new IllegalArgumentException("Invalid rank");
-        }
-        if (suit < 0 || suit > NO_OF_SUITS - 1) {
-            throw new IllegalArgumentException("Invalid suit");
-        }
+    public Card(int rank, int suit) 
+    {
         this.rank = rank;
         this.suit = suit;
     }
     
-    /**
-     * Constructor based on a string representing a card.
-     * 
-     * The string must consist of a rank character and a suit character, in that
-     * order.
-     * 
-     * @param s
-     *            The string representation of the card, e.g. "As", "Td", "7h".
-     * 
-     * @throws IllegalArgumentException
-     *             If the card string is null or of invalid length, or the rank
-     *             or suit could not be parsed.
-     */
-    public Card(String s) {
-        if (s == null) {
-            throw new IllegalArgumentException("Null string or of invalid length");
-        }
-        s = s.trim();
-        if (s.length() != 2) {
-            throw new IllegalArgumentException("Empty string or invalid length");
-        }
-        
-        // Parse the rank character.
-        String rankSymbol = s.substring(0, 1);
-        char suitSymbol = s.charAt(1);
-        int rank = -1;
-        for (int i = 0; i < Card.NO_OF_RANKS; i++) {
-            if (rankSymbol.equals(RANK_SYMBOLS[i])) {
-                rank = i;
-                break;
-            }
-        }
-        if (rank == -1) {
-            throw new IllegalArgumentException("Unknown rank: " + rankSymbol);
-        }
-        // Parse the suit character.
-        int suit = -1;
-        for (int i = 0; i < Card.NO_OF_SUITS; i++) {
-            if (suitSymbol == SUIT_SYMBOLS[i]) {
-                suit = i;
-                break;
-            }
-        }
-        if (suit == -1) {
-            throw new IllegalArgumentException("Unknown suit: " + suitSymbol);
-        }
-        this.rank = rank;
-        this.suit = suit;
+    public Card(String card)
+    {
+    	String rankSymbol = card.substring(0, 1);
+    	char suitSymbol = card.charAt(1);
+    	
+    	int rank = -1;
+    	
+    	for(int i = 0; i < NO_OF_RANKS; i++)
+    		if(rankSymbol.equals(RANK_SYMBOLS[i]))
+    			rank = i;
+    	
+    	int suit = -1;
+    	
+    	for(int i = 0; i < NO_OF_SUITS; i++)
+    		if(suitSymbol == SUIT_SYMBOLS[i])
+    			suit = i;
+    	
+    	this.rank = rank;
+    	this.suit = suit;
     }
     
-    /**
-     * Returns the suit.
-     * 
-     * @return The suit.
-     */
-    public int getSuit() {
-        return suit;
+    public boolean equals(Object others)
+    {
+    	if(this == others)
+    		return true;
+    	else
+    		return false;
     }
     
-    /**
-     * Returns the rank.
-     * 
-     * @return The rank.
-     */
-    public int getRank() {
-        return rank;
+    public int getRank()
+    {
+    	return rank;
     }
     
-    /** {@inheritDoc} */
-    @Override
-    public int hashCode() {
-        return (rank * NO_OF_SUITS + suit);
+    public int getSuit()
+    {
+    	return suit;
     }
-
-    /** {@inheritDoc} */
-    @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof Card) {
-            return ((Card) obj).hashCode() == hashCode();
-        } else {
-            return false;
-        }
+    
+    //Assign specific value for a single card
+    public int hashCode()
+    {
+    	return (rank*NO_OF_SUITS + suit);
     }
-
-    /** {@inheritDoc} */
-    @Override
-    public int compareTo(Card card) {
+    
+    //Compare two single card by hash codes
+    public int compareTo(Card card) 
+    {
         int thisValue = hashCode();
         int otherValue = card.hashCode();
-        if (thisValue < otherValue) {
+        if (thisValue < otherValue) 
+        {
             return -1;
-        } else if (thisValue > otherValue) {
+        } 
+        else if (thisValue > otherValue) 
+        {
             return 1;
-        } else {
+        } else 
+        {
             return 0;
         }
     }
     
     /** {@inheritDoc} */
     @Override
-    public String toString() {
+    public String toString() 
+    {
         return RANK_SYMBOLS[rank] + SUIT_SYMBOLS[suit];
     }
     
