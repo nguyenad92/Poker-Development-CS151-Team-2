@@ -1,5 +1,6 @@
 package edu.sjsu.cs.cs151.model;
 
+import java.util.ArrayList;
 import java.util.Set;
 
 /**
@@ -8,12 +9,12 @@ import java.util.Set;
  */
 public class PlayerHand {
 //    private edu.sjsu.cs.cs151.model.Player player;
-    Set<Card> cards;
+    ArrayList<Card> cards;
 
     /**
      * Construct a playerHand object
      */
-    public PlayerHand(Set<Card> cards) {
+    public PlayerHand(ArrayList<Card> cards) {
 //        this.player = player;
         this.cards = cards;
     }
@@ -22,7 +23,7 @@ public class PlayerHand {
 //        return player;
 //    }
 
-    public Set<Card> getCard() {
+    public ArrayList<Card> getCard() {
         return cards;
     }
 
