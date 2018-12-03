@@ -13,9 +13,9 @@ public class Controller {
     private Model model;
     private List<Valve> valves = new LinkedList<Valve>();
 
-    public Controller(View view, Model model, BlockingQueue<Message> queue) {
-        this.view = view;
-        this.model = model;
+    public Controller(BlockingQueue<Message> queue) {
+        this.view = new View(this);
+        this.model = new Model();
         this.queue = queue;
     }
 

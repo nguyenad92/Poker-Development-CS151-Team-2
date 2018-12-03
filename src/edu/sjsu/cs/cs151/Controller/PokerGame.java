@@ -13,9 +13,8 @@ public class PokerGame {
     private static Model model;
 
     public static void main(String [] args) throws Exception {
-        view = view.init(queue);
-        model = new Model();
-        Controller game = new Controller(view, model, queue);
+        Controller game = new Controller(queue);
+//        Controller game = new Controller(view, model, queue);
         game.mainLoop();
         view.dispose();
         queue.clear();

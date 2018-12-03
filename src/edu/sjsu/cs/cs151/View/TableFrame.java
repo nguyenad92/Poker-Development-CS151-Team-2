@@ -59,8 +59,7 @@ public class TableFrame extends JPanel {
     /**
      * Constructor.
      */
-    public TableFrame(Controller baseController) {
-        basePannel = new TablePanel(baseController);
+    public TableFrame() {
         JPanel tablePanel = new JPanel();
         tablePanel.setBorder(TABLE_BORDER);
         tablePanel.setBackground(TABLE_COLOR);
@@ -133,62 +132,62 @@ public class TableFrame extends JPanel {
            
         }
     }
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("Poker");
-        frame.setVisible(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(500, 300);
-        JPanel panel = new JPanel();
-        frame.add(panel);
-        JButton checkbutton = new JButton("Check");
-        panel.add(checkbutton);
-        checkbutton.setBounds(0,260,100,40);
-        JButton callbutton = new JButton("Call");
-        panel.add(callbutton);
-        callbutton.setBounds(100,260,100,40);
-        JButton raisebutton = new JButton("Raise");
-        panel.add(raisebutton);
-        raisebutton.setBounds(200,260,100,40);
-        JButton foldbutton = new JButton("Fold");
-        panel.add(foldbutton);
-        foldbutton.setBounds(300,260,100,40);
-        JButton betbutton = new JButton("Bet");
-        panel.add(betbutton);
-        betbutton.setBounds(400,260,100,40);
-        checkbutton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
-        callbutton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
-        raisebutton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
-        foldbutton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
-        betbutton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
-
-        JLabel Pot = new JLabel("", (int) JLabel.LEFT_ALIGNMENT);
-        JLabel CurrentBet = new JLabel("", (int) JLabel.RIGHT_ALIGNMENT);
-    }
+//    public static void main(String[] args) {
+//        JFrame frame = new JFrame("Poker");
+//        frame.setVisible(true);
+//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        frame.setSize(500, 300);
+//        JPanel panel = new JPanel();
+//        frame.add(panel);
+//        JButton checkbutton = new JButton("Check");
+//        panel.add(checkbutton);
+//        checkbutton.setBounds(0,260,100,40);
+//        JButton callbutton = new JButton("Call");
+//        panel.add(callbutton);
+//        callbutton.setBounds(100,260,100,40);
+//        JButton raisebutton = new JButton("Raise");
+//        panel.add(raisebutton);
+//        raisebutton.setBounds(200,260,100,40);
+//        JButton foldbutton = new JButton("Fold");
+//        panel.add(foldbutton);
+//        foldbutton.setBounds(300,260,100,40);
+//        JButton betbutton = new JButton("Bet");
+//        panel.add(betbutton);
+//        betbutton.setBounds(400,260,100,40);
+//        checkbutton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//
+//            }
+//        });
+//        callbutton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//
+//            }
+//        });
+//        raisebutton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//
+//            }
+//        });
+//        foldbutton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//
+//            }
+//        });
+//        betbutton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//
+//            }
+//        });
+//
+//        JLabel Pot = new JLabel("", (int) JLabel.LEFT_ALIGNMENT);
+//        JLabel CurrentBet = new JLabel("", (int) JLabel.RIGHT_ALIGNMENT);
+//    }
     
     public void setMessage(String message) 
     {
