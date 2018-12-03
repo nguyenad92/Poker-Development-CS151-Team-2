@@ -1,3 +1,4 @@
+
 package edu.sjsu.cs.cs151.model;
 
 import java.util.ArrayList;
@@ -48,8 +49,9 @@ public class Player {
 
 	}
 
-	public void payMoney(int money) {
-//		money =
+	public void payMoney(int bet) {
+		money = money - bet;
+		currentBet = currentBet + bet;
 	}
 	/**
 	 * do the action to fold
