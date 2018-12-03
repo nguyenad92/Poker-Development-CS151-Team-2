@@ -1,6 +1,4 @@
-package edu.sjsu.cs.cs151.model;
-
-import java.util.ArrayList;
+import java.util.Set;
 
 /**
  * A class to create player and keep player's information
@@ -11,18 +9,21 @@ public class Player {
 
 	private String id;
 	private String name;
-	private int level, country, age;
+	private int age;
 	private String gender;
-	private int money; 								// total money of edu.sjsu.cs.cs151.model.Player
-	private int currentBet;							// current Bet of the edu.sjsu.cs.cs151.model.Player
+	private int money; 								// total money of Player
+	private int currentBet;							// current Bet of the Player
+	private int level;
+	private int country;
 	private PlayerHand playerHands;
 	private boolean isWin;
 	private int currentPositionOnTable;
+	private Set<Card> cards;
 
 	/**
 	 * Construct a player object
 	 */
-	public Player(String id, String name, int age, String gender, int money, int level, int country, boolean isWin, ArrayList<Card> c) {
+	public Player(String id, String name, int age, String gender, int money, int level, int country, boolean isWin, Set<Card> c) {
 		this.id = id;
 		this.name = name;
 		this.age = age;
@@ -30,9 +31,10 @@ public class Player {
 		this.money = money;
 		this.level = level;
 		this.country = country;
+		cards = c;
 		this.playerHands = new PlayerHand(c);
 		this.isWin = isWin;
-		currentBet = 0;
+		currentBet =0;
 		currentPositionOnTable = 0;
 	}
 
@@ -44,7 +46,7 @@ public class Player {
 	}
 
 	public void payMoney(int money) {
-//		money =
+		money =
 	}
 	/**
 	 * do the action to fold
@@ -68,6 +70,9 @@ public class Player {
 		return id;
 	}
 
+	// getMoney has to be int
+
+
 	public int getMoney() {
 		return money;
 	}
@@ -84,10 +89,9 @@ public class Player {
 	public  void resetHand() {
 		money = 0;
 		currentBet = 0;
-		playerHands.getCard().clear();
-//		setCard().clear();
+		setCard().clear();
 
-		// Clear the edu.sjsu.cs.cs151.model.PlayerHand
+		// Clear the PlayerHand
 	}
 
 	public boolean isWin() {
@@ -98,41 +102,27 @@ public class Player {
 		isWin = win;
 	}
 
-	public void addMoney(int money) {
-		this.money += money;
+	public void setMoney(int money) {
+		int newMoney = getMoney() + money;
+		this.money = newMoney;
 	}
 
-//	public void setMoney(int money) {
-//		int newMoney = getMoney() + money;
-//		this.money = newMoney;
-//	}
-
-	public void addCard(ArrayList<Card> cards) {
-//		for (int i = 0; i < 7; i++) {
-//			Set<edu.sjsu.cs.cs151.model.Card>[i] = playerHands.getCard();
-//		}
-		playerHands.getCard().addAll(cards);
+	public void setCard(Set<Card> cards) {
+		for (int i = 0; i < 7; i++) {
+			Set<Card>[i] = playerHands.getCard();
+		}
 	}
 	
-	public ArrayList<Card> getCard()
+	public Card[] getCards()
 	{
 		return playerHands.getCard();
 	}
 
-	public void setBlind(int blind) {
-		currentBet += blind;
-		money -= blind;
-	}
-
-	public ArrayList<Card> getPlayerHands() {
-		return playerHands.getCard();
+	public void betting(int bet) {
+		currentBet = bet + currentBet;
 	}
 
 	public int getCurrentPositionOnTable() {
 		return currentPositionOnTable;
-	}
-
-	public void setCurrentPositionOnTable(int currentPositionOnTable) {
-		this.currentPositionOnTable = currentPositionOnTable;
 	}
 }
