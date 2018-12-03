@@ -1,10 +1,10 @@
-package gui;
+package edu.sjsu.cs.cs151.view;
 
 import java.net.URL;
 
 import javax.swing.ImageIcon;
 
-import edu.sjsu.cs.cs151.Card;
+import edu.sjsu.cs.cs151.model.*;
 
 /**
  * utility for retrieving cards images

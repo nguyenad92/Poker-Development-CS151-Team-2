@@ -1,3 +1,5 @@
+package edu.sjsu.cs.cs151.model;
+
 import java.util.Set;
 
 /**
@@ -5,7 +7,7 @@ import java.util.Set;
  *
  */
 public class PlayerHand {
-//    private Player player;
+//    private edu.sjsu.cs.cs151.model.Player player;
     Set<Card> cards;
 
     /**
@@ -16,7 +18,7 @@ public class PlayerHand {
         this.cards = cards;
     }
 
-//    public Player getPlayer() {
+//    public edu.sjsu.cs.cs151.model.Player getPlayer() {
 //        return player;
 //    }
 
