@@ -14,7 +14,7 @@ public class PokerGame {
     private int dealerPosition = 0, currentPlayerPosition = 0, bigBlind = 0;
     private RankedHandChecker handComparison;
     private ArrayList<Player> activePlayerList;
-    private Player currentPlayerToAct;
+    private Player currentPlayerToAct, lastBettor;
     private boolean isFlop, isTurn, isRiver;
     private Player actor, dealerPlayer;
     private int bet, raises;
@@ -138,18 +138,9 @@ public class PokerGame {
 
     public void betting() {
     	int playerToAct = playerList.size();
-    	if (table.sizeCard() == 0) {
-    		bet = bigBlind;
-    	}
-    	
-    	else {
-    		currentPlayerPosition = dealerPosition;
-    		bet = 0;
-    	}
-    	
-    	if(playerToAct == 2) {
-    		currentPlayerPosition = dealerPosition;
-    	}
+
+    	bet = bigBlind;
+        currentPlayerPosition = dealerPosition;
     	
     	lastBettor = null;
     	raises = 0;
@@ -157,11 +148,10 @@ public class PokerGame {
     	
     	while(playerToAct > 0) {
     		rotatePosition();
-    		Action action = null;
     		
     		//current player ALL IN
-    		if(actor.isALlIn) {
-    			action = Action.CHECK;
+    		if(actor.isAllIn()) {
+    			table.setCurrentActionStatus("CHECK");
     			playerToAct--;
     		}
     		else {
@@ -176,6 +166,7 @@ public class PokerGame {
     					betIncrement = actor.getMoney();
     				actor.setCurrentBet(actor.getCurrentBet() - betIncrement);
     				table.addMoneyToPot(actor, actor.getCurrentBet());
+    				table.setCurrentActionStatus("CALL");
     			}
     			//current player BET
     			if(table.getCurrentActionStatus().equals("BET")) {
@@ -184,6 +175,7 @@ public class PokerGame {
     				table.addMoneyToPot(actor, actor.getCurrentBet());
     				bet = amount;
     				playerToAct = playerList.size();
+                    table.setCurrentActionStatus("CALL");
     			}
     			//current player RAISE
     			if(table.getCurrentActionStatus().equals("RAISE")) {
@@ -218,13 +210,16 @@ public class PokerGame {
     	updateTable();
     	
     }
+
+    private void nextPlayerToAct() {
+
+    }
     
     //Notify observer that the tabel has been updated
-    private void updateTable()
-    {
+    private void updateTable() {
     	int pot = table.getTotalMoney();
-    	for(Player player: activePlayerList)
-    		player.getObserver().tableUpdated(table, bet, pot);
+    	for(Player player: activePlayerList) {}
+//    		player.getObserver().tableUpdated(table, bet, pot);
     }
 
     public int getCurrentPlayerPosition() {

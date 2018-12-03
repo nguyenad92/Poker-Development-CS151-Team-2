@@ -18,6 +18,7 @@ public class Player {
 	private int currentBet;							// current Bet of the edu.sjsu.cs.cs151.model.Player
 	private PlayerHand playerHands;
 	private int currentPositionOnTable;
+	private boolean allIn;
 
 	/**
 	 * Construct a player object
@@ -107,6 +108,11 @@ public class Player {
 
 	public ArrayList<Card> getPlayerHands() {
 		return playerHands.getCard();
+	}
+
+
+	public boolean isAllIn() {
+		return allIn;
 	}
 
 	public int getCurrentPositionOnTable() {

@@ -5,6 +5,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.net.URL;
+import java.util.ArrayList;
 import javax.swing.ImageIcon;
 
 import javax.swing.Icon;
@@ -21,8 +22,7 @@ import edu.sjsu.cs.cs151.model.*;
  * @author ADNguyen
  *
  */
-public class PlayerFrame extends JPanel
-{
+public class PlayerFrame extends JPanel {
 	
     private static final Icon CARD_FRAME_ICON =
     		IconManager.getIcon("/images/card_frame.png");
@@ -52,8 +52,7 @@ public class PlayerFrame extends JPanel
     
     
     
-    public PlayerFrame(String name, String money)
-    {
+    public PlayerFrame(String name, String money) {
     	playerNameLabel.setText(name);
     	playerMoneyLabel.setText(money);
     	setBorder(BORDER);
@@ -122,14 +121,13 @@ public class PlayerFrame extends JPanel
     	
     }
     
-    public void updateInfo(Player player)
-    {
+    public void updateInfo(Player player) {
     	playerNameLabel.setText( player.getName());
     	playerMoneyLabel.setText("$  " + Integer.toString(player.getMoney()));
-    	Card[] cards = player.getPlayerHands();
+    	ArrayList<Card> cards = player.getPlayerHands();
     	    	
-    	int valueOfCard1 = cards[0].hashCode();
-    	int valueOfCard2 = cards[1].hashCode();
+    	int valueOfCard1 = cards.get(0).hashCode();
+    	int valueOfCard2 = cards.get(1).hashCode();
     	
     	String card1 = String.valueOf(valueOfCard1);
     	String card2 = String.valueOf(valueOfCard2);
@@ -141,13 +139,10 @@ public class PlayerFrame extends JPanel
     	ImageIcon cardImage2 = new ImageIcon(link2);
     	
     	
-    	if(cards.length == 2)
-    	{
+    	if (cards.size() == 2) {
     		card1Label.setIcon(cardImage1);
     		card2Label.setIcon(cardImage2);
-    	}
-    	else
-    	{
+    	} else {
     		card1Label.setIcon(BACK_OF_CARD_ICON);
     		card2Label.setIcon(BACK_OF_CARD_ICON);
     	}

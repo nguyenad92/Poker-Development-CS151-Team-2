@@ -8,12 +8,14 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.BoxLayout;
 import javax.swing.Icon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
@@ -37,13 +39,13 @@ public class TableFrame extends JPanel
     
     private static final String IMAGE_LINK_FORMAT = "/images/card_%s.png";
     
-    private final JLabel betLabel;
+    private final JLabel betLabel = new JLabel();
 
-    private final JLabel potLabel;
+    private final JLabel potLabel = new JLabel();;
 
     private final JLabel[] cardLabels;
 
-    private final JLabel messageLabel;
+    private final JLabel messageLabel = new JLabel();;
     
     private final JPanel amountOfPot;
     
@@ -154,21 +156,39 @@ public class TableFrame extends JPanel
         JButton betbutton = new JButton("Bet");
         panel.add(betbutton);
         betbutton.setBounds(400,260,100,40);
-        checkbutton.addActionListener(new Action());
-        callbutton.addActionListener(new Action());
-        raisebutton.addActionListener(new Action());
-        foldbutton.addActionListener(new Action());
-        betbutton.addActionListener(new Action());
+        checkbutton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+        callbutton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+        raisebutton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+        foldbutton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+        betbutton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
 
         JLabel Pot = new JLabel("", (int) JLabel.LEFT_ALIGNMENT);
         JLabel CurrentBet = new JLabel("", (int) JLabel.RIGHT_ALIGNMENT);
-    }
-
-        static class Action implements ActionListener{
-            public void actionPerformed (ActionEvent e){
-            }
-
-        }
     }
     
     public void setMessage(String message) 
