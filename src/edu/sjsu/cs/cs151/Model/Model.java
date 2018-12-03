@@ -13,26 +13,24 @@ public class Model {
     private int dealerPosition = 0, currentActorPosition = 0, bigBlind = 0;
     private ArrayList<Player> activePlayerList;
     private Player currentActor, dealerPlayer;
-    private boolean isFlop, isTurn, isRiver;
+    private boolean isFlop, isTurn, isRiver, isStarted, isOver, CheckIfWon;
 
     public Model() {
-
-    }
-
-    public Model(Player p1, Player p2, int bigBlind) {
         this.table = new Table();
         this.deckOfCard = new DeckOfCard();
         this.playerList = new ArrayList<>();
         activePlayerList = new ArrayList<>();
         cardDealer = new Dealer(table, deckOfCard, playerList);
-        this.bigBlind = bigBlind;
+        bigBlind = 100;
 
-        // Add Player
+        Player p1 = new Player("Calvin Nguyen", 10000);
+        Player p2 = new Player("Nhung Le", 10000);
         addPlayer(p1);
         addPlayer(p2);
     }
 
-    private void start() {
+    public void start() {
+        isStarted = true;
         dealerPosition = -1;
         currentActorPosition = -1;
 
@@ -45,6 +43,8 @@ public class Model {
             if (activePlayerList.size() > 1) {
                 playHand();
             } else {
+                isOver = true;
+                isStarted = false;
                 break;
             }
         }
@@ -54,7 +54,6 @@ public class Model {
         for (Player player : playerList) {
             player.resetHand();
         }
-        System.out.println("No one is at the table OR others don't have enough money to play");
     }
 
     /**
@@ -273,5 +272,29 @@ public class Model {
             actions.add("FOLD");
         }
         return actions;
+    }
+
+    public boolean isCheckIfWon() {
+        return CheckIfWon;
+    }
+
+    public boolean isFlop() {
+        return isFlop;
+    }
+
+    public boolean isTurn() {
+        return isTurn;
+    }
+
+    public boolean isRiver() {
+        return isRiver;
+    }
+
+    public boolean isStarted() {
+        return isStarted;
+    }
+
+    public boolean isOver() {
+        return isOver;
     }
 }

@@ -19,7 +19,7 @@ import edu.sjsu.cs.cs151.Model.*;
  * @author ADNguyen
  *
  */
-public class PlayerFrame extends JPanel {
+public class PlayerPanel extends JPanel {
 	
 //    private static final Icon CARD_FRAME_ICON =
 //    		IconManager.getIcon("/images/card_frame.png");
@@ -34,24 +34,22 @@ public class PlayerFrame extends JPanel {
     **/
     private static final Border BORDER = new EmptyBorder(10, 10, 10, 10);
     
-    private JLabel playerNameLabel;
+    private JLabel playerNameLabel  = new JLabel();
     
-    private JLabel playerMoneyLabel;
+    private JLabel playerMoneyLabel = new JLabel();
     
-    private JLabel card1Label;
+    private JLabel card1Label = new JLabel();
     
-    private JLabel card2Label;
+    private JLabel card2Label = new JLabel();
     
     //Green table
     public Color TABLE_COLOR = new Color(0, 128, 0);
     //Yellow text color
     public Color TEXT_COLOR = Color.YELLOW;
-    
-    
-    
-    public PlayerFrame(String name, String money) {
+
+    public PlayerPanel(String name, String money) {
     	playerNameLabel.setText(name);
-    	playerMoneyLabel.setText(money);
+    	playerMoneyLabel.setText("$" + money);
     	setBorder(BORDER);
     	setBackground(TABLE_COLOR);
     	
@@ -61,59 +59,59 @@ public class PlayerFrame extends JPanel {
     	
 //    	playerNameLabel = new
     	
-//    	card1Label = new JLabel(CARD_FRAME_ICON);
-//    	card2Label = new JLabel(CARD_FRAME_ICON);
-    	
-    	gcl.gridx = 0;
-    	gcl.gridy = 1;
-    	gcl.gridwidth = 1;
-    	gcl.gridheight = 1;
+    	card1Label = new JLabel("This is card 1");
+    	card2Label = new JLabel("This is card 2");
+
+
+		// Player Info
+    	gcl.gridx = 1000;
+    	gcl.gridy = 100000;
+    	gcl.gridwidth = 10;
+    	gcl.gridheight = 10;
     	
     	gcl.anchor = GridBagConstraints.CENTER;
     	gcl.fill = GridBagConstraints.HORIZONTAL;
-    	
-    	gcl.weightx = 1;
-    	gcl.weighty = 1;
     	
     	add(playerNameLabel, gcl);
-    	
-    	gcl.gridx = 0;
-    	gcl.gridy = 1;
-    	gcl.gridwidth = 1;
-    	gcl.gridheight = 1;
-    	
+
+
+    	// Adding Money
+    	gcl.gridx = 1000;
+    	gcl.gridy = 1000;
+    	gcl.gridwidth = 10;
+    	gcl.gridheight = 10;
+
     	gcl.anchor = GridBagConstraints.CENTER;
     	gcl.fill = GridBagConstraints.HORIZONTAL;
-    	
-    	gcl.weightx = 1;
-    	gcl.weighty = 1;
-    	
+
     	add(playerMoneyLabel, gcl);
-    	
-    	gcl.gridx = 0;
+
+    	// Card 1 Info
+		gcl.gridx = 0;
     	gcl.gridy = 1;
     	gcl.gridwidth = 1;
     	gcl.gridheight = 1;
-    	
+
     	gcl.anchor = GridBagConstraints.CENTER;
     	gcl.fill = GridBagConstraints.HORIZONTAL;
-    	
+
     	gcl.weightx = 1;
     	gcl.weighty = 1;
-    	
+
     	add(card1Label, gcl);
-    	
-    	gcl.gridx = 0;
+
+		// Card 2 Info
+    	gcl.gridx = 1000000;
     	gcl.gridy = 1;
     	gcl.gridwidth = 1;
     	gcl.gridheight = 1;
-    	
+
     	gcl.anchor = GridBagConstraints.CENTER;
     	gcl.fill = GridBagConstraints.HORIZONTAL;
-    	
+
     	gcl.weightx = 1;
     	gcl.weighty = 1;
-    	
+
     	add(card2Label, gcl);
     	
     }

@@ -9,6 +9,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
+import javax.sound.sampled.Line;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -36,17 +37,12 @@ public class TablePanel extends JPanel {
 
     private static final String IMAGE_LINK_FORMAT = "/images/card_%s.png";
 
-    private final JLabel betLabel = new JLabel();
 
-    private final JLabel potLabel = new JLabel();
+    private PlayerPanel playerPanel = new PlayerPanel("Calvin", "1000");
 
     private final JLabel[] cardLabels;
 
     private final JLabel messageLabel = new JLabel();
-
-    private final JPanel amountOfPot;
-
-    private final JPanel amountOfBet;
 
     private Controller baseController;
 
@@ -55,7 +51,7 @@ public class TablePanel extends JPanel {
 
     private static final Border LABEL_BORDER = new LineBorder(Color.BLACK, 1);
 
-    public Color TABLE_COLOR = new Color(0, 128, 0);
+//    public Color TABLE_COLOR = new Color(0, 128, 0);
 
     /**
      * Constructor.
@@ -63,29 +59,20 @@ public class TablePanel extends JPanel {
     public TablePanel(Controller baseController) {
         this.baseController = baseController;
 
-        JPanel tablePanel = new JPanel();
-        tablePanel.setBorder(TABLE_BORDER);
-        tablePanel.setBackground(TABLE_COLOR);
-        tablePanel.setLayout(new GridBagLayout());
+        this.setBorder(TABLE_BORDER);
+        this.setLayout(new GridBagLayout());
         GridBagConstraints gcl = new GridBagConstraints();
 
 
-        amountOfPot = new JPanel();
-        amountOfPot.setLayout(new BorderLayout());
-        amountOfPot.setForeground(Color.YELLOW);
-        setMessage("Pot: 0");
-        amountOfPot.add(getMessage(), BorderLayout.CENTER);
+        /**
+         * Info Pannel
+         */
+        InfoPannel infoPannel = new InfoPannel(baseController);
+        this.add(infoPannel);
 
-        tablePanel.add(amountOfPot);
-
-        amountOfBet = new JPanel();
-        amountOfBet.setLayout(new BorderLayout());
-        amountOfBet.setForeground(Color.YELLOW);
-        setMessage("Bet: 0");
-        amountOfBet.add(getMessage(), BorderLayout.CENTER);
-
-        tablePanel.add(amountOfBet);
-
+        /**
+         * Community Card Pannel
+         */
         // The five card positions.
         JPanel cardPanel = new JPanel();
         cardPanel.setLayout(new GridLayout(1, 5));
@@ -97,41 +84,78 @@ public class TablePanel extends JPanel {
             cardPanel.add(cardLabels[i]);
         }
 
-        tablePanel.add(cardPanel);
-        tablePanel.setPreferredSize(new Dimension(400,270));
+        this.add(cardPanel);
+        this.setPreferredSize(new Dimension(400,270));
+
+
+        /**
+         * Player pannel
+         */
+        this.add(playerPanel);
+
+        /**
+         * Button Pannel
+         */
+        JPanel buttonPanel = new JPanel();
+        this.add(buttonPanel);
+
+        JButton checkbutton = new JButton("Check");
+        buttonPanel.add(checkbutton);
+        checkbutton.setBounds(0,260,100,40);
+
+        JButton callbutton = new JButton("Call");
+        buttonPanel.add(callbutton);
+        callbutton.setBounds(100,260,100,40);
+
+        JButton raisebutton = new JButton("Raise");
+        buttonPanel.add(raisebutton);
+        raisebutton.setBounds(200,260,100,40);
+
+        JButton foldbutton = new JButton("Fold");
+        buttonPanel.add(foldbutton);
+        foldbutton.setBounds(300,260,100,40);
+
+        JButton betbutton = new JButton("Bet");
+        buttonPanel.add(betbutton);
+        betbutton.setBounds(400,260,100,40);
+
+
+        checkbutton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                baseController.getQueue().add("CHECK");
+
+            }
+        });
+        callbutton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+        raisebutton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+        foldbutton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+        betbutton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
 
 //        update(null, 0, 0);
     }
 
-    /**
-     * Updates the current pot, bet, and community cards.
-     * @param cards
-     * @param bet
-     * @param pot
-     */
-    public void update(List<Card> cards, int bet, int pot) {
-        if (bet == 0)
-            betLabel.setText("0");
-        else
-            betLabel.setText("$ " + bet);
 
-        if (pot == 0)
-            potLabel.setText("0");
-        else
-            potLabel.setText("$ " + pot);
-
-        int communityCards = cards.size();
-//        for (int i = 0; i < NO_OF_CARDS; i++) {
-//            if (i < communityCards) {
-//                int cardValue = cards.get(i).hashCode();
-//                String link = String.format(IMAGE_LINK_FORMAT, cardValue);
-//                ImageIcon cardImage = new ImageIcon(link);
-//                cardLabels[i].setIcon(cardImage);
-//            }
-//            else {}
-////                cardLabels[i].setIcon(CARD_FRAME_ICON);
-//        }
-    }
 
     public void setMessage(String message)
     {
@@ -144,3 +168,4 @@ public class TablePanel extends JPanel {
     }
 
 }
+

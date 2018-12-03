@@ -23,14 +23,10 @@ public class Player {
 	/**
 	 * Construct a player object
 	 */
-	public Player(String id, String name, int age, String gender, int money, int level, int country, boolean isWin, ArrayList<Card> c) {
-		this.id = id;
+	public Player(String name, int money) {
 		this.name = name;
-		this.age = age;
-		this.gender = gender;
 		this.money = money;
-		this.level = level;
-		this.country = country;
+		ArrayList<Card> c = new ArrayList<>();
 		this.playerHands = new PlayerHand(this, c);
 		currentBet = 0;
 		currentPositionOnTable = 0;

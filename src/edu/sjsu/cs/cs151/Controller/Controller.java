@@ -1,39 +1,63 @@
 package edu.sjsu.cs.cs151.Controller;
 import edu.sjsu.cs.cs151.Model.Model;
 import edu.sjsu.cs.cs151.View.View;
-import sun.jvm.hotspot.opto.Block;
-import sun.plugin2.message.Message;
 
 import java.util.*;
 import java.util.concurrent.*;
 
 public class Controller {
-    private BlockingQueue<Message> queue;
+    private BlockingQueue<String> queue;
     private View view;
     private Model model;
-    private List<Valve> valves = new LinkedList<Valve>();
+    private List<newGameValve> valves = new LinkedList<>();
+    private static boolean gameInfo;
 
-    public Controller(BlockingQueue<Message> queue) {
-        this.view = new View(this);
-        this.model = new Model();
+    public Controller(BlockingQueue<String> queue) {
         this.queue = queue;
     }
 
     public void mainLoop() throws Exception {
+        this.view = new View(this, queue);
+        this.model = new Model();
         ValveResponse response = ValveResponse.EXECUTED;
-        Message message= null;
+        String message;
 
         while (response != ValveResponse.FINISH) {
             try {
-                message = (Message) queue.take();
+                message = queue.take();
+                for (Valve valve : valves) {
+                    response = valve.execute(message);
+                    if (response != ValveResponse.MISS) break;
+                    else {
+
+                    }
+                }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
+        
+        model.start();
+        gameInfo = model.isStarted();
+    }
 
-        for (Valve valve : valves) {
-            response = valve.execute(message);
-            if (response != ValveResponse.MISS) break;
-        }
+    public View getView() {
+        return view;
+    }
+
+    public Model getModel() {
+        return model;
+    }
+
+    public BlockingQueue<String> getQueue() {
+        return queue;
+    }
+
+    public List<newGameValve> getValves() {
+        return valves;
+    }
+
+    public static boolean getGameInfo() {
+        return gameInfo;
     }
 }

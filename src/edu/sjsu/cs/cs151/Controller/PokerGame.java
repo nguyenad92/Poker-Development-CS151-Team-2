@@ -8,14 +8,15 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class PokerGame {
-    private static BlockingQueue<Message> queue = new LinkedBlockingQueue<Message>();
+    private static BlockingQueue<String> queue = new LinkedBlockingQueue<>();
     private static View view;
     private static Model model;
 
     public static void main(String [] args) throws Exception {
         Controller game = new Controller(queue);
-//        Controller game = new Controller(view, model, queue);
         game.mainLoop();
+        view = game.getView();
+        model = game.getModel();
         view.dispose();
         queue.clear();
     }

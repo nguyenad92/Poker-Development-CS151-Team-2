@@ -1,6 +1,7 @@
 package edu.sjsu.cs.cs151.View;
 
 import edu.sjsu.cs.cs151.Controller.Controller;
+import edu.sjsu.cs.cs151.Model.Player;
 import sun.plugin2.message.Message;
 
 import javax.swing.*;
@@ -8,82 +9,54 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.concurrent.BlockingQueue;
 
+/**
+ * Main Frame of the Game
+ */
 public class View extends JFrame {
 
     private TablePanel basePanel;
-    private BlockingQueue<Message> queue;
+    private BlockingQueue<String> queue;
 
-    public View() {
-
-    }
-
-    public View(Controller baseController) {
+    public View(Controller baseController, BlockingQueue<String> queue) {
         basePanel = new TablePanel(baseController);
-        setupFrame();
-    }
-
-    public View init(BlockingQueue<Message> queue) {
         this.queue = queue;
-        return new View();
+        init();
     }
 
     public void dispose() {
 
     }
 
-    public void setupFrame() {
+    /**
+     *  Setup Frame for the Game
+     */
+    public void init() {
         this.setContentPane(basePanel);
         this.setSize(500, 500);
         this.setVisible(true);
-        JPanel panel = new JPanel();
-        this.add(panel);
-        JButton checkbutton = new JButton("Check");
-        panel.add(checkbutton);
-        checkbutton.setBounds(0,260,100,40);
-        JButton callbutton = new JButton("Call");
-        panel.add(callbutton);
-        callbutton.setBounds(100,260,100,40);
-        JButton raisebutton = new JButton("Raise");
-        panel.add(raisebutton);
-        raisebutton.setBounds(200,260,100,40);
-        JButton foldbutton = new JButton("Fold");
-        panel.add(foldbutton);
-        foldbutton.setBounds(300,260,100,40);
-        JButton betbutton = new JButton("Bet");
-        panel.add(betbutton);
-        betbutton.setBounds(400,260,100,40);
-        checkbutton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
 
+//        this.add(playerPanel);
+
+        JButton buttonNewGame = new JButton("NewGame");
+        buttonNewGame.addActionListener(new NewGameListener());
+        this.add(buttonNewGame);
+    }
+
+    public void change() {
+
+    }
+
+    public void addMessage() {
+
+    }
+
+    public class NewGameListener implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
+            try {
+                queue.put("START");
+            } catch (InterruptedException exception) {
+                exception.printStackTrace();
             }
-        });
-        callbutton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
-        raisebutton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
-        foldbutton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
-        betbutton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
-
-//        JLabel Pot = new JLabel("", (int) JLabel.LEFT_ALIGNMENT);
-//        JLabel CurrentBet = new JLabel("", (int) JLabel.RIGHT_ALIGNMENT);
+        }
     }
 }
