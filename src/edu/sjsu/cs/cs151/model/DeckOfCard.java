@@ -1,6 +1,7 @@
+package edu.sjsu.cs.cs151.model;
+
 import java.security.SecureRandom;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 /**
@@ -87,14 +88,14 @@ public class DeckOfCard {
      * @throws IllegalStateException
      *             If there are no cards left in the deck.
      */
-    public List<Card> deal(int noOfCards) {
+    public ArrayList<Card> deal(int noOfCards) {
         if (noOfCards < 1) {
             throw new IllegalArgumentException("noOfCards < 1");
         }
         if (nextCardIndex + noOfCards >= NO_OF_CARDS) {
             throw new IllegalStateException("No cards left in deck");
         }
-        List<Card> dealtCards = new ArrayList<Card>();
+        ArrayList<Card> dealtCards = new ArrayList<Card>();
         for (int i = 0; i < noOfCards; i++) {
             dealtCards.add(cards[nextCardIndex++]);
         }

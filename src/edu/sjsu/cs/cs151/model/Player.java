@@ -1,4 +1,7 @@
-import java.util.Calendar;
+
+package edu.sjsu.cs.cs151.model;
+
+import java.util.ArrayList;
 import java.util.Set;
 
 /**
@@ -12,14 +15,14 @@ public class Player {
 	private String name;
 	private int age;
 	private String gender;
-	private int money; 								// total money of Player
-	private int currentBet;							// current Bet of the Player
+	private int money; 								// total money of edu.sjsu.cs.cs151.model.Player
+	private int currentBet;							// current Bet of the edu.sjsu.cs.cs151.model.Player
 	private int level;
 	private int country;
 	private PlayerHand playerHands;
 	private boolean isWin;
 	private int currentPositionOnTable;
-	private Set<Card> cards;
+//	private Set<edu.sjsu.cs.cs151.model.Card> cards;
 
 	/**
 	 * Construct a player object
@@ -32,10 +35,10 @@ public class Player {
 		this.money = money;
 		this.level = level;
 		this.country = country;
-		cards = c;
+//		cards = c;
 		this.playerHands = new PlayerHand(c);
 		this.isWin = isWin;
-		currentBet =0;
+		currentBet = 0;
 		currentPositionOnTable = 0;
 	}
 
@@ -72,9 +75,6 @@ public class Player {
 		return id;
 	}
 
-	// getMoney has to be int
-
-
 	public int getMoney() {
 		return money;
 	}
@@ -91,12 +91,10 @@ public class Player {
 	public  void resetHand() {
 		money = 0;
 		currentBet = 0;
-		setCard().clear();
+		playerHands.getCard().clear();
+//		setCard().clear();
 
-		// Clear the PlayerHand
-	}
-
-	private Calendar setCard() {
+		// Clear the edu.sjsu.cs.cs151.model.PlayerHand
 	}
 
 	public boolean isWin() {
@@ -107,22 +105,32 @@ public class Player {
 		isWin = win;
 	}
 
-	public void setMoney(int money) {
-		int newMoney = getMoney() + money;
-		this.money = newMoney;
+	public void addMoney(int money) {
+		this.money += money;
 	}
 
-	public void setCard(Set<Card> cards) {
-		for (int i = 0; i < 7; i++) {
-			Set<Card>[i] = playerHands.getCard();
-		}
+//	public void setMoney(int money) {
+//		int newMoney = getMoney() + money;
+//		this.money = newMoney;
+//	}
+
+	public void addCard(ArrayList<Card> cards) {
+//		for (int i = 0; i < 7; i++) {
+//			Set<edu.sjsu.cs.cs151.model.Card>[i] = playerHands.getCard();
+//		}
+		playerHands.getCard().addAll(cards);
 	}
 
-	public void betting(int bet) {
-		currentBet = bet + currentBet;
+	public void setBlind(int blind) {
+		currentBet += blind;
+		money -= blind;
 	}
 
 	public int getCurrentPositionOnTable() {
 		return currentPositionOnTable;
+	}
+
+	public void setCurrentPositionOnTable(int currentPositionOnTable) {
+		this.currentPositionOnTable = currentPositionOnTable;
 	}
 }
