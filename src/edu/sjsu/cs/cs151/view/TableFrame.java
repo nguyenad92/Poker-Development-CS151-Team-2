@@ -41,12 +41,12 @@ public class TableFrame extends JPanel
     
     private final JLabel betLabel = new JLabel();
 
-    private final JLabel potLabel = new JLabel();;
+    private final JLabel potLabel = new JLabel();
 
     private final JLabel[] cardLabels;
 
-    private final JLabel messageLabel = new JLabel();;
-    
+    private final JLabel messageLabel = new JLabel();
+
     private final JPanel amountOfPot;
     
     private final JPanel amountOfBet;

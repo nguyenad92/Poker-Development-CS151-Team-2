@@ -82,10 +82,7 @@ public class Card implements Comparable<Card> {
     
     public boolean equals(Object others)
     {
-    	if(this == others)
-    		return true;
-    	else
-    		return false;
+        return this == others;
     }
     
     public int getRank()

@@ -7,8 +7,8 @@ import java.util.ArrayList;
  *
  */
 public class PlayerHand {
-    Player player;
-    ArrayList<Card> cards;
+    private Player player;
+    private ArrayList<Card> cards;
 
     /**
      * Construct a playerHand object

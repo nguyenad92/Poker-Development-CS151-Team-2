@@ -18,7 +18,7 @@ public class Player {
 	private int currentBet;							// current Bet of the edu.sjsu.cs.cs151.model.Player
 	private PlayerHand playerHands;
 	private int currentPositionOnTable;
-	private boolean allIn;
+	private String action;
 
 	/**
 	 * Construct a player object
@@ -101,18 +101,20 @@ public class Player {
 		return playerHands.getCard();
 	}
 
-	public void setBlind(int blind) {
-		currentBet += blind;
-		money -= blind;
-	}
-
 	public ArrayList<Card> getPlayerHands() {
 		return playerHands.getCard();
 	}
 
-
 	public boolean isAllIn() {
-		return allIn;
+		return playerHands.getCard().size() >= 2 && money == 0;
+	}
+
+	public String getAction() {
+		return action;
+	}
+
+	public void setAction(String action) {
+		this.action = action;
 	}
 
 	public int getCurrentPositionOnTable() {

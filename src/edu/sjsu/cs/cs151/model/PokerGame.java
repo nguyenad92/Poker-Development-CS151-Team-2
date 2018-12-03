@@ -2,6 +2,8 @@ package edu.sjsu.cs.cs151.model;
 
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+
 /**
  * This edu.sjsu.cs.cs151.model.PokerGame class will be the main loop to generate the game
  */
@@ -11,12 +13,11 @@ public class PokerGame {
     private DeckOfCard deckOfCard;
     private Dealer cardDealer;
     private Table table;
-    private int dealerPosition = 0, currentPlayerPosition = 0, bigBlind = 0;
+    private int dealerPosition = 0, currentActorPosition = 0, bigBlind = 0;
     private RankedHandChecker handComparison;
     private ArrayList<Player> activePlayerList;
-    private Player currentPlayerToAct, lastBettor;
+    private Player currentActor, dealerPlayer, lastBettor;
     private boolean isFlop, isTurn, isRiver;
-    private Player actor, dealerPlayer;
     private int bet, raises;
 
     public PokerGame(Player p1, Player p2, int bigBlind) {
@@ -34,7 +35,7 @@ public class PokerGame {
 
     private void start() {
         dealerPosition = -1;
-        currentPlayerPosition = -1;
+        currentActorPosition = -1;
 
         while (true) {
             for (Player player : playerList) {
@@ -63,30 +64,45 @@ public class PokerGame {
     private void playHand() {
         resetHand();
 
-        // Set BigBlind and Small Blind
-        if (activePlayerList.size() > 1) {
-            rotatePosition();
-        }
+        setBlind("SMALL");
 
-        currentPlayerToAct.setBlind(bigBlind);
+        nextPlayerToAct();
+        setBlind("BIG");
 
-
-        deckOfCard.shuffle();                           // Deck Shuffle
-        cardDealer.dealPreFlopCard();                  // Deck deal Preflop
+        cardDealer.dealPreFlopCard();
         betting();
+        isFlop = true;
 
         while (activePlayerList.size() > 1) {
-            table.setCurrentBet();
+            table.setCurrentBet(0);
             if (isFlop) {
                 cardDealer.dealFlopCard();
+                isFlop = false;
+                isTurn = true;
             } else if (isTurn) {
                 cardDealer.dealTurnCard();
+                isTurn = false;
+                isRiver = true;
             } else if (isRiver) {
                 cardDealer.dealRiverCard();
+                isRiver = false;
+            } else {
+                showDown();
+                break;
             }
             betting();
-            if (isRiver) showDown();
         }
+    }
+
+    private void setBlind(String blind) {
+        int blindAmount;
+        if (blind.equals("BIG")) {
+            blindAmount = bigBlind;
+        } else {
+            blindAmount = bigBlind / 2;
+        }
+        currentActor.payMoney(blindAmount);
+        table.addMoneyToPot(currentActor, blindAmount);
     }
 
     /**
@@ -116,103 +132,115 @@ public class PokerGame {
         dealerPlayer = activePlayerList.get(dealerPosition);
 
         // Determine the first player to act.
-        currentPlayerToAct.setCurrentPositionOnTable(dealerPosition);
-        actor = activePlayerList.get(currentPlayerToAct.getCurrentPositionOnTable());
+        currentActorPosition = dealerPosition;
+        currentActor = activePlayerList.get(currentActorPosition);
     }
 
     public void showDown() {
+        int bestHandValue = -1;
+        Player winner = activePlayerList.get(0);
+        for (Player p : activePlayerList) {
+            p.addCard(table.getCommunityCards());
+            RankedHand rankedHand = new RankedHand(p);
+            if (rankedHand.getRankedHandScore() >= bestHandValue) {
+                bestHandValue = rankedHand.getRankedHandScore();
+                winner = p;
+            }
+        }
 
+        winner.addMoney(table.getTotalMoney());
     }
 
-    public void rotatePosition() {
-        dealerPosition++;
-        int playerPostion = currentPlayerToAct.getCurrentPositionOnTable();
-        playerPostion = (playerPostion + 1) % activePlayerList.size();
-        actor = activePlayerList.get(playerPostion);
-    }
-
-
-    public int getDealerPosition() {
-        return dealerPosition;
+    public void nextPlayerToAct() {
+        currentActorPosition = (currentActorPosition + 1) % activePlayerList.size();
+        currentActor = activePlayerList.get(currentActorPosition);
     }
 
     public void betting() {
-    	int playerToAct = playerList.size();
-
-    	bet = bigBlind;
-        currentPlayerPosition = dealerPosition;
+    	int noOfActivePlayer = activePlayerList.size();
     	
-    	lastBettor = null;
-    	raises = 0;
-    	updateTable();
-    	
-    	while(playerToAct > 0) {
-    		rotatePosition();
-    		
+    	while(noOfActivePlayer > 1) {
+    		nextPlayerToAct();
+            String action = "";
     		//current player ALL IN
-    		if(actor.isAllIn()) {
+    		if(currentActor.isAllIn()) {
+                noOfActivePlayer--;
     			table.setCurrentActionStatus("CHECK");
-    			playerToAct--;
-    		}
-    		else {
-    			playerToAct--;
-    			//current player CHECK
-    			if(table.getCurrentActionStatus().equals("CHECK")) {} //do nothing
+    		} else {
+                noOfActivePlayer--;
 
-    			//current player CALL
-    			if(table.getCurrentActionStatus().equals("CALL")) {
-    				int betIncrement = table.getTotalMoney() + actor.getCurrentBet();
-    				if(betIncrement > actor.getMoney())
-    					betIncrement = actor.getMoney();
-    				actor.setCurrentBet(actor.getCurrentBet() - betIncrement);
-    				table.addMoneyToPot(actor, actor.getCurrentBet());
-    				table.setCurrentActionStatus("CALL");
+                // Need to get actions from the GUI
+//                action = currentActor.getClient.act(bigBlind, bet, getAllowedAction(currentActor));
+                action = currentActor.getAction();
+
+    			//current player CHECK
+    			if (action.equals("CHECK")) {
+                    //do nothing
+                }
+
+    			// current player CALL
+    			else if(action.equals("CALL")) {
+    				int moneyToPay = table.getCurrentBet() - currentActor.getCurrentBet();
+    				if (moneyToPay > currentActor.getMoney()) moneyToPay = currentActor.getMoney();
+
+    				currentActor.payMoney(moneyToPay);
+                    currentActor.setCurrentBet(moneyToPay);
+    				table.addMoneyToPot(currentActor, moneyToPay);
     			}
+
     			//current player BET
-    			if(table.getCurrentActionStatus().equals("BET")) {
-    				int amount = table.getCurrentBet();
-    				actor.payMoney(amount - actor.getCurrentBet());
-    				table.addMoneyToPot(actor, actor.getCurrentBet());
-    				bet = amount;
-    				playerToAct = playerList.size();
-                    table.setCurrentActionStatus("CALL");
+    			else if(action.equals("BET")) {
+                    // Need to set currentBet when user enter amount Input from front end and hit "BET" + set CurrentBet in Player's class
+    				int currentBet = table.getCurrentBet();
+
+    				currentActor.payMoney(currentBet);
+    				currentActor.setCurrentBet(currentBet);
+    				table.addMoneyToPot(currentActor, currentBet);
+
+                    noOfActivePlayer = activePlayerList.size();
     			}
+
     			//current player RAISE
-    			if(table.getCurrentActionStatus().equals("RAISE")) {
-    				int amount = table.getCurrentBet();
+    			else if(action.equals("RAISE")) {
+                    // Need to set currentBet when user enter amount Input from front end and hit "BET" + set CurrentBet in Player's class
+                    int currentBet = table.getCurrentBet();
+
+                    int moneyToPay = currentBet - currentActor.getCurrentBet();
+
+                    if (moneyToPay > currentActor.getMoney()) {
+                        moneyToPay = currentActor.getMoney();
+                    }
+                    currentActor.payMoney(moneyToPay);
+                    currentActor.setCurrentBet(currentBet);
+                    table.addMoneyToPot(currentActor, moneyToPay);
+                    noOfActivePlayer = activePlayerList.size();
     			}
 
     			//current player FOLD
-    			if(table.getCurrentActionStatus().equals("FOLD")) {
-    				actor.resetHand();
-    				activePlayerList.remove(actor);
-    				currentPlayerPosition--;
+    			else if(action.equals("FOLD")) {
+    				currentActor.resetHand();
+    				activePlayerList.remove(currentActor);
+    				currentActorPosition--;
     				if(activePlayerList.size() == 1) {
     					updateTable();
-    					nextPlayerToAct();
     					Player winner = activePlayerList.get(0);
     					int amount = table.getTotalMoney();
     					winner.addMoney(amount);
     					updateTable();
-    					playerToAct = 0;
+    					noOfActivePlayer--;
     				}
     			}
-    				
     		}
-    		if(playerToAct > 0) {
+    		currentActor.setAction(action);
+    		if(noOfActivePlayer > 0) {
     			updateTable();
-    			nextPlayerToAct();
     		}
     	}
+
     	//reset players' bet
-    	for(Player player: activePlayerList)
-    		player.setCurrentBet(0);
+    	for(Player player: activePlayerList) player.setCurrentBet(0);
+
     	updateTable();
-    	
-    }
-
-    private void nextPlayerToAct() {
-
     }
     
     //Notify observer that the tabel has been updated
@@ -222,11 +250,29 @@ public class PokerGame {
 //    		player.getObserver().tableUpdated(table, bet, pot);
     }
 
-    public int getCurrentPlayerPosition() {
-        return currentPlayerPosition;
-    }
 
-    public void getAllowedAction(String action) {
-
+    public ArrayList<String> getAllowedAction(Player player) {
+        ArrayList<String> actions = new ArrayList<>();
+        if (player.isAllIn()) {
+            actions.add("CHECK");
+        } else {
+            // No one Bet
+            if (table.getCurrentBet() == 0) {
+                actions.add("CHECK");
+                actions.add("BET");
+            } else {
+                // Someone Bet
+                if (currentActor.getCurrentBet() < table.getCurrentBet()) {
+                    actions.add("CALL");
+                    actions.add("RAISE");
+                } else {
+                    // Big-blind Action
+                    actions.add("CHECK");
+                    actions.add("RAISE");
+                }
+            }
+            actions.add("FOLD");
+        }
+        return actions;
     }
 }

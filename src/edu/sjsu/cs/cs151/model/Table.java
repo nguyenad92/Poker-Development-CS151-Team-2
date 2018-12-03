@@ -4,40 +4,37 @@ import java.util.*;
 /**
  * A class to show information of players and dealer
  * add and remove players, add money
- * start new game or return cards from the players to the deck
+ * start new game or return communityCards from the players to the deck
  * announce the winner
  */
 public class Table {
 
     private Pot potContribution;
-    private List<Card> cards;
+    private ArrayList<Card> communityCards;
     private String currentActionStatus;
 
     public Table() {
         potContribution = new Pot();
-        cards = new ArrayList<>();
+        communityCards = new ArrayList<>();
     }
     
     
     public void addCard(Card c)
     {
-    	cards.add(c);
+    	communityCards.add(c);
     }
     
-    public Card showCards(int i)
+    public Card showCommunityCards(int i)
     {
-    	return cards.get(i);
+    	return communityCards.get(i);
     }
     
     public int sizeCard()
     {
-    	return cards.size();
+    	return communityCards.size();
     }
 
     public void addMoneyToPot(Player p, int betMoney) {
-        if (betMoney > potContribution.getCurrentBet()) {               // User Raise --> Set new currentBet
-            potContribution.setCurrentBet(betMoney);
-        }
         potContribution.addMoneyToPotContribution(p, betMoney);
     }
 
@@ -51,7 +48,11 @@ public class Table {
 
     public void reset() {
         potContribution.reset();
-        cards.clear();
+        communityCards.clear();
+    }
+
+    public ArrayList<Card> getCommunityCards() {
+        return communityCards;
     }
 
     public int getCurrentBet() {
@@ -66,7 +67,7 @@ public class Table {
         this.currentActionStatus = currentActionStatus;
     }
 
-    public void setCurrentBet() {
-        potContribution.setCurrentBet(0);
+    public void setCurrentBet(int money) {
+        potContribution.setCurrentBet(money);
     }
 }
