@@ -17,7 +17,6 @@ public class Player {
 	private int money; 								// total money of edu.sjsu.cs.cs151.model.Player
 	private int currentBet;							// current Bet of the edu.sjsu.cs.cs151.model.Player
 	private PlayerHand playerHands;
-	private boolean isWin;
 	private int currentPositionOnTable;
 
 	/**
@@ -31,8 +30,7 @@ public class Player {
 		this.money = money;
 		this.level = level;
 		this.country = country;
-		this.playerHands = new PlayerHand(c);
-		this.isWin = isWin;
+		this.playerHands = new PlayerHand(this, c);
 		currentBet = 0;
 		currentPositionOnTable = 0;
 	}
@@ -87,32 +85,13 @@ public class Player {
 		money = 0;
 		currentBet = 0;
 		playerHands.getCard().clear();
-//		setCard().clear();
-
-		// Clear the edu.sjsu.cs.cs151.model.PlayerHand
-	}
-
-	public boolean isWin() {
-		return isWin;
-	}
-
-	public void setWin(boolean win) {
-		isWin = win;
 	}
 
 	public void addMoney(int money) {
 		this.money += money;
 	}
 
-//	public void setMoney(int money) {
-//		int newMoney = getMoney() + money;
-//		this.money = newMoney;
-//	}
-
 	public void addCard(ArrayList<Card> cards) {
-//		for (int i = 0; i < 7; i++) {
-//			Set<edu.sjsu.cs.cs151.model.Card>[i] = playerHands.getCard();
-//		}
 		playerHands.getCard().addAll(cards);
 	}
 	
