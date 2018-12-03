@@ -7,6 +7,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.BoxLayout;
@@ -17,6 +18,7 @@ import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+
 
 import edu.sjsu.cs.cs151.model.*;
 /**
@@ -40,7 +42,7 @@ public class TableFrame extends JPanel
     private final JLabel potLabel;
 
     private final JLabel[] cardLabels;
-    
+
     private final JLabel messageLabel;
     
     private final JPanel amountOfPot;
@@ -128,6 +130,44 @@ public class TableFrame extends JPanel
             else
                 cardLabels[i].setIcon(CARD_FRAME_ICON);
            
+        }
+    }
+    public static void main(String[] args) {
+        JFrame frame = new JFrame("Poker");
+        frame.setVisible(true);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(500, 300);
+        JPanel panel = new JPanel();
+        frame.add(panel);
+        JButton checkbutton = new JButton("Check");
+        panel.add(checkbutton);
+        checkbutton.setBounds(0,260,100,40);
+        JButton callbutton = new JButton("Call");
+        panel.add(callbutton);
+        callbutton.setBounds(100,260,100,40);
+        JButton raisebutton = new JButton("Raise");
+        panel.add(raisebutton);
+        raisebutton.setBounds(200,260,100,40);
+        JButton foldbutton = new JButton("Fold");
+        panel.add(foldbutton);
+        foldbutton.setBounds(300,260,100,40);
+        JButton betbutton = new JButton("Bet");
+        panel.add(betbutton);
+        betbutton.setBounds(400,260,100,40);
+        checkbutton.addActionListener(new Action());
+        callbutton.addActionListener(new Action());
+        raisebutton.addActionListener(new Action());
+        foldbutton.addActionListener(new Action());
+        betbutton.addActionListener(new Action());
+
+        JLabel Pot = new JLabel("", (int) JLabel.LEFT_ALIGNMENT);
+        JLabel CurrentBet = new JLabel("", (int) JLabel.RIGHT_ALIGNMENT);
+    }
+
+        static class Action implements ActionListener{
+            public void actionPerformed (ActionEvent e){
+            }
+
         }
     }
     

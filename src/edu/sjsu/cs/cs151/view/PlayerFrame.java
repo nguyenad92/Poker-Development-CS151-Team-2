@@ -153,6 +153,5 @@ public class PlayerFrame extends JPanel
     	}
     		
     }
-    	
     
 }
