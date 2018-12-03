@@ -62,6 +62,10 @@ public class Table {
         return currentActionStatus;
     }
 
+    public void setCurrentActionStatus(String currentActionStatus) {
+        this.currentActionStatus = currentActionStatus;
+    }
+
     public void setCurrentBet() {
         potContribution.setCurrentBet(0);
     }

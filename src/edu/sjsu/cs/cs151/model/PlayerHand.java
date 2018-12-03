@@ -1,37 +1,28 @@
 package edu.sjsu.cs.cs151.model;
 
-import java.util.Set;
+import java.util.ArrayList;
 
 /**
  * A class to keep cards of players
  *
  */
 public class PlayerHand {
-//    private edu.sjsu.cs.cs151.model.Player player;
-    Set<Card> cards;
+    Player player;
+    ArrayList<Card> cards;
 
     /**
      * Construct a playerHand object
      */
-    public PlayerHand(Set<Card> cards) {
-//        this.player = player;
+    public PlayerHand(Player p, ArrayList<Card> cards) {
+        player = p;
         this.cards = cards;
     }
 
-//    public edu.sjsu.cs.cs151.model.Player getPlayer() {
-//        return player;
-//    }
-
-    public Set<Card> getCard() {
+    public ArrayList<Card> getCard() {
         return cards;
     }
 
-    public void playerHand() {
-
+    public Player getPlayer() {
+        return player;
     }
-
-    public int compareRankHand() {
-        return 0;
-    }
-
 }
