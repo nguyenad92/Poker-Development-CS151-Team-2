@@ -1,10 +1,8 @@
-package edu.sjsu.cs.cs151.model;
+package edu.sjsu.cs.cs151.Model;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-class PokerGameTest {
+class ModelTest {
 
     @Test
     void addPlayer() {

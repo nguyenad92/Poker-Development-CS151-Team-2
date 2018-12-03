@@ -1,4 +1,4 @@
-package edu.sjsu.cs.cs151.model;
+package edu.sjsu.cs.cs151.Model;
 
 /**
  * A generic game card in a deck 

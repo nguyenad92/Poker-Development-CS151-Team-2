@@ -1,4 +1,4 @@
-package edu.sjsu.cs.cs151.model;
+package edu.sjsu.cs.cs151.Model;
 
 /**
  * Type of Hand and the score for each Hand.

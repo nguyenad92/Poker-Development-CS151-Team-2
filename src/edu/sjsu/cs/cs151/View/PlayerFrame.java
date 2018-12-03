@@ -1,20 +1,17 @@
-package edu.sjsu.cs.cs151.view;
+package edu.sjsu.cs.cs151.View;
 
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.net.URL;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 
-import javax.swing.Icon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
-import edu.sjsu.cs.cs151.model.*;
+import edu.sjsu.cs.cs151.Model.*;
  
 
 /**

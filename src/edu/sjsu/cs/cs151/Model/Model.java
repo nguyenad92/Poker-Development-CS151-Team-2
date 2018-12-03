@@ -1,26 +1,25 @@
-package edu.sjsu.cs.cs151.model;
+package edu.sjsu.cs.cs151.Model;
 
-import javax.swing.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
- * This edu.sjsu.cs.cs151.model.PokerGame class will be the main loop to generate the game
+ * This edu.sjsu.cs.cs151.model.Model class will be the main loop to generate the game
  */
-public class PokerGame {
-
+public class Model {
     private ArrayList<Player> playerList;
     private DeckOfCard deckOfCard;
     private Dealer cardDealer;
     private Table table;
     private int dealerPosition = 0, currentActorPosition = 0, bigBlind = 0;
-    private RankedHandChecker handComparison;
     private ArrayList<Player> activePlayerList;
-    private Player currentActor, dealerPlayer, lastBettor;
+    private Player currentActor, dealerPlayer;
     private boolean isFlop, isTurn, isRiver;
-    private int bet, raises;
 
-    public PokerGame(Player p1, Player p2, int bigBlind) {
+    public Model() {
+
+    }
+
+    public Model(Player p1, Player p2, int bigBlind) {
         this.table = new Table();
         this.deckOfCard = new DeckOfCard();
         this.playerList = new ArrayList<>();

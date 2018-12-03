@@ -1,4 +1,4 @@
-package edu.sjsu.cs.cs151.view;
+package edu.sjsu.cs.cs151.View;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -6,13 +6,10 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 import javax.swing.ImageIcon;
-import javax.swing.BoxLayout;
-import javax.swing.Icon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.*;
@@ -22,7 +19,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 
-import edu.sjsu.cs.cs151.model.*;
+import edu.sjsu.cs.cs151.Controller.Controller;
+import edu.sjsu.cs.cs151.Model.*;
 /**
  * it shows community cards, amount of pots, current actions, messages
  * it needs to update informations when pot increases or player do betting,...
@@ -49,6 +47,8 @@ public class TableFrame extends JPanel {
     private final JPanel amountOfPot;
     
     private final JPanel amountOfBet;
+
+    private TablePanel basePannel;
     
     private static final Border TABLE_BORDER 
     	= new CompoundBorder(new LineBorder(Color.BLACK, 1), new EmptyBorder(10, 10, 10, 10));
@@ -59,7 +59,8 @@ public class TableFrame extends JPanel {
     /**
      * Constructor.
      */
-    public TableFrame() {
+    public TableFrame(Controller baseController) {
+        basePannel = new TablePanel(baseController);
         JPanel tablePanel = new JPanel();
         tablePanel.setBorder(TABLE_BORDER);
         tablePanel.setBackground(TABLE_COLOR);
