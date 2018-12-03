@@ -24,11 +24,11 @@ import edu.sjsu.cs.cs151.model.*;
  */
 public class PlayerFrame extends JPanel {
 	
-    private static final Icon CARD_FRAME_ICON =
-    		IconManager.getIcon("/images/card_frame.png");
-
-    private static final Icon BACK_OF_CARD_ICON =
-    		IconManager.getIcon("/images/back_of_card.png");
+//    private static final Icon CARD_FRAME_ICON =
+//    		IconManager.getIcon("/images/card_frame.png");
+//
+//    private static final Icon BACK_OF_CARD_ICON =
+//    		IconManager.getIcon("/images/back_of_card.png");
     
     private static final String IMAGE_LINK_FORMAT = "/images/card_%s.png";
     
@@ -64,8 +64,8 @@ public class PlayerFrame extends JPanel {
     	
 //    	playerNameLabel = new
     	
-    	card1Label = new JLabel(CARD_FRAME_ICON);
-    	card2Label = new JLabel(CARD_FRAME_ICON);
+//    	card1Label = new JLabel(CARD_FRAME_ICON);
+//    	card2Label = new JLabel(CARD_FRAME_ICON);
     	
     	gcl.gridx = 0;
     	gcl.gridy = 1;
@@ -143,8 +143,8 @@ public class PlayerFrame extends JPanel {
     		card1Label.setIcon(cardImage1);
     		card2Label.setIcon(cardImage2);
     	} else {
-    		card1Label.setIcon(BACK_OF_CARD_ICON);
-    		card2Label.setIcon(BACK_OF_CARD_ICON);
+//    		card1Label.setIcon(BACK_OF_CARD_ICON);
+//    		card2Label.setIcon(BACK_OF_CARD_ICON);
     	}
     		
     }

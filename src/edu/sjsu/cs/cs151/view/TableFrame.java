@@ -29,13 +29,12 @@ import edu.sjsu.cs.cs151.model.*;
  * @author ADNguyen
  *
  */
-public class TableFrame extends JPanel
-{
+public class TableFrame extends JPanel {
 	//number of community cards
     private static final int NO_OF_CARDS = 5;
     
-    private static final Icon CARD_FRAME_ICON =
-    		IconManager.getIcon("/images/card_frame.png");
+//    private static final Icon CARD_FRAME_ICON =
+//    		IconManager.getIcon("/images/card_frame.png");
     
     private static final String IMAGE_LINK_FORMAT = "/images/card_%s.png";
     
@@ -60,8 +59,7 @@ public class TableFrame extends JPanel
     /**
      * Constructor.
      */
-    public TableFrame() 
-    {
+    public TableFrame() {
         JPanel tablePanel = new JPanel();
         tablePanel.setBorder(TABLE_BORDER);
         tablePanel.setBackground(TABLE_COLOR);
@@ -91,7 +89,7 @@ public class TableFrame extends JPanel
         
         cardLabels = new JLabel[NO_OF_CARDS];
         for (int i = 0; i < NO_OF_CARDS; i++) {
-            cardLabels[i] = new JLabel(CARD_FRAME_ICON);
+//            cardLabels[i] = new JLabel(CARD_FRAME_ICON);
             cardPanel.add(cardLabels[i]);
         }
         
@@ -129,8 +127,8 @@ public class TableFrame extends JPanel
             	cardLabels[i].setIcon(cardImage);
             }
                 
-            else
-                cardLabels[i].setIcon(CARD_FRAME_ICON);
+            else {}
+//                cardLabels[i].setIcon(CARD_FRAME_ICON);
            
         }
     }
