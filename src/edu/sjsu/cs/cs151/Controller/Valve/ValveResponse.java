@@ -1,4 +1,4 @@
-package edu.sjsu.cs.cs151.Controller;
+package edu.sjsu.cs.cs151.Controller.Valve;
 
 public enum ValveResponse {
     MISS,

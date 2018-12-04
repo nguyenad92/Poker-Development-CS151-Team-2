@@ -3,7 +3,10 @@ package edu.sjsu.cs.cs151.View;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.concurrent.BlockingQueue;
 import javax.swing.ImageIcon;
 
 import javax.swing.JLabel;
@@ -11,6 +14,8 @@ import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
+import edu.sjsu.cs.cs151.Message.Message;
+import edu.sjsu.cs.cs151.Message.NewGameMessage;
 import edu.sjsu.cs.cs151.Model.*;
  
 
@@ -20,7 +25,12 @@ import edu.sjsu.cs.cs151.Model.*;
  *
  */
 public class PlayerPanel extends JPanel {
-	
+
+
+
+	BlockingQueue<Message> queue = null;
+
+
 //    private static final Icon CARD_FRAME_ICON =
 //    		IconManager.getIcon("/images/card_frame.png");
 //
@@ -47,7 +57,10 @@ public class PlayerPanel extends JPanel {
     //Yellow text color
     public Color TEXT_COLOR = Color.YELLOW;
 
-    public PlayerPanel(String name, String money) {
+    public PlayerPanel(BlockingQueue<Message> queue, String name, String money) {
+    	this.queue = queue;
+
+
     	playerNameLabel.setText(name);
     	playerMoneyLabel.setText("$" + money);
     	setBorder(BORDER);
@@ -143,5 +156,16 @@ public class PlayerPanel extends JPanel {
     	}
     		
     }
+
+	private class BetListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent event) {
+			try {
+				queue.put(new NewGameMessage());
+			} catch (InterruptedException exception) {
+				exception.printStackTrace();
+			}
+		}
+	}
     
 }

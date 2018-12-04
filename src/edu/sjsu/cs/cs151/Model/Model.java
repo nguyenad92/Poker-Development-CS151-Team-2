@@ -1,5 +1,7 @@
 package edu.sjsu.cs.cs151.Model;
 
+import edu.sjsu.cs.cs151.Message.Message;
+
 import java.util.ArrayList;
 
 /**
@@ -10,7 +12,7 @@ public class Model {
     private DeckOfCard deckOfCard;
     private Dealer cardDealer;
     private Table table;
-    private int dealerPosition = 0, currentActorPosition = 0, bigBlind = 0;
+    private int dealerPosition = 0, currentActorPosition = 0, bigBlind = 0, noOfActivePlayer;
     private ArrayList<Player> activePlayerList;
     private Player currentActor, dealerPlayer;
     private boolean isFlop, isTurn, isRiver, isStarted, isOver, CheckIfWon;
@@ -29,37 +31,30 @@ public class Model {
         addPlayer(p2);
     }
 
+    /**
+     * First State of the game
+     */
     public void start() {
         isStarted = true;
         dealerPosition = -1;
         currentActorPosition = -1;
 
-        while (true) {
-            for (Player player : playerList) {
-                if (player.getMoney() >= 0) {
-                    activePlayerList.add(player);
-                }
-            }
-            if (activePlayerList.size() > 1) {
-                playHand();
-            } else {
-                isOver = true;
-                isStarted = false;
-                break;
+        for (Player player : playerList) {
+            if (player.getMoney() >= 0) {
+                activePlayerList.add(player);
             }
         }
 
-        // Reset Everything when oneHand is finished or the other loses all Money
-        table.reset();
-        for (Player player : playerList) {
-            player.resetHand();
+        if (activePlayerList.size() > 1) {
+            noOfActivePlayer = activePlayerList.size();
+            dealPreFlop();
+        } else {
+            isOver = true;
+            isStarted = false;
         }
     }
 
-    /**
-     * Before play a new hand, need to reset everything back to original
-     */
-    private void playHand() {
+    private void dealPreFlop() {
         resetHand();
 
         setBlind("SMALL");
@@ -68,6 +63,39 @@ public class Model {
         setBlind("BIG");
 
         cardDealer.dealPreFlopCard();
+        nextPlayerToAct();
+        isFlop = true;
+    }
+
+    public void dealFlop() {
+        cardDealer.dealFlopCard();
+        isFlop = false;
+        isTurn = true;
+    }
+
+    public void endGame() {
+        table.reset();
+        for (Player player : playerList) {
+            player.resetHand();
+        }
+    }
+
+
+
+    /**
+     * Before play a new hand, need to reset everything back to original
+     */
+    private void playHand() {
+        System.out.println("PLAY a game");
+        resetHand();
+
+        setBlind("SMALL");
+
+        nextPlayerToAct();
+        setBlind("BIG");
+
+        cardDealer.dealPreFlopCard();
+
         betting();
         isFlop = true;
 
@@ -92,6 +120,117 @@ public class Model {
         }
     }
 
+    public void betting() {
+    	int noOfActivePlayer = activePlayerList.size();
+
+    	if (noOfActivePlayer > 1) {
+    		nextPlayerToAct();
+            Message action = null;
+
+    		if(currentActor.isAllIn()) {
+                noOfActivePlayer--;
+    			table.setCurrentActionStatus("CHECK");
+    		} else {
+                noOfActivePlayer--;
+
+
+
+
+                // Need to get actions from the GUI
+//                action = currentActor.getClient.act(bigBlind, bet, getAllowedAction(currentActor));
+//                action = currentActor.getAction();
+//                action = new Message("CHECK", 0);
+
+
+    			//current player CHECK
+    			if (action.equals("CHECK")) {
+                    //do nothing
+                }
+
+    			// current player CALL
+    			else if(action.equals("CALL")) {
+
+    			}
+
+    			//current player BET
+    			else if(action.equals("BET")) {
+
+    			}
+
+    			//current player RAISE
+    			else if(action.equals("RAISE")) {
+
+    			}
+
+    			//current player FOLD
+    			else if(action.equals("FOLD")) {
+    				currentActor.resetHand();
+    				activePlayerList.remove(currentActor);
+    				currentActorPosition--;
+    				if(activePlayerList.size() == 1) {
+    					updateTable();
+    					Player winner = activePlayerList.get(0);
+    					int amount = table.getTotalMoney();
+    					winner.addMoney(amount);
+    					updateTable();
+    					noOfActivePlayer--;
+    				}
+    			}
+    		}
+//    		currentActor.setAction(action);
+    		if(noOfActivePlayer > 0) {
+    			updateTable();
+    		}
+    	}
+
+    	//reset players' bet
+    	for(Player player: activePlayerList) player.setCurrentBet(0);
+
+    	updateTable();
+    }
+
+    public void check() {
+        noOfActivePlayer--;
+        nextPlayerToAct();
+    }
+
+    public void call() {
+        noOfActivePlayer--;
+        int moneyToPay = table.getCurrentBet() - currentActor.getCurrentBet();
+        if (moneyToPay > currentActor.getMoney()) moneyToPay = currentActor.getMoney();
+
+        currentActor.payMoney(moneyToPay);
+        currentActor.setCurrentBet(moneyToPay);
+        table.addMoneyToPot(currentActor, moneyToPay);
+    }
+
+    public void bet(int amount) {
+        currentActor.payMoney(amount);
+        currentActor.setCurrentBet(amount);
+        table.addMoneyToPot(currentActor, amount);
+        noOfActivePlayer = activePlayerList.size();
+    }
+
+    public void raise(int amount) {
+        int moneyToPay = amount - currentActor.getCurrentBet();
+
+        if (moneyToPay > currentActor.getMoney()) {
+            moneyToPay = currentActor.getMoney();
+        }
+        currentActor.payMoney(moneyToPay);
+        currentActor.setCurrentBet(amount);
+        table.addMoneyToPot(currentActor, moneyToPay);
+        noOfActivePlayer = activePlayerList.size();
+    }
+
+    
+    //Notify observer that the tabel has been updated
+    private void updateTable() {
+    	int pot = table.getTotalMoney();
+    	for(Player player: activePlayerList) {}
+//    		player.getObserver().tableUpdated(table, bet, pot);
+    }
+
     private void setBlind(String blind) {
         int blindAmount;
         if (blind.equals("BIG")) {
@@ -114,9 +253,10 @@ public class Model {
 
 
     public void resetHand() {
+        System.out.println("RESET a game");
         table.reset();
         deckOfCard.shuffle(); // Shuffle the deck.
-        
+
         activePlayerList.clear();
         for (Player player : playerList) {
             player.resetHand();
@@ -154,100 +294,10 @@ public class Model {
         currentActor = activePlayerList.get(currentActorPosition);
     }
 
-    public void betting() {
-    	int noOfActivePlayer = activePlayerList.size();
-    	
-    	while(noOfActivePlayer > 1) {
-    		nextPlayerToAct();
-            String action = "";
-    		//current player ALL IN
-    		if(currentActor.isAllIn()) {
-                noOfActivePlayer--;
-    			table.setCurrentActionStatus("CHECK");
-    		} else {
-                noOfActivePlayer--;
-
-                // Need to get actions from the GUI
-//                action = currentActor.getClient.act(bigBlind, bet, getAllowedAction(currentActor));
-                action = currentActor.getAction();
-
-    			//current player CHECK
-    			if (action.equals("CHECK")) {
-                    //do nothing
-                }
-
-    			// current player CALL
-    			else if(action.equals("CALL")) {
-    				int moneyToPay = table.getCurrentBet() - currentActor.getCurrentBet();
-    				if (moneyToPay > currentActor.getMoney()) moneyToPay = currentActor.getMoney();
-
-    				currentActor.payMoney(moneyToPay);
-                    currentActor.setCurrentBet(moneyToPay);
-    				table.addMoneyToPot(currentActor, moneyToPay);
-    			}
-
-    			//current player BET
-    			else if(action.equals("BET")) {
-                    // Need to set currentBet when user enter amount Input from front end and hit "BET" + set CurrentBet in Player's class
-    				int currentBet = table.getCurrentBet();
-
-    				currentActor.payMoney(currentBet);
-    				currentActor.setCurrentBet(currentBet);
-    				table.addMoneyToPot(currentActor, currentBet);
-
-                    noOfActivePlayer = activePlayerList.size();
-    			}
-
-    			//current player RAISE
-    			else if(action.equals("RAISE")) {
-                    // Need to set currentBet when user enter amount Input from front end and hit "BET" + set CurrentBet in Player's class
-                    int currentBet = table.getCurrentBet();
-
-                    int moneyToPay = currentBet - currentActor.getCurrentBet();
-
-                    if (moneyToPay > currentActor.getMoney()) {
-                        moneyToPay = currentActor.getMoney();
-                    }
-                    currentActor.payMoney(moneyToPay);
-                    currentActor.setCurrentBet(currentBet);
-                    table.addMoneyToPot(currentActor, moneyToPay);
-                    noOfActivePlayer = activePlayerList.size();
-    			}
-
-    			//current player FOLD
-    			else if(action.equals("FOLD")) {
-    				currentActor.resetHand();
-    				activePlayerList.remove(currentActor);
-    				currentActorPosition--;
-    				if(activePlayerList.size() == 1) {
-    					updateTable();
-    					Player winner = activePlayerList.get(0);
-    					int amount = table.getTotalMoney();
-    					winner.addMoney(amount);
-    					updateTable();
-    					noOfActivePlayer--;
-    				}
-    			}
-    		}
-    		currentActor.setAction(action);
-    		if(noOfActivePlayer > 0) {
-    			updateTable();
-    		}
-    	}
-
-    	//reset players' bet
-    	for(Player player: activePlayerList) player.setCurrentBet(0);
-
-    	updateTable();
+    public void doBET() {
+        // Call method from Valve
+        // set Message
     }
-    
-    //Notify observer that the tabel has been updated
-    private void updateTable() {
-    	int pot = table.getTotalMoney();
-    	for(Player player: activePlayerList) {}
-//    		player.getObserver().tableUpdated(table, bet, pot);
-    }
-
 
     public ArrayList<String> getAllowedAction(Player player) {
         ArrayList<String> actions = new ArrayList<>();
@@ -274,6 +324,8 @@ public class Model {
         return actions;
     }
 
+
+
     public boolean isCheckIfWon() {
         return CheckIfWon;
     }
@@ -296,5 +348,33 @@ public class Model {
 
     public boolean isOver() {
         return isOver;
+    }
+
+    public int getDealerPosition() {
+        return dealerPosition;
+    }
+
+    public int getBigBlind() {
+        return bigBlind;
+    }
+
+    public int getCurrentActorPosition() {
+        return currentActorPosition;
+    }
+
+    public Player getCurrentActor() {
+        return currentActor;
+    }
+
+    public Player getDealerPlayer() {
+        return dealerPlayer;
+    }
+
+    public ArrayList<Player> getActivePlayerList() {
+        return activePlayerList;
+    }
+
+    public ArrayList<Player> getPlayerList() {
+        return playerList;
     }
 }

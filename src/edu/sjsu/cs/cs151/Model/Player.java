@@ -1,6 +1,8 @@
 
 package edu.sjsu.cs.cs151.Model;
 
+import edu.sjsu.cs.cs151.Message.Message;
+
 import java.util.ArrayList;
 
 /**
@@ -18,7 +20,7 @@ public class Player {
 	private int currentBet;							// current Bet of the edu.sjsu.cs.cs151.model.Player
 	private PlayerHand playerHands;
 	private int currentPositionOnTable;
-	private String action;
+	private Message action;
 
 	/**
 	 * Construct a player object
@@ -106,12 +108,12 @@ public class Player {
 	}
 
 	public String getAction() {
-		return action;
+		return action.getName();
 	}
 
-	public void setAction(String action) {
-		this.action = action;
-	}
+//	public void setAction(String action) {
+//		this.action = action;
+//	}
 
 	public int getCurrentPositionOnTable() {
 		return currentPositionOnTable;

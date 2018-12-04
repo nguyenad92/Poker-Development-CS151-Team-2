@@ -1,46 +1,48 @@
 package edu.sjsu.cs.cs151.Controller;
+import edu.sjsu.cs.cs151.Controller.Valve.*;
+import edu.sjsu.cs.cs151.Message.*;
 import edu.sjsu.cs.cs151.Model.Model;
-import edu.sjsu.cs.cs151.View.View;
+import edu.sjsu.cs.cs151.View.*;
 
 import java.util.*;
 import java.util.concurrent.*;
 
 public class Controller {
-    private BlockingQueue<String> queue;
+    private BlockingQueue<Message> queue;
     private View view;
     private Model model;
-    private List<newGameValve> valves = new LinkedList<>();
-    private static boolean gameInfo;
+    private List<Valve> valves = new LinkedList<>();
+    private GameInfo gameInfo;
 
-    public Controller(BlockingQueue<String> queue) {
+    public Controller(View view, Model model, BlockingQueue<Message> queue) {
+        this.view = view;
+        this.model = model;
         this.queue = queue;
+        addAllValves();
     }
 
     public void mainLoop() throws Exception {
-        this.view = new View(this, queue);
-        this.model = new Model();
         ValveResponse response = ValveResponse.EXECUTED;
-        String message;
+        Message message = null;
 
         while (response != ValveResponse.FINISH) {
             try {
                 message = queue.take();
-                for (Valve valve : valves) {
-                    response = valve.execute(message);
-                    if (response != ValveResponse.MISS) break;
-                    else {
-
-                    }
-                }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
-        
-        model.start();
-        gameInfo = model.isStarted();
+        for (Valve valve : valves) {
+            response = valve.execute(model, view, message);
+            if (response != ValveResponse.MISS) break;
+        }
     }
 
+
+    public GameInfo updateGameInfo() {
+        gameInfo = new GameInfo(model);
+        return gameInfo;
+    }
     public View getView() {
         return view;
     }
@@ -49,15 +51,22 @@ public class Controller {
         return model;
     }
 
-    public BlockingQueue<String> getQueue() {
+    public BlockingQueue<Message> getQueue() {
         return queue;
     }
 
-    public List<newGameValve> getValves() {
+    public List<Valve> getValves() {
         return valves;
     }
 
-    public static boolean getGameInfo() {
-        return gameInfo;
+    public void addAllValves() {
+        valves.add(new StartNewGameValve());
+        valves.add(new DoActionCheckValve());
+        valves.add(new DoActionCallValve());
+        valves.add(new DoActionBetValve());
+        valves.add(new DoActionRaiseValve());
+        valves.add(new DoActionFoldValve());
+        valves.add(new DoDealCardValve());
+
     }
 }

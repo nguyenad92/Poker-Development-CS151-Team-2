@@ -72,7 +72,7 @@ public class RankedHandChecker {
     }
 
     private ArrayList<Integer> getRankDistributionList() {
-        ArrayList<Integer> list = new ArrayList<>(Collections.nCopies(13, 0));
+        ArrayList<Integer> list = new ArrayList<>(Collections.nCopies(14, 0));
         for (int i = 0; i < cardToBeAnalyzed.size(); i++) {
             int currValue = list.get(i);
             int currRank = cardToBeAnalyzed.get(i).getRank();

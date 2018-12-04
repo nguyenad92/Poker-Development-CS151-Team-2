@@ -19,8 +19,7 @@ public class InfoPannel extends JPanel {
 
     private Controller baseController;
 
-    public InfoPannel(Controller baseController) {
-        this.baseController = baseController;
+    public InfoPannel() {
 
 //        this.setBorder(TABLE_BORDER);
 //        this.setBackground(TABLE_COLOR);

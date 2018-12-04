@@ -1,6 +1,5 @@
 package edu.sjsu.cs.cs151.View;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -8,9 +7,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
-import javax.sound.sampled.Line;
-import javax.swing.ImageIcon;
+import java.util.concurrent.BlockingQueue;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.*;
@@ -21,7 +18,8 @@ import javax.swing.border.LineBorder;
 
 
 import edu.sjsu.cs.cs151.Controller.Controller;
-import edu.sjsu.cs.cs151.Model.*;
+import edu.sjsu.cs.cs151.Message.Message;
+
 /**
  * it shows community cards, amount of pots, current actions, messages
  * it needs to update informations when pot increases or player do betting,...
@@ -38,13 +36,11 @@ public class TablePanel extends JPanel {
     private static final String IMAGE_LINK_FORMAT = "/images/card_%s.png";
 
 
-    private PlayerPanel playerPanel = new PlayerPanel("Calvin", "1000");
+//    private PlayerPanel playerPanel = new PlayerPanel(queue"Calvin", "1000");
 
     private final JLabel[] cardLabels;
 
     private final JLabel messageLabel = new JLabel();
-
-    private Controller baseController;
 
     private static final Border TABLE_BORDER
             = new CompoundBorder(new LineBorder(Color.BLACK, 1), new EmptyBorder(10, 10, 10, 10));
@@ -56,8 +52,7 @@ public class TablePanel extends JPanel {
     /**
      * Constructor.
      */
-    public TablePanel(Controller baseController) {
-        this.baseController = baseController;
+    public TablePanel() {
 
         this.setBorder(TABLE_BORDER);
         this.setLayout(new GridBagLayout());
@@ -67,7 +62,7 @@ public class TablePanel extends JPanel {
         /**
          * Info Pannel
          */
-        InfoPannel infoPannel = new InfoPannel(baseController);
+        InfoPannel infoPannel = new InfoPannel();
         this.add(infoPannel);
 
         /**
@@ -91,10 +86,10 @@ public class TablePanel extends JPanel {
         /**
          * Player pannel
          */
-        this.add(playerPanel);
+//        this.add(playerPanel);
 
         /**
-         * Button Pannel
+         * ControllPannel
          */
         JPanel buttonPanel = new JPanel();
         this.add(buttonPanel);
@@ -120,13 +115,7 @@ public class TablePanel extends JPanel {
         betbutton.setBounds(400,260,100,40);
 
 
-        checkbutton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                baseController.getQueue().add("CHECK");
-
-            }
-        });
+//        checkbutton.addActionListener(new checkActionListener());
         callbutton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
