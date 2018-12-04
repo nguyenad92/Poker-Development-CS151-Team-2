@@ -7,7 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-public class InfoPannel extends JPanel {
+public class InfoPanel extends JPanel {
 
     private JLabel betLabel;
 
@@ -19,7 +19,7 @@ public class InfoPannel extends JPanel {
 
     private Controller baseController;
 
-    public InfoPannel(Controller baseController) {
+    public InfoPanel(Controller baseController) {
         this.baseController = baseController;
 
 //        this.setBorder(TABLE_BORDER);

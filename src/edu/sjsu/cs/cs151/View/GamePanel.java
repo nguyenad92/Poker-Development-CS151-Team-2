@@ -1,4 +1,4 @@
 package edu.sjsu.cs.cs151.View;
 
-public class GamePannel {
+public class GamePanel {
 }

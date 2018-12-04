@@ -1,4 +1,4 @@
 package edu.sjsu.cs.cs151.Controller.Valve;
 
-public class doActionCallValve {
+public class DoActionCallValve {
 }

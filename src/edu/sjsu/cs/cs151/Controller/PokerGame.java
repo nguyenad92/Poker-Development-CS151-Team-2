@@ -2,7 +2,7 @@ package edu.sjsu.cs.cs151.Controller;
 
 import edu.sjsu.cs.cs151.Model.Model;
 import edu.sjsu.cs.cs151.View.View;
-import sun.plugin2.message.Message;
+//import sun.plugin2.message.Message;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;

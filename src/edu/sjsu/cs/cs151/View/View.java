@@ -2,11 +2,12 @@ package edu.sjsu.cs.cs151.View;
 
 import edu.sjsu.cs.cs151.Controller.Controller;
 import edu.sjsu.cs.cs151.Model.Player;
-import sun.plugin2.message.Message;
+//import sun.plugin2.message.Message;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.util.concurrent.BlockingQueue;
 
 /**
@@ -15,6 +16,7 @@ import java.util.concurrent.BlockingQueue;
 public class View extends JFrame {
 
     private TablePanel basePanel;
+    private PlayerPanel playerPanels;
     private BlockingQueue<String> queue;
 
     public View(Controller baseController, BlockingQueue<String> queue) {
@@ -40,6 +42,12 @@ public class View extends JFrame {
         JButton buttonNewGame = new JButton("NewGame");
         buttonNewGame.addActionListener(new NewGameListener());
         this.add(buttonNewGame);
+    }
+    
+    public void joinedTable(List<Player> players)
+    {
+    	for(Player player : players)
+    		playerPanels.updateInfo(player);
     }
 
     public void change() {

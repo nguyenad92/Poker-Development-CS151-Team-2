@@ -67,7 +67,7 @@ public class TablePanel extends JPanel {
         /**
          * Info Pannel
          */
-        InfoPannel infoPannel = new InfoPannel(baseController);
+        InfoPanel infoPannel = new InfoPanel(baseController);
         this.add(infoPannel);
 
         /**

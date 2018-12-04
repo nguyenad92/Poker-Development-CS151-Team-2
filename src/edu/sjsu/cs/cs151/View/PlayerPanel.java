@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.util.ArrayList;
+
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
 import javax.swing.JLabel;
@@ -21,11 +23,11 @@ import edu.sjsu.cs.cs151.Model.*;
  */
 public class PlayerPanel extends JPanel {
 	
-//    private static final Icon CARD_FRAME_ICON =
-//    		IconManager.getIcon("/images/card_frame.png");
-//
-//    private static final Icon BACK_OF_CARD_ICON =
-//    		IconManager.getIcon("/images/back_of_card.png");
+    private static final Icon CARD_FRAME_ICON =
+    		IconManager.getIcon("/images/card_frame.png");
+
+    private static final Icon BACK_OF_CARD_ICON =
+    		IconManager.getIcon("/images/back_of_card.png");
     
     private static final String IMAGE_LINK_FORMAT = "/images/card_%s.png";
     
@@ -138,8 +140,8 @@ public class PlayerPanel extends JPanel {
     		card1Label.setIcon(cardImage1);
     		card2Label.setIcon(cardImage2);
     	} else {
-//    		card1Label.setIcon(BACK_OF_CARD_ICON);
-//    		card2Label.setIcon(BACK_OF_CARD_ICON);
+    		card1Label.setIcon(BACK_OF_CARD_ICON);
+    		card2Label.setIcon(BACK_OF_CARD_ICON);
     	}
     		
     }
