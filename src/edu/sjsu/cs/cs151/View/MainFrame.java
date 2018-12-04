@@ -37,7 +37,7 @@ public class MainFrame extends JFrame{
 	
 	private void GamePanel() {
 		setFrameDisplay();
-		setCardsPanel();
+		setLocationPanel();
 		setVisible(true);
 		
 	}
@@ -48,7 +48,7 @@ public class MainFrame extends JFrame{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
-	public void setCardsPanel() {
+	public void setLocationPanel() {
 		Container mainContainer = new Container();
 		mainContainer.setLayout(new BorderLayout());
 		
@@ -70,11 +70,20 @@ public class MainFrame extends JFrame{
         }
         
         mainContainer.add(cardPanel, BorderLayout.CENTER);
+        
+
+		playerPanel1 = new PlayerPanel(null);
+		mainContainer.add(playerPanel1, BorderLayout.WEST);
+		
+		playerPanel2 = new PlayerPanel(null);
+		mainContainer.add(playerPanel2, BorderLayout.EAST);
+		
+		
 	}
-//	public void setPlayerPanel(final PlayerPanel mode) {
-//		playerPanel.s
-//		((UserPane) userPane).setUserPanel(mode);
-//	}
+	public void setPlayerPanel() {
+		
+		
+	}
 	
 	
 	
