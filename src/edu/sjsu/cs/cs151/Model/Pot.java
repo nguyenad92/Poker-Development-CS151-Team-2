@@ -19,17 +19,15 @@ public class Pot {
     }
 
     public void addMoneyToPotContribution(Player p, int chip) {
-        int playerCurrentBet;
 
         if (!potContribution.containsKey(p)) {
             potContribution.put(p, chip);
-            playerCurrentBet = chip;
         } else {
             potContribution.put(p, chip + p.getCurrentBet());
-            playerCurrentBet = chip + p.getCurrentBet();
         }
-        currentBet = playerCurrentBet;
-        p.setCurrentBet(playerCurrentBet);
+        currentBet = chip;
+//        p.setCurrentBet(playerCurrentBet);
+        p.payMoney(chip);
         totalMoney += chip;
     }
 

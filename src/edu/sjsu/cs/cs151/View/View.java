@@ -46,10 +46,18 @@ public class View extends JFrame {
         });
     }
 
-    public void setControlPannel(String actionName) {
+    public void setControlPannel(GameInfo gameInfo, String actionName) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                ((MainFrame)mainFrame).setControlPanel(actionName);
+                ((MainFrame)mainFrame).setControlPanel(gameInfo, actionName);
+            }
+        });
+    }
+
+    public void setMessage(GameInfo gameInfo, String messsage) {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                ((MainFrame)mainFrame).setMessage(gameInfo, messsage);
             }
         });
     }

@@ -1,10 +1,17 @@
 package edu.sjsu.cs.cs151.View;
 
+import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.BlockingQueue;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
 
+import edu.sjsu.cs.cs151.Message.Message;
 import edu.sjsu.cs.cs151.Model.Card;
+import sun.jvm.hotspot.opto.Block;
 
 /**
  * Community Card + text that describe the state game action of previous players
@@ -12,37 +19,77 @@ import edu.sjsu.cs.cs151.Model.Card;
 public class GamePanel extends JPanel {
 	
 	private static final int NO_OF_CARDS = 5;
-	
-	private static final JLabel messageLabel = null;
+
+	BlockingQueue<Message> messageQueue;
+
+	private static final Border BORDER = new EmptyBorder(10, 10, 10, 10);
+
+	public Color TABLE_COLOR = new Color(0, 128, 0);
+
+	private JLabel[] cardLabels;
+
+	private JLabel messageLabel = null;
+
+	public GamePanel(BlockingQueue<Message> queue) {
+		messageQueue = queue;
+
+		setBorder(UIConstants.PANEL_BORDER);
+		setBackground(UIConstants.TABLE_COLOR);
+		setLayout(new GridBagLayout());
+		GridBagConstraints gc = new GridBagConstraints();
+
+		// The five card positions.
+		cardLabels = new JLabel[NO_OF_CARDS];
+		for (int i = 0; i < 5; i++) {
+			cardLabels[i] = new JLabel(IconManager.getIcon("/images/card_placeholder.png"));
+			gc.gridx = i;
+			gc.gridy = 2;
+			gc.gridwidth = 1;
+			gc.gridheight = 1;
+			gc.anchor = GridBagConstraints.CENTER;
+			gc.fill = GridBagConstraints.NONE;
+			gc.weightx = 1;
+			gc.weighty = 1;
+			gc.insets = new Insets(5, 1, 5, 1);
+			add(cardLabels[i], gc);
+		}
+
+		// Message label.
+		messageLabel = new JLabel();
+		messageLabel.setForeground(Color.YELLOW);
+		messageLabel.setHorizontalAlignment(JLabel.CENTER);
+		gc.gridx = 0;
+		gc.gridy = 3;
+		gc.gridwidth = 5;
+		gc.gridheight = 1;
+		gc.anchor = GridBagConstraints.CENTER;
+		gc.fill = GridBagConstraints.HORIZONTAL;
+		gc.weightx = 1.0;
+		gc.weighty = 1.0;
+		gc.insets = new Insets(0, 0, 0, 0);
+		add(messageLabel, gc);
+	}
 
     public void setGamePanel(GameInfo gameInfo) {
-    	setCommunityCards(null);
-    	updateMessage("Hello");
-    	
+			addCommunityCards(gameInfo.getCommunityCards());
     }
     
-    public void setCommunityCards(List<Card> cards) {
-    	JLabel[] cardLabels = null;
-    	int communityCards = cards.size();
-    	for (int i = 0; i < NO_OF_CARDS; i++) {
-    		if (i < communityCards) {
-    			int cardValue = cards.get(i).hashCode();
-    			String link = String.format("/images/card_%s.png", cardValue);
-    			ImageIcon cardImage = new ImageIcon(link);
-    			cardLabels[i].setIcon(cardImage);
-    		}
-    		else {
-    			cardLabels[i].setIcon(new ImageIcon("/images/card_frame.png"));
-    		}
-      }
-
-    }
+    public void addCommunityCards(ArrayList<Card> cards) {
+		int noOfCards = cards.size();
+		for (int i = 0; i < NO_OF_CARDS; i++) {
+			if (i < noOfCards) {
+				cardLabels[i].setIcon(IconManager.getCardImage(cards.get(i)));
+			} else {
+				cardLabels[i].setIcon(IconManager.getIcon("/images/card_placeholder.png"));
+			}
+		}
+	}
     
-    public void updateMessage(String message) {
+    public void setMessage(GameInfo gameInfo, String message) {
     	if(message.length() == 0)
     		messageLabel.setText(" ");
     	else
-    		messageLabel.setText("message");
+    		messageLabel.setText(gameInfo.getCurrentPlayer().getName() + " just " + message);
     }
 
 }

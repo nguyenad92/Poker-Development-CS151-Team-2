@@ -18,14 +18,23 @@ public class MainFrame extends JFrame {
 
     private static MainFrame mainFrame;
     private static BlockingQueue<Message> messageQueue;
-    private JPanel topPanel, cardPanel, controlPanel,
-            playerPanel1, playerPanel2, infoPanel;
+    private JPanel cardPanel, controlPanel,
+            playerPanel1, playerPanel2, infoPanel, gamePanel;
+
+    public static final int DEFAULT_HEIGHT = 900;
+
+    public static final int DEFAULT_WIDTH = 600;
+
+    public static final int NO_OF_CARDS = 5;
 
     public MainFrame() {
 
 //        PlayerPannel = new PlayerPanel(messageQueue, "Calvin", 10000);
         controlPanel = new ControlPanel(messageQueue);
         infoPanel = new InfoPanel(messageQueue);
+        gamePanel = new GamePanel(messageQueue);
+        playerPanel1 = new PlayerPanel(messageQueue);
+        playerPanel2 = new PlayerPanel(messageQueue);
         setupFrame();
     }
 
@@ -38,12 +47,12 @@ public class MainFrame extends JFrame {
     }
 
     public void setPlayerPannel(GameInfo gameInfo) {
-        System.out.println("This is Dealer Position: " + gameInfo.getDealerPlayer().getName() + ": " + gameInfo.getDealerPlayer().getMoney());
-        System.out.println("This is Curent Position: " + gameInfo.getCurrentPlayer().getName() + ": " + gameInfo.getCurrentPlayer().getMoney());
+    	((PlayerPanel) playerPanel1).updatePlayer1(gameInfo);
+    	((PlayerPanel) playerPanel2).updatePlayer2(gameInfo);
     }
 
-    public void setControlPanel(String actionName) {
-        ((ControlPanel) controlPanel).setControlPanel(actionName);
+    public void setControlPanel(GameInfo gameInfo, String actionName) {
+        ((ControlPanel) controlPanel).setControlPanel(gameInfo, actionName);
     }
 
     public void setGamePanel(GameInfo gameInfo) {
@@ -54,23 +63,16 @@ public class MainFrame extends JFrame {
         ((InfoPanel) infoPanel).setInfoPannel(gameInfo);
     }
 
+    public void setMessage(GameInfo gameInfo, String message) {
+        ((GamePanel) gamePanel).setMessage(gameInfo, message);
+    }
+
 
     private void setupFrame() {
 //        this.setContentPane(basePanel);
         setLocationPanel();
         setFrameDisplay();
     }
-
-	private static BlockingQueue<Message> queue = null;
-	
-	private static GamePanel gamePanel = null;
-	
-	public static final int DEFAULT_HEIGHT = 900;
-	
-	public static final int DEFAULT_WIDTH = 600;
-	
-	public static final int NO_OF_CARDS = 5;
-
 	
 	public void setFrameDisplay() {
 		setSize(DEFAULT_HEIGHT, DEFAULT_WIDTH);
@@ -81,28 +83,26 @@ public class MainFrame extends JFrame {
 	public void setLocationPanel() {
 		Container mainContainer = this.getContentPane();
 		mainContainer.setLayout(new BorderLayout());
-		
-		topPanel = infoPanel;
-		mainContainer.add(topPanel, BorderLayout.NORTH);
-		
-		cardPanel = new JPanel();
-        cardPanel.setLayout(new GridLayout(1, 5));
-        
-        JLabel[] cardLabels = new JLabel[NO_OF_CARDS];
 
-        for (int i = 0; i < NO_OF_CARDS; i++) {
-            cardLabels[i] = new JLabel("/images/card_frame.png");
-            cardPanel.add(cardLabels[i]);
-        }
-        mainContainer.add(cardPanel, BorderLayout.CENTER);
+		mainContainer.add(infoPanel, BorderLayout.NORTH);
+
+        mainContainer.add(gamePanel, BorderLayout.CENTER);
+		
+//		cardPanel = new JPanel();
+//        cardPanel.setLayout(new GridLayout(1, 5));
         
-//        controlPanel = new ControlPanel(messageQueue);
+//        JLabel[] cardLabels = new JLabel[NO_OF_CARDS];
+
+//        for (int i = 0; i < NO_OF_CARDS; i++) {
+//            cardLabels[i] = new JLabel(new ImageIcon("/edu/sjsj/cs/cs151/images/card_frame.png"));
+//            cardPanel.add(cardLabels[i]);
+//        }
+//        mainContainer.add(cardPanel, BorderLayout.CENTER);
+        
         mainContainer.add(controlPanel, BorderLayout.SOUTH);
 
-		playerPanel1 = new PlayerPanel(messageQueue);
 		mainContainer.add(playerPanel1, BorderLayout.WEST);
 		
-		playerPanel2 = new PlayerPanel(messageQueue);
 		mainContainer.add(playerPanel2, BorderLayout.EAST);
 	}
 }

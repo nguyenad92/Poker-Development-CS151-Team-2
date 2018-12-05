@@ -12,23 +12,29 @@ public class ControlPanel extends JPanel {
     BlockingQueue<Message> messageQueue;
 
     /** The Raise button. */
-    private final JButton newGameButton;
+    private JButton newGameButton;
 
     /** The Check button. */
-    private final JButton checkButton;
+    private JButton checkButton;
 
     /** The Call button. */
-    private final JButton callButton;
+    private JButton callButton;
 
     /** The Bet button. */
-    private final JButton betButton;
+    private JButton betButton;
 
     /** The Raise button. */
-    private final JButton raiseButton;
+    private JButton raiseButton;
 
     /** The Fold button. */
-    private final JButton foldButton;
+    private JButton foldButton;
 
+    /** The ALL IN button. */
+    private JButton allInButton;
+
+    private JTextField betAmount;
+
+    private GameInfo gameInfo;
 
 
     public ControlPanel(BlockingQueue<Message> queue) {
@@ -39,29 +45,53 @@ public class ControlPanel extends JPanel {
         betButton = createActionButton("BET");
         raiseButton = createActionButton("RAISE");
         foldButton = createActionButton("FOLD");
+//        allInButton = createActionButton("ALL_IN");
+        betAmount = new JTextField(15);
 
-        addButton();
-    }
-
-    public void setControlPanel(String actionName) {
-        if (actionName.equals("CHECK")) {
-            // Add Check, Bet, Fold
-        } else if (actionName.equals("CALL")) {
-            // Add Fold, Call, Raise
-        } else if (actionName.equals("BET") || actionName.equals("RAISE")) {
-            // Add Fold, Call, Raise
-        } else if (actionName.equals("FOLD")) {
-            // Add Check, Bet, Fold
-        }
-    }
-
-    private void addButton() {
         add(newGameButton);
-        add(checkButton);
-        add(callButton);
-        add(betButton);
-        add(raiseButton);
-        add(foldButton);
+    }
+
+    public void setControlPanel(GameInfo gameInfo, String actionName) {
+        this.gameInfo = gameInfo;
+        clearAllButton();
+        if (actionName.equals("NEW_GAME") && gameInfo.isOver()) {
+            add(newGameButton);
+        }
+        else if (actionName.equals("NEW_GAME") || (actionName.equals("FOLD"))) {
+            add(callButton);
+            add(raiseButton);
+        } else if (actionName.equals("CHECK")) {
+
+            add(checkButton);
+            add(betButton);
+//            if (gameInfo.getCurrentPlayer().getMoney() <= gameInfo.getBigBlind()) {
+//                add(allInButton);
+//            }
+        } else if(actionName.equals("CALL")) {
+            add(checkButton);
+            add(raiseButton);
+        } else if (actionName.equals("BET") || actionName.equals("RAISE") || actionName.equals("ALL_IN")) {
+            add(foldButton);
+            add(callButton);
+            add(raiseButton);
+//            if (gameInfo.getCurrentPlayer().getMoney() <= gameInfo.getBigBlind()) {
+//                add(allInButton);
+//            }
+        }
+        betAmount.setText(Integer.toString(gameInfo.getBigBlind()));
+
+        add(betAmount);
+    }
+
+    private void clearAllButton() {
+        remove(newGameButton);
+        remove(checkButton);
+        remove(betButton);
+        remove(raiseButton);
+        remove(callButton);
+        remove(foldButton);
+//        remove(allInButton);
+        remove(betAmount);
     }
 
     private JButton createActionButton(String buttonName) {
@@ -74,6 +104,7 @@ public class ControlPanel extends JPanel {
         if (buttonName.equals("RAISE")) button.addActionListener(new raiseActionListener());
         if (buttonName.equals("FOLD")) button.addActionListener(new foldActionListener());
         if (buttonName.equals("BET")) button.addActionListener(new betActionListener());
+        if (buttonName.equals("ALL_IN")) button.addActionListener(new allInActionListener());
         return button;
     }
 
@@ -81,6 +112,16 @@ public class ControlPanel extends JPanel {
         public void actionPerformed(ActionEvent event) {
             try {
                 messageQueue.put(new NewGameMessage());
+            } catch (InterruptedException exception) {
+                exception.printStackTrace();
+            }
+        }
+    }
+
+    public class allInActionListener implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
+            try {
+                messageQueue.put(new AllInactionMessage(gameInfo.getCurrentPlayer().getMoney()));
             } catch (InterruptedException exception) {
                 exception.printStackTrace();
             }
@@ -100,7 +141,7 @@ public class ControlPanel extends JPanel {
     public class callActionListener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
             try {
-                messageQueue.put(new ActionCallMessage(1000));
+                messageQueue.put(new ActionCallMessage(gameInfo.getCurrentBet()));
             } catch (InterruptedException exception) {
                 exception.printStackTrace();
             }
@@ -110,7 +151,7 @@ public class ControlPanel extends JPanel {
     public class betActionListener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
             try {
-                messageQueue.put(new ActionBetMessage(1000));
+                messageQueue.put(new ActionBetMessage(Integer.parseInt(betAmount.getText())));
             } catch (InterruptedException exception) {
                 exception.printStackTrace();
             }
@@ -120,7 +161,7 @@ public class ControlPanel extends JPanel {
     public class raiseActionListener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
             try {
-                messageQueue.put(new ActionRaiseMessage(1500));
+                messageQueue.put(new ActionRaiseMessage(Integer.parseInt(betAmount.getText())));
             } catch (InterruptedException exception) {
                 exception.printStackTrace();
             }
