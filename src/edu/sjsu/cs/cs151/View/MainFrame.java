@@ -18,7 +18,7 @@ public class MainFrame extends JFrame {
 
     private static MainFrame mainFrame;
     private static BlockingQueue<Message> messageQueue;
-    private JPanel topPanel, cardPanel, controlPanel,
+    private JPanel cardPanel, controlPanel,
             playerPanel1, playerPanel2, infoPanel;
 
     public MainFrame() {
@@ -26,6 +26,8 @@ public class MainFrame extends JFrame {
 //        PlayerPannel = new PlayerPanel(messageQueue, "Calvin", 10000);
         controlPanel = new ControlPanel(messageQueue);
         infoPanel = new InfoPanel(messageQueue);
+        playerPanel1 = new PlayerPanel(messageQueue);
+        playerPanel2 = new PlayerPanel(messageQueue);
         setupFrame();
     }
 
@@ -37,9 +39,9 @@ public class MainFrame extends JFrame {
         return mainFrame;
     }
 
-    public void setPlayerPannel(GameInfo gameInfo) {
-        System.out.println("This is Dealer Position: " + gameInfo.getDealerPlayer().getName() + ": " + gameInfo.getDealerPlayer().getMoney());
-        System.out.println("This is Curent Position: " + gameInfo.getCurrentPlayer().getName() + ": " + gameInfo.getCurrentPlayer().getMoney());
+    public void setPlayerPannel(GameInfo playerInfo) {
+    	((PlayerPanel) playerPanel1).updatePlayer1(playerInfo);
+    	((PlayerPanel) playerPanel2).updatePlayer2(playerInfo);
     }
 
     public void setControlPanel(String actionName) {
@@ -81,9 +83,8 @@ public class MainFrame extends JFrame {
 	public void setLocationPanel() {
 		Container mainContainer = this.getContentPane();
 		mainContainer.setLayout(new BorderLayout());
-		
-		topPanel = infoPanel;
-		mainContainer.add(topPanel, BorderLayout.NORTH);
+
+		mainContainer.add(infoPanel, BorderLayout.NORTH);
 		
 		cardPanel = new JPanel();
         cardPanel.setLayout(new GridLayout(1, 5));
@@ -91,18 +92,15 @@ public class MainFrame extends JFrame {
         JLabel[] cardLabels = new JLabel[NO_OF_CARDS];
 
         for (int i = 0; i < NO_OF_CARDS; i++) {
-            cardLabels[i] = new JLabel("/images/card_frame.png");
+            cardLabels[i] = new JLabel(new ImageIcon("/edu/sjsj/cs/cs151/images/card_frame.png"));
             cardPanel.add(cardLabels[i]);
         }
         mainContainer.add(cardPanel, BorderLayout.CENTER);
         
-//        controlPanel = new ControlPanel(messageQueue);
         mainContainer.add(controlPanel, BorderLayout.SOUTH);
 
-		playerPanel1 = new PlayerPanel(messageQueue);
 		mainContainer.add(playerPanel1, BorderLayout.WEST);
 		
-		playerPanel2 = new PlayerPanel(messageQueue);
 		mainContainer.add(playerPanel2, BorderLayout.EAST);
 	}
 }

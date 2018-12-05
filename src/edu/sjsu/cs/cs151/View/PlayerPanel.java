@@ -1,6 +1,8 @@
 package edu.sjsu.cs.cs151.View;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -60,6 +62,8 @@ public class PlayerPanel extends JPanel {
     public Color TABLE_COLOR = new Color(0, 128, 0);
     /** Set the color of text in player frame to yellow */
     public Color TEXT_COLOR = Color.YELLOW;
+    
+    private JPanel player1Panel, player2Panel;
 
     /**
      * The panel show playeys' information included cards, name, and money 
@@ -85,7 +89,7 @@ public class PlayerPanel extends JPanel {
 
 
 		// Player Info
-    	gcl.gridx = 100;
+    	gcl.gridx = 10;
     	gcl.gridy = 100;
     	gcl.gridwidth = 10;
     	gcl.gridheight = 10;
@@ -97,8 +101,8 @@ public class PlayerPanel extends JPanel {
 
 
     	// Adding Money
-    	gcl.gridx = 10;
-    	gcl.gridy = 100;
+    	gcl.gridx = 100;
+    	gcl.gridy = 10000;
     	gcl.gridwidth = 10;
     	gcl.gridheight = 10;
 
@@ -135,35 +139,71 @@ public class PlayerPanel extends JPanel {
 
     	add(card2Label, gcl);
     	
+//    	updatePlayer1(null);
+//    	updatePlayer2(null);
+    	
     }
     /**
      * The method that updates players' information
      */
-    public void updateInfo() {
-    	playerNameLabel.setText(" ");
-    	playerMoneyLabel.setText("$  ");
-//    	ArrayList<Card> cards = player.getPlayerHands();
+    public void updatePlayer1(final GameInfo gameInfo) {
+    	
+		Player player = gameInfo.getPlayerList().get(0);
+		playerNameLabel.setText(player.getName());
+		playerMoneyLabel.setText("$ " + player.getMoney());
     	    	
-//    	int valueOfCard1 = cards.get(0).hashCode();
-//    	int valueOfCard2 = cards.get(1).hashCode();
+    	ArrayList<Card> cards = player.getPlayerHands();
     	
-//    	String card1 = String.valueOf(valueOfCard1);
-//    	String card2 = String.valueOf(valueOfCard2);
+        int valueOfCard1 = cards.get(0).hashCode();
+        int valueOfCard2 = cards.get(1).hashCode();
+
+        String card1 = String.valueOf(valueOfCard1);
+        String card2 = String.valueOf(valueOfCard2);
+
+        String link1 = String.format(IMAGE_LINK_FORMAT, card1);
+        String link2 = String.format(IMAGE_LINK_FORMAT, card2);
+
+        ImageIcon cardImage1 = new ImageIcon(link1);
+        ImageIcon cardImage2 = new ImageIcon(link2);
+
+
+        if (cards.size() == 2) {
+            card1Label.setIcon(cardImage1);
+            card2Label.setIcon(cardImage2);
+        } else {
+            card1Label.setIcon(new ImageIcon("/images/back_of_card.png"));
+            card2Label.setIcon(new ImageIcon("/images/back_of_card.png"));
+        }
+    }
+    
+ public void updatePlayer2(final GameInfo gameInfo) {
     	
-//    	String link1 = String.format(IMAGE_LINK_FORMAT, card1);
-//    	String link2 = String.format(IMAGE_LINK_FORMAT, card2);
+		Player player = gameInfo.getPlayerList().get(1);
+		playerNameLabel.setText(player.getName());
+		playerMoneyLabel.setText("$ " + player.getMoney());
+    	    	
+    	ArrayList<Card> cards = player.getPlayerHands();
     	
-//    	ImageIcon cardImage1 = new ImageIcon(link1);
-//    	ImageIcon cardImage2 = new ImageIcon(link2);
-    	
-    	
-//    	if (cards.size() == 2) {
-//    		card1Label.setIcon(cardImage1);
-//    		card2Label.setIcon(cardImage2);
-//    	} else {
-//    		card1Label.setIcon(new ImageIcon("/images/back_of_card.png"));
-//    		card2Label.setIcon(new ImageIcon("/images/back_of_card.png"));
-//    	}
+        int valueOfCard1 = cards.get(0).hashCode();
+        int valueOfCard2 = cards.get(1).hashCode();
+
+        String card1 = String.valueOf(valueOfCard1);
+        String card2 = String.valueOf(valueOfCard2);
+
+        String link1 = String.format(IMAGE_LINK_FORMAT, card1);
+        String link2 = String.format(IMAGE_LINK_FORMAT, card2);
+
+        ImageIcon cardImage1 = new ImageIcon(link1);
+        ImageIcon cardImage2 = new ImageIcon(link2);
+
+
+        if (cards.size() == 2) {
+            card1Label.setIcon(IconManager.getCardImage(cards.get(0)));
+            card2Label.setIcon(IconManager.getCardImage(cards.get(1)));
+        } else {
+            card1Label.setIcon(IconManager.getCardImage(cards.get(0)));
+            card2Label.setIcon(IconManager.getCardImage(cards.get(1)));
+        }
     }
 
 	public void setPlayerPanel(GameInfo gameInfo) {
