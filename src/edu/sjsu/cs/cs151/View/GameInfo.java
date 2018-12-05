@@ -9,7 +9,7 @@ public class GameInfo {
     private boolean isStarted, isOver, isFlop, isTurn, isRiver;
     private int dealerPosition, currentActorPosition, bigBlind;
     private Player currentPlayer, dealerPlayer;
-    private ArrayList<Player> playersList;
+    private ArrayList<Player> playerList;
     private int currentBet, potTotal;
     
     public GameInfo(Model model) {
@@ -18,7 +18,7 @@ public class GameInfo {
         this.dealerPosition = model.getDealerPosition();
         this.currentActorPosition = model.getCurrentActorPosition();
         this.currentPlayer = model.getCurrentActor();
-        playersList = model.getActivePlayerList();
+        this.playerList = model.getActivePlayerList();
         currentBet = model.getTable().getCurrentBet();
         potTotal = model.getTable().getTotalMoney();
         dealerPlayer = model.getDealerPlayer();
@@ -29,8 +29,8 @@ public class GameInfo {
         }
     }
     
-    public ArrayList<Player> getPlayerList() {
-    	return playersList;
+    public ArrayList<Player> getPlayerList(){
+    	return playerList;
     }
 
 

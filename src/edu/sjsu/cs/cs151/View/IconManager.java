@@ -8,11 +8,11 @@ import edu.sjsu.cs.cs151.Model.*;
 
 /**
  * utility for retrieving cards images
- * @author ADNguyen
+ * @author Oscar Stigter
  *
  */
 public abstract class IconManager {
-	private static final String IMAGE_PATH= "/images/card_%s.png";
+	private static final String IMAGE_PATH = "/src/edu/sjsu/cs/cs151/images/card_%s.png";
 
     /**
      * Returns the image of a specific card.
