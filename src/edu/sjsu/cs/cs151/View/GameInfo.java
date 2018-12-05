@@ -2,22 +2,27 @@ package edu.sjsu.cs.cs151.View;
 
 import edu.sjsu.cs.cs151.Model.*;
 
+import java.util.ArrayList;
+
 public class GameInfo {
 
     private boolean isStarted, isOver, isFlop, isTurn, isRiver;
     private int dealerPosition, currentActorPosition, bigBlind;
     private Player currentPlayer, dealerPlayer;
     private int currentBet, potTotal;
+    private ArrayList<Card> communityCards = new ArrayList<>();
     
     public GameInfo(Model model) {
-        this.isStarted = model.isStarted();
-        this.isOver = model.isOver();
-        this.dealerPosition = model.getDealerPosition();
-        this.currentActorPosition = model.getCurrentActorPosition();
-        this.currentPlayer = model.getCurrentActor();
+        isStarted = model.isStarted();
+        isOver = model.isOver();
+        dealerPosition = model.getDealerPosition();
+        currentActorPosition = model.getCurrentActorPosition();
+        currentPlayer = model.getCurrentActor();
         currentBet = model.getTable().getCurrentBet();
         potTotal = model.getTable().getTotalMoney();
         dealerPlayer = model.getDealerPlayer();
+        communityCards = model.getTable().getCommunityCards();
+
 //        this.currPot = model.getPot();
         if (isStarted) {
 //            this.dealer= model.getDealer().iterator();

@@ -141,7 +141,6 @@ public class Controller {
             System.out.println("Player " + model.getCurrentActor().getName() + " just check");
             model.check();
 
-
             model.dealCardByStage();
 
             view.setPlayerPannel(updateGameInfo());

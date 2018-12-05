@@ -22,10 +22,10 @@ public class Model {
         this.deckOfCard = new DeckOfCard();
         this.playerList = new ArrayList<>();
         activePlayerList = new ArrayList<>();
-        bigBlind = 100;
+        bigBlind = 2000;
 
-        Player p1 = new Player("Calvin Nguyen", 10000);
-        Player p2 = new Player("Nhung Le", 10000);
+        Player p1 = new Player("Calvin Nguyen", 4000);
+        Player p2 = new Player("Nhung Le", 4000);
         addPlayer(p1);
         addPlayer(p2);
 
@@ -41,6 +41,7 @@ public class Model {
 
         isStarted = true;
         isEndGame = false;
+
         resetHand();
     }
 
@@ -68,7 +69,6 @@ public class Model {
     public void dealFlop() {
         noOfActivePlayer = activePlayerList.size();
         cardDealer.dealFlopCard();
-        System.out.println(table.getCommunityCards().toString());
         nextPlayerToAct();
     }
     
@@ -87,7 +87,6 @@ public class Model {
     public void dealRiver() {
         noOfActivePlayer = activePlayerList.size();
         cardDealer.dealRiverCard();
-        System.out.println(table.getCommunityCards().toString());
         nextPlayerToAct();
     }
 
@@ -153,6 +152,7 @@ public class Model {
         } else {
             blindAmount = bigBlind / 2;
         }
+        if (blindAmount > currentActor.getMoney()) blindAmount = currentActor.getMoney();
         currentActor.payMoney(blindAmount);
         table.addMoneyToPot(currentActor, blindAmount);
     }
@@ -174,12 +174,14 @@ public class Model {
         activePlayerList.clear();
         for (Player player : playerList) {
             player.resetHand();
+            System.out.println(player.getMoney());
             if (player.getMoney() >= 0) {
                 activePlayerList.add(player);
             }
         }
 
         if (activePlayerList.size() <= 1) {
+            System.out.println("WHAT");
             isEndGame = true;
             isStarted = false;
         } else {
@@ -194,22 +196,31 @@ public class Model {
     }
 
     public void checkWinner() {
+        noOfActivePlayer--;
         int bestHandValue = -1;
         isShowDown = false;
 
         Player winner = activePlayerList.get(0);
 
         for (Player p : activePlayerList) {
-            System.out.println(p.getName());
-            System.out.println(table.getCommunityCards().toString());
             p.addCard(table.getCommunityCards());
+
+            System.out.println("Card of this player: " + p.getPlayerHands().toString());
             RankedHand rankedHand = new RankedHand(p);
+            System.out.println(p.getName() + " : score = " +  rankedHand.getRankedHandScore() +
+                    " type Hand: " + rankedHand.getRankedHandType().getHandType());
+            System.out.println();
+
             if (rankedHand.getRankedHandScore() >= bestHandValue) {
                 bestHandValue = rankedHand.getRankedHandScore();
                 winner = p;
             }
         }
+        System.out.println("Before adding money: " + winner.getName() + " " + winner.getMoney());
         winner.addMoney(table.getTotalMoney());
+        System.out.println("Winner is: " + winner.getName() + " " + winner.getMoney());
+        resetHand();
+
     }
 
     public void nextPlayerToAct() {
@@ -297,16 +308,18 @@ public class Model {
     public boolean isShowDown() {
         return isShowDown && noOfActivePlayer == 0;
     }
-    
+
     public void dealCardByStage() {
-        if (isShowDown() && !isEndGame()) {
+        if (isShowDown()) {
             checkWinner();
-            resetHand();
-            dealPreFlop();
+            if (!isEndGame) dealPreFlop();
+            else {
+                isEndGame = false;
+                System.out.println("GAME OVER!");
+            }
         } else if (isFlop()) {
             dealFlop();
             nextPlayerToAct();
-//            System.out.println("Community Card: " + table.getCommunityCards().size());
             isFlop = false;
             isTurn = true;
         } else if (isTurn()) {
@@ -314,14 +327,12 @@ public class Model {
             nextPlayerToAct();
             isTurn = false;
             isRiver = true;
-//            System.out.println("Community Card: " + table.getCommunityCards().size());
         } else if (isRiver()) {
             dealRiver();
             nextPlayerToAct();
             isRiver = false;
             isShowDown = true;
-//            System.out.println("Community Card: " + table.getCommunityCards().size());
-        } else {
+        } else if (isEndGame()) {
             start();
         }
     }
@@ -352,18 +363,16 @@ public class Model {
         public void dealFlopCard() {
             System.out.println("Flop round");
             table.addCard(deckOfCard.deal(3));
-//            System.out.println("Community Card: " + table.getCommunityCards().toString());
         }
 
         public void dealTurnCard() {
             System.out.println("Turn round");
-            table.getCommunityCards().add(deckOfCard.deal());
-//            System.out.println("Community Card: " + table.getCommunityCards().toString());
+            table.addCard(deckOfCard.deal(1));
         }
 
         public void dealRiverCard() {
             System.out.println("River round");
-            table.getCommunityCards().add(deckOfCard.deal());
+            table.addCard(deckOfCard.deal(1));
         }
     }
 }

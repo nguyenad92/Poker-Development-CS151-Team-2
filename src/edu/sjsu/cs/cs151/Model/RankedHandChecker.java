@@ -17,7 +17,7 @@ public class RankedHandChecker {
     /** The ranking factors (powers of 13, the number of ranks). */
     private static final int[] RANKING_FACTORS = {28561, 2197, 169, 13, 1};
 
-    private int setRank, quadRank, flushSuit, highestFlushRank, highestStraightCard;
+    private int setRank = -1, quadRank = -1, flushSuit = -1, highestFlushRank = -1, highestStraightCard = -1;
 
     public RankedHandChecker(ArrayList<Card> card) {
         handScore = new ArrayList<>();
@@ -49,10 +49,10 @@ public class RankedHandChecker {
 
     private ArrayList<Integer> getSuitDistributionList() {
         ArrayList<Integer> list = new ArrayList<>(Collections.nCopies(4, 0));
-        for (int i = 0; i < cardToBeAnalyzed.size(); i++) {
-            int currValue = list.get(i);
-            int currSuit = cardToBeAnalyzed.get(i).getSuit();
-            list.set(currSuit, ++currValue);
+        for (int j = 0; j < cardToBeAnalyzed.size(); j++) {
+            int currSuit = cardToBeAnalyzed.get(j).getSuit();
+            int currVal = list.get(currSuit);
+            list.set(currSuit, ++currVal);
         }
         return list;
     }
@@ -60,6 +60,9 @@ public class RankedHandChecker {
     private void initArrayList() {
         suitList = getSuitDistributionList();
         rankList = getRankDistributionList();
+
+        System.out.println("Suit List: " + suitList);
+        System.out.println("Rank List: " + rankList);
 
         // Find Flush
         getFlush();
@@ -73,9 +76,9 @@ public class RankedHandChecker {
 
     private ArrayList<Integer> getRankDistributionList() {
         ArrayList<Integer> list = new ArrayList<>(Collections.nCopies(14, 0));
-        for (int i = 0; i < cardToBeAnalyzed.size(); i++) {
-            int currValue = list.get(i);
-            int currRank = cardToBeAnalyzed.get(i).getRank();
+        for (int j = 0; j < cardToBeAnalyzed.size(); j++) {
+            int currRank = cardToBeAnalyzed.get(j).getRank();
+            int currValue = list.get(currRank);
             list.set(currRank, ++currValue);
         }
         return list;
@@ -131,7 +134,7 @@ public class RankedHandChecker {
                 highestStraightCard = -1;
             }
 
-            if (count >= 5) {
+            if (count > 5) {
                 handScore.add(highestStraightCard);
             }
         }
@@ -143,6 +146,9 @@ public class RankedHandChecker {
             else if (rankList.get(i) == 3) setRank = i;
             else if (rankList.get(i) == 2) pairRank.add(i);
         }
+        System.out.println("Quad found " + quadRank);
+        System.out.println("Set found " + setRank);
+        System.out.println("Pair found " + pairRank.toString());
     }
 
     /**
@@ -191,7 +197,7 @@ public class RankedHandChecker {
 
     // Check for a Set
     private boolean isSet() {
-        if (setRank >= 0) {
+        if (setRank > 0) {
             rankedHandType = RankedHandType.THREE_OF_A_KIND;
             handScore.add(setRank);
             int count = 0;
