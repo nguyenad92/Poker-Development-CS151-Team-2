@@ -34,12 +34,11 @@ public class PlayerPanel extends JPanel {
 	private static BlockingQueue<Message> queue;
 
 	/** The frame icon of the card */
-    private static final Icon CARD_FRAME_ICON =
-    		IconManager.getIcon("/images/card_frame.png");
+//    private static final Icon CARD_FRAME_ICON = IconManager.getIcon("/images/card_frame.png");
 
-    /** The back of the card when it is up side down */
-    private static final Icon BACK_OF_CARD_ICON =
-    		IconManager.getIcon("/images/back_of_card.png");
+//    /** The back of the card when it is up side down */
+//    private static final Icon BACK_OF_CARD_ICON =
+//    		IconManager.getIcon("/images/back_of_card.png");
 
     /** The format for the link to card images follow by its hashcode */
     private static final String IMAGE_LINK_FORMAT = "/images/card_%s.png";
@@ -71,8 +70,6 @@ public class PlayerPanel extends JPanel {
     	
     	this.setLayout(new GridLayout(2,6));
     	setBackground(Color.RED);
-//    	playerNameLabel.setText(name);
-//    	playerMoneyLabel.setText("$" + money);
 
     	setBorder(BORDER);
     	setBackground(TABLE_COLOR);
@@ -82,14 +79,14 @@ public class PlayerPanel extends JPanel {
     	GridBagConstraints gcl = new GridBagConstraints();
     	
 //    	playerNameLabel = new
-    	
-    	card1Label = new JLabel("This is card 1");
-    	card2Label = new JLabel("This is card 2");
+//    	
+//    	card1Label = new JLabel("This is card 1");
+//    	card2Label = new JLabel("This is card 2");
 
 
 		// Player Info
-    	gcl.gridx = 1000;
-    	gcl.gridy = 100000;
+    	gcl.gridx = 100;
+    	gcl.gridy = 100;
     	gcl.gridwidth = 10;
     	gcl.gridheight = 10;
     	
@@ -100,8 +97,8 @@ public class PlayerPanel extends JPanel {
 
 
     	// Adding Money
-    	gcl.gridx = 1000;
-    	gcl.gridy = 1000;
+    	gcl.gridx = 10;
+    	gcl.gridy = 100;
     	gcl.gridwidth = 10;
     	gcl.gridheight = 10;
 
@@ -125,7 +122,7 @@ public class PlayerPanel extends JPanel {
     	add(card1Label, gcl);
 
 		// Card 2 Info
-    	gcl.gridx = 1000000;
+    	gcl.gridx = 100;
     	gcl.gridy = 1;
     	gcl.gridwidth = 1;
     	gcl.gridheight = 1;
@@ -143,9 +140,9 @@ public class PlayerPanel extends JPanel {
      * The method that updates players' information
      * @param player
      */
-    public void updateInfo(Player player) {
-    	playerNameLabel.setText( player.getName());
-    	playerMoneyLabel.setText("$  " + Integer.toString(player.getMoney()));
+    public void updateInfo() {
+    	playerNameLabel.setText(" ");
+    	playerMoneyLabel.setText("$  ");
     	ArrayList<Card> cards = player.getPlayerHands();
     	    	
     	int valueOfCard1 = cards.get(0).hashCode();
@@ -165,8 +162,8 @@ public class PlayerPanel extends JPanel {
     		card1Label.setIcon(cardImage1);
     		card2Label.setIcon(cardImage2);
     	} else {
-    		card1Label.setIcon(BACK_OF_CARD_ICON);
-    		card2Label.setIcon(BACK_OF_CARD_ICON);
+    		card1Label.setIcon(new ImageIcon("/images/back_of_card.png"));
+    		card2Label.setIcon(new ImageIcon("/images/back_of_card.png"));
     	}
     }
 
