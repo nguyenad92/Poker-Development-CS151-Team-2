@@ -97,6 +97,7 @@ public class RankedHandChecker {
 
     private void getStraight() {
         int size = cardToBeAnalyzed.size();
+//        System.out.println(size);
         int nextRank = cardToBeAnalyzed.get(size - 1).getRank() + 1;
         int count = 1;
         for (int i = cardToBeAnalyzed.size() - 1; i > 0; i--) {

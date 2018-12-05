@@ -19,9 +19,9 @@ public class InfoPanel extends JPanel {
 
     private JPanel amountOfBet = new JPanel();
 
-    private Controller baseController;
-
     private BlockingQueue<Message> messageQueue;
+
+    private int potAmount = 0, betAmount = 0;
 
     public InfoPanel(BlockingQueue<Message> queue) {
         messageQueue = queue;
@@ -35,12 +35,12 @@ public class InfoPanel extends JPanel {
 
         amountOfPot.setLayout(new BorderLayout());
         amountOfPot.setForeground(Color.YELLOW);
-        potLabel = new JLabel("Pot: 0");
+        potLabel = new JLabel("Pot: " + potAmount);
         amountOfPot.add(potLabel, BorderLayout.NORTH);
 
         infoPannel.add(amountOfPot);
 
-        betLabel = new JLabel("Bet: 0");
+        betLabel = new JLabel("Current Bet: " + betAmount);
         amountOfBet.setLayout(new BorderLayout());
         amountOfBet.setForeground(Color.YELLOW);
         amountOfBet.add(betLabel, BorderLayout.NORTH);
@@ -49,27 +49,31 @@ public class InfoPanel extends JPanel {
     }
 
     public void setInfoPannel(GameInfo gameInfo) {
+        betAmount = gameInfo.getCurrentBet();
+        potAmount = gameInfo.getPotTotal();
 
+        potLabel.setText("Pot: " + potAmount);
+
+        betLabel.setText("Current Bet: " + betAmount);
     }
 
     /**
      * Updates the current pot, bet, and community cards.
-     * @param cards
      * @param bet
      * @param pot
      */
-    public void update(List<Card> cards, int bet, int pot) {
+    public void update(int bet, int pot) {
         if (bet == 0)
-            betLabel.setText("0");
+            betAmount = 0;
         else
-            betLabel.setText("$ " + bet);
+            betAmount = bet;
 
         if (pot == 0)
-            potLabel.setText("0");
+            potAmount = 0;
         else
-            potLabel.setText("$ " + pot);
+            potAmount = pot;
 
-        int communityCards = cards.size();
+//        int communityCards = cards.size();
 //        for (int i = 0; i < NO_OF_CARDS; i++) {
 //            if (i < communityCards) {
 //                int cardValue = cards.get(i).hashCode();

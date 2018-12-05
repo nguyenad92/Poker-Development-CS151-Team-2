@@ -28,7 +28,7 @@ public class Pot {
             potContribution.put(p, chip + p.getCurrentBet());
             playerCurrentBet = chip + p.getCurrentBet();
         }
-
+        currentBet = playerCurrentBet;
         p.setCurrentBet(playerCurrentBet);
         totalMoney += chip;
     }

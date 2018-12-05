@@ -19,8 +19,12 @@ public class Table {
     }
     
     
-    public void addCard(Card c) {
-    	communityCards.add(c);
+    public void addCard(ArrayList<Card> c) {
+        for (Card card :
+                c) {
+            communityCards.add(card);
+        }
+
     }
     
     public Card showCommunityCards(int i) {
