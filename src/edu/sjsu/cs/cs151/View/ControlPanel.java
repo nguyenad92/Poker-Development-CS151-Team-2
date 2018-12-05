@@ -12,6 +12,10 @@ import java.util.concurrent.BlockingQueue;
 public class ControlPanel extends JPanel {
 
     BlockingQueue<Message> messageQueue;
+
+    /** The Raise button. */
+    private final JButton newGameButton;
+
     /** The Check button. */
     private final JButton checkButton;
 
@@ -29,12 +33,13 @@ public class ControlPanel extends JPanel {
 
     public ControlPanel(BlockingQueue<Message> queue) {
         messageQueue = queue;
-        checkButton = createActionButton("CHECK1");
+        newGameButton = createActionButton("NEW GAME");
+        checkButton = createActionButton("CHECK");
         callButton = createActionButton("CALL");
         betButton = createActionButton("BET");
         raiseButton = createActionButton("RAISE");
         foldButton = createActionButton("FOLD");
-        this.add(checkButton);
+        this.add(newGameButton);
     }
 
     public void setControlPanel(String actionName) {
@@ -45,11 +50,11 @@ public class ControlPanel extends JPanel {
         JButton button = new JButton(buttonName);
         button.setMnemonic(buttonName.charAt(0));
         button.setSize(100, 30);
-        button.addActionListener(new checkActionListener());
+        button.addActionListener(new newGameActionListener());
         return button;
     }
 
-    public class checkActionListener implements ActionListener {
+    public class newGameActionListener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
             try {
                 messageQueue.put(new NewGameMessage());
