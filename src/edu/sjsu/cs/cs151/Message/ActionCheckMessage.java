@@ -5,4 +5,5 @@ public class ActionCheckMessage extends Message {
     public ActionCheckMessage() {
         super("Check", 0);
     }
+
 }
