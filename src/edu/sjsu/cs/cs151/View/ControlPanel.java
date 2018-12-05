@@ -39,11 +39,21 @@ public class ControlPanel extends JPanel {
         betButton = createActionButton("BET");
         raiseButton = createActionButton("RAISE");
         foldButton = createActionButton("FOLD");
-        this.add(newGameButton);
+
+        addButton();
     }
 
     public void setControlPanel(String actionName) {
 
+    }
+
+    private void addButton() {
+        add(newGameButton);
+        add(checkButton);
+        add(callButton);
+        add(betButton);
+        add(raiseButton);
+        add(foldButton);
     }
 
     private JButton createActionButton(String buttonName) {
