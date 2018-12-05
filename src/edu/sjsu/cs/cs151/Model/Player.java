@@ -1,8 +1,6 @@
-
 package edu.sjsu.cs.cs151.Model;
 
 import java.util.ArrayList;
-
 /**
  * A class to create player and keep player's information
  * it contains player's actions such as check, call, raise, fold and outGame
@@ -10,15 +8,11 @@ import java.util.ArrayList;
  */
 public class Player {
 
-	private String id;
 	private String name;
-	private int level, country, age;
-	private String gender;
-	private int money; 								// total money of edu.sjsu.cs.cs151.model.Player
-	private int currentBet;							// current Bet of the edu.sjsu.cs.cs151.model.Player
+	private int money; 								// total money
+	private int currentBet;							// current Bet
 	private PlayerHand playerHands;
 	private int currentPositionOnTable;
-	private String action;
 
 	/**
 	 * Construct a player object
@@ -32,43 +26,20 @@ public class Player {
 		currentPositionOnTable = 0;
 	}
 
-	/**
-	 * do the action to check
-	 */
-	public void check() {
-
-	}
-
 	public void payMoney(int bet) {
 		money = money - bet;
 		currentBet = currentBet + bet;
 	}
-	/**
-	 * do the action to fold
-	 */
-	public void fold() {
 
-	}
-
-	/**
-	 * do the action to out the game
-	 */
-	public void outGame() {
-
-	}
 
 	public String getName() {
 		return name;
 	}
 
-	public String getID() {
-		return id;
-	}
 
 	public int getMoney() {
 		return money;
 	}
-
 
 	public int getCurrentBet() {
 		return currentBet;
@@ -79,7 +50,6 @@ public class Player {
 	}
 
 	public  void resetHand() {
-		money = 0;
 		currentBet = 0;
 		playerHands.getCard().clear();
 	}
@@ -103,14 +73,6 @@ public class Player {
 
 	public boolean isAllIn() {
 		return playerHands.getCard().size() >= 2 && money == 0;
-	}
-
-	public String getAction() {
-		return action;
-	}
-
-	public void setAction(String action) {
-		this.action = action;
 	}
 
 	public int getCurrentPositionOnTable() {

@@ -72,7 +72,7 @@ public class RankedHandChecker {
     }
 
     private ArrayList<Integer> getRankDistributionList() {
-        ArrayList<Integer> list = new ArrayList<>(Collections.nCopies(13, 0));
+        ArrayList<Integer> list = new ArrayList<>(Collections.nCopies(14, 0));
         for (int i = 0; i < cardToBeAnalyzed.size(); i++) {
             int currValue = list.get(i);
             int currRank = cardToBeAnalyzed.get(i).getRank();
@@ -97,6 +97,7 @@ public class RankedHandChecker {
 
     private void getStraight() {
         int size = cardToBeAnalyzed.size();
+//        System.out.println(size);
         int nextRank = cardToBeAnalyzed.get(size - 1).getRank() + 1;
         int count = 1;
         for (int i = cardToBeAnalyzed.size() - 1; i > 0; i--) {
