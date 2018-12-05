@@ -22,13 +22,14 @@ public class Model {
         this.deckOfCard = new DeckOfCard();
         this.playerList = new ArrayList<>();
         activePlayerList = new ArrayList<>();
-        cardDealer = new Dealer(table, deckOfCard, playerList);
         bigBlind = 100;
 
         Player p1 = new Player("Calvin Nguyen", 10000);
         Player p2 = new Player("Nhung Le", 10000);
         addPlayer(p1);
         addPlayer(p2);
+
+        cardDealer = new Dealer();
     }
 
     /**
@@ -40,14 +41,13 @@ public class Model {
 
         isStarted = true;
         isEndGame = false;
-
         resetHand();
     }
 
     public void dealPreFlop() {
         isFlop = true;
         noOfActivePlayer = activePlayerList.size();
-        resetHand();
+
 
         setBlind("SMALL");
 
@@ -55,12 +55,13 @@ public class Model {
         setBlind("BIG");
 
         cardDealer.dealPreFlopCard();
-//        nextPlayerToAct();
+        nextPlayerToAct();
     }
 
     public void dealFlop() {
         noOfActivePlayer = activePlayerList.size();
         cardDealer.dealFlopCard();
+        System.out.println(table.getCommunityCards().toString());
         nextPlayerToAct();
     }
 
@@ -73,15 +74,8 @@ public class Model {
     public void dealRiver() {
         noOfActivePlayer = activePlayerList.size();
         cardDealer.dealRiverCard();
+        System.out.println(table.getCommunityCards().toString());
         nextPlayerToAct();
-    }
-
-
-    public void endGame() {
-        table.reset();
-        for (Player player : playerList) {
-            player.resetHand();
-        }
     }
 
     public void check() {
@@ -191,7 +185,10 @@ public class Model {
         isShowDown = false;
 
         Player winner = activePlayerList.get(0);
+
         for (Player p : activePlayerList) {
+            System.out.println(p.getName());
+            System.out.println(table.getCommunityCards().toString());
             p.addCard(table.getCommunityCards());
             RankedHand rankedHand = new RankedHand(p);
             if (rankedHand.getRankedHandScore() >= bestHandValue) {
@@ -296,6 +293,7 @@ public class Model {
         } else if (isFlop()) {
             dealFlop();
             nextPlayerToAct();
+//            System.out.println("Community Card: " + table.getCommunityCards().size());
             isFlop = false;
             isTurn = true;
         } else if (isTurn()) {
@@ -303,13 +301,56 @@ public class Model {
             nextPlayerToAct();
             isTurn = false;
             isRiver = true;
+//            System.out.println("Community Card: " + table.getCommunityCards().size());
         } else if (isRiver()) {
             dealRiver();
             nextPlayerToAct();
             isRiver = false;
             isShowDown = true;
+//            System.out.println("Community Card: " + table.getCommunityCards().size());
         } else {
             start();
+        }
+    }
+
+    public Table getTable() {
+        return table;
+    }
+
+    public int getNoOfActivePlayer() {
+        return noOfActivePlayer;
+    }
+
+    public class Dealer {
+
+        /**
+         * deal two cards to players
+         */
+
+        public void dealPreFlopCard() {
+            System.out.println("PreFlop round");
+            for(int i = 0; i < playerList.size(); i++) {
+                playerList.get(i).addCard(deckOfCard.deal(2));
+                System.out.println("Card of this player: " + playerList.get(i).getPlayerHands().toString());
+            }
+
+        }
+
+        public void dealFlopCard() {
+            System.out.println("Flop round");
+            table.addCard(deckOfCard.deal(3));
+//            System.out.println("Community Card: " + table.getCommunityCards().toString());
+        }
+
+        public void dealTurnCard() {
+            System.out.println("Turn round");
+            table.getCommunityCards().add(deckOfCard.deal());
+//            System.out.println("Community Card: " + table.getCommunityCards().toString());
+        }
+
+        public void dealRiverCard() {
+            System.out.println("River round");
+            table.getCommunityCards().add(deckOfCard.deal());
         }
     }
 }

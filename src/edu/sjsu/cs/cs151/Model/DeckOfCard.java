@@ -25,8 +25,7 @@ public class DeckOfCard {
     /**
      * Constructor.
      */
-    public DeckOfCard() 
-    {
+    public DeckOfCard() {
         cards = new Card[NO_OF_CARDS];
         int index = 0;
         for (int suit = Card.NO_OF_SUITS - 1; suit >= 0; suit--) 
@@ -37,8 +36,7 @@ public class DeckOfCard {
     /**
      * Shuffles the deck.
      */
-    public void shuffle() 
-    {
+    public void shuffle() {
     	for(int oldValue = 0; oldValue < NO_OF_CARDS; oldValue++)
     	{
     		int newValue = random.nextInt(NO_OF_CARDS);
@@ -70,8 +68,7 @@ public class DeckOfCard {
     /**
      * Deals multiple cards at once or to deal community cards.
      */
-    public ArrayList<Card> deal(int noOfCards) 
-    {
+    public ArrayList<Card> deal(int noOfCards) {
         ArrayList<Card> communityCards = new ArrayList<Card>();
         for (int i = 0; i < noOfCards; i++) {
         	communityCards.add(cards[nextCard++]);
@@ -81,8 +78,7 @@ public class DeckOfCard {
     
     /** to string value of cards */
     @Override
-    public String toString() 
-    {
+    public String toString() {
         StringBuilder sb = new StringBuilder();
         for (Card card : cards) 
         {

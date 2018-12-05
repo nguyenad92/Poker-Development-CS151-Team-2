@@ -13,6 +13,7 @@ public class RankedHand implements Comparable<RankedHand> {
     private RankedHandType rankedHandType;
 
     public RankedHand(Player p) {
+        System.out.println(p.getPlayerHands().size());
         initRankedHand(p.getPlayerHands());
     }
 

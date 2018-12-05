@@ -82,8 +82,12 @@ public class Controller {
             model.start();
             model.dealPreFlop();
 
+            System.out.println("This is the current Bet: " + updateGameInfo().getCurrentBet());
+
+            view.setInfoPannel(updateGameInfo());
             view.setPlayerPannel(updateGameInfo());
             view.setControlPannel("CHECK");
+
             return ValveResponse.EXECUTED;
         }
     }
@@ -91,7 +95,7 @@ public class Controller {
     public class DoActionBetValve implements Valve {
 
         public ValveResponse execute(Message message) {
-            //if(!(message instanceof NewGameMessage))
+
             if (message.getClass() != ActionBetMessage.class) {
                 return ValveResponse.MISS;
             }
@@ -111,7 +115,7 @@ public class Controller {
     public class DoActionCallValve implements Valve {
         
         public ValveResponse execute(Message message) {
-            //if(!(message instanceof NewGameMessage))
+
             if (message.getClass() != ActionCallMessage.class) {
                 return ValveResponse.MISS;
             }
@@ -134,7 +138,9 @@ public class Controller {
                 return ValveResponse.MISS;
             }
 
+            System.out.println("Player " + model.getCurrentActor().getName() + " just check");
             model.check();
+
 
             model.dealCardByStage();
 
