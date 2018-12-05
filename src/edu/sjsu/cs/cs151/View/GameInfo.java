@@ -7,6 +7,7 @@ public class GameInfo {
     private boolean isStarted, isOver, isFlop, isTurn, isRiver;
     private int dealerPosition, currentActorPosition, bigBlind;
     private Player currentPlayer, dealerPlayer;
+    private int currentBet, potTotal;
     
     public GameInfo(Model model) {
         this.isStarted = model.isStarted();
@@ -14,6 +15,8 @@ public class GameInfo {
         this.dealerPosition = model.getDealerPosition();
         this.currentActorPosition = model.getCurrentActorPosition();
         this.currentPlayer = model.getCurrentActor();
+        currentBet = model.getTable().getCurrentBet();
+        potTotal = model.getTable().getTotalMoney();
         dealerPlayer = model.getDealerPlayer();
 //        this.currPot = model.getPot();
         if (isStarted) {
@@ -45,5 +48,13 @@ public class GameInfo {
 
     public int getCurrentActorPosition() {
         return currentActorPosition;
+    }
+
+    public int getCurrentBet() {
+        return currentBet;
+    }
+
+    public int getPotTotal() {
+        return potTotal;
     }
 }

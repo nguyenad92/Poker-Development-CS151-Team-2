@@ -1,8 +1,6 @@
 package edu.sjsu.cs.cs151.View;
 
-import edu.sjsu.cs.cs151.Message.ActionCheckMessage;
-import edu.sjsu.cs.cs151.Message.Message;
-import edu.sjsu.cs.cs151.Message.NewGameMessage;
+import edu.sjsu.cs.cs151.Message.*;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -31,6 +29,8 @@ public class ControlPanel extends JPanel {
     /** The Fold button. */
     private final JButton foldButton;
 
+
+
     public ControlPanel(BlockingQueue<Message> queue) {
         messageQueue = queue;
         newGameButton = createActionButton("NEW GAME");
@@ -44,7 +44,15 @@ public class ControlPanel extends JPanel {
     }
 
     public void setControlPanel(String actionName) {
-
+        if (actionName.equals("CHECK")) {
+            // Add Check, Bet, Fold
+        } else if (actionName.equals("CALL")) {
+            // Add Fold, Call, Raise
+        } else if (actionName.equals("BET") || actionName.equals("RAISE")) {
+            // Add Fold, Call, Raise
+        } else if (actionName.equals("FOLD")) {
+            // Add Check, Bet, Fold
+        }
     }
 
     private void addButton() {
@@ -60,7 +68,12 @@ public class ControlPanel extends JPanel {
         JButton button = new JButton(buttonName);
         button.setMnemonic(buttonName.charAt(0));
         button.setSize(100, 30);
-        button.addActionListener(new newGameActionListener());
+        if (buttonName.equals("NEW GAME")) button.addActionListener(new newGameActionListener());
+        if (buttonName.equals("CHECK")) button.addActionListener(new checkActionListener());
+        if (buttonName.equals("CALL")) button.addActionListener(new callActionListener());
+        if (buttonName.equals("RAISE")) button.addActionListener(new raiseActionListener());
+        if (buttonName.equals("FOLD")) button.addActionListener(new foldActionListener());
+        if (buttonName.equals("BET")) button.addActionListener(new betActionListener());
         return button;
     }
 
@@ -68,6 +81,56 @@ public class ControlPanel extends JPanel {
         public void actionPerformed(ActionEvent event) {
             try {
                 messageQueue.put(new NewGameMessage());
+            } catch (InterruptedException exception) {
+                exception.printStackTrace();
+            }
+        }
+    }
+
+    public class checkActionListener implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
+            try {
+                messageQueue.put(new ActionCheckMessage());
+            } catch (InterruptedException exception) {
+                exception.printStackTrace();
+            }
+        }
+    }
+
+    public class callActionListener implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
+            try {
+                messageQueue.put(new ActionCallMessage(1000));
+            } catch (InterruptedException exception) {
+                exception.printStackTrace();
+            }
+        }
+    }
+
+    public class betActionListener implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
+            try {
+                messageQueue.put(new ActionBetMessage(1000));
+            } catch (InterruptedException exception) {
+                exception.printStackTrace();
+            }
+        }
+    }
+
+    public class raiseActionListener implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
+            try {
+                messageQueue.put(new ActionRaiseMessage(1500));
+            } catch (InterruptedException exception) {
+                exception.printStackTrace();
+            }
+        }
+    }
+
+    public class foldActionListener implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
+            try {
+                messageQueue.put(new ActionFoldMessage());
             } catch (InterruptedException exception) {
                 exception.printStackTrace();
             }
