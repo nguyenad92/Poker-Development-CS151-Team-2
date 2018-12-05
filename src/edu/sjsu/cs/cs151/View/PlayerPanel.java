@@ -23,7 +23,7 @@ import javax.swing.border.EmptyBorder;
 import edu.sjsu.cs.cs151.Message.Message;
 import edu.sjsu.cs.cs151.Message.NewGameMessage;
 import edu.sjsu.cs.cs151.Model.*;
- 
+
 
 /**
  * It shows players' cards, name, actions, and amount of money
@@ -42,46 +42,46 @@ public class PlayerPanel extends JPanel {
 //    private static final Icon BACK_OF_CARD_ICON =
 //    		IconManager.getIcon("/images/back_of_card.png");
 
-    /** The format for the link to card images follow by its hashcode */
-    private static final String IMAGE_LINK_FORMAT = "/images/card_%s.png";
-    
-    /**Border of player frame.
-    * Square 10x10
-    **/
-    private static final Border BORDER = new EmptyBorder(10, 10, 10, 10);
-    /** Show player's name */
-    private JLabel playerNameLabel  = new JLabel();
-    /** Show player's money */
-    private JLabel playerMoneyLabel = new JLabel();
-    /** Show card #1 of player */
-    private JLabel card1Label = new JLabel();
-    /** Show card #2 of player */
-    private JLabel card2Label = new JLabel();
-    
-    /** Set the color of the table to green */
-    public Color TABLE_COLOR = new Color(0, 128, 0);
-    /** Set the color of text in player frame to yellow */
-    public Color TEXT_COLOR = Color.YELLOW;
-    
-    private JPanel player1Panel, player2Panel;
+	/** The format for the link to card images follow by its hashcode */
+	private static final String IMAGE_LINK_FORMAT = "/images/card_%s.png";
 
-    /**
-     * The panel show playeys' information included cards, name, and money 
-     * @param blockingQueue
-     */
-    public PlayerPanel(BlockingQueue<Message> blockingQueue) {
-    	queue = blockingQueue;
-    	
-    	this.setLayout(new GridLayout(2,6));
-    	setBackground(Color.RED);
+	/**Border of player frame.
+	 * Square 10x10
+	 **/
+	private static final Border BORDER = new EmptyBorder(10, 10, 10, 10);
+	/** Show player's name */
+	private JLabel playerNameLabel  = new JLabel();
+	/** Show player's money */
+	private JLabel playerMoneyLabel = new JLabel();
+	/** Show card #1 of player */
+	private JLabel card1Label = new JLabel();
+	/** Show card #2 of player */
+	private JLabel card2Label = new JLabel();
 
-    	setBorder(BORDER);
-    	setBackground(TABLE_COLOR);
-    	
-    	setLayout(new GridBagLayout());
-    	
-    	GridBagConstraints gcl = new GridBagConstraints();
-    	
+	/** Set the color of the table to green */
+	public Color TABLE_COLOR = new Color(0, 128, 0);
+	/** Set the color of text in player frame to yellow */
+	public Color TEXT_COLOR = Color.YELLOW;
+
+	private JPanel player1Panel, player2Panel;
+
+	/**
+	 * The panel show playeys' information included cards, name, and money 
+	 * @param blockingQueue
+	 */
+	public PlayerPanel(BlockingQueue<Message> blockingQueue) {
+		queue = blockingQueue;
+
+		this.setLayout(new GridLayout(2,6));
+		setBackground(Color.RED);
+
+		setBorder(BORDER);
+		setBackground(TABLE_COLOR);
+
+		setLayout(new GridBagLayout());
+
+		GridBagConstraints gcl = new GridBagConstraints();
+
 //    	playerNameLabel = new
 //    	
 //    	card1Label = new JLabel("This is card 1");
@@ -89,122 +89,122 @@ public class PlayerPanel extends JPanel {
 
 
 		// Player Info
-    	gcl.gridx = 10;
-    	gcl.gridy = 100;
-    	gcl.gridwidth = 10;
-    	gcl.gridheight = 10;
-    	
-    	gcl.anchor = GridBagConstraints.CENTER;
-    	gcl.fill = GridBagConstraints.HORIZONTAL;
-    	
-    	add(playerNameLabel, gcl);
+		gcl.gridx = 10;
+		gcl.gridy = 100;
+		gcl.gridwidth = 10;
+		gcl.gridheight = 10;
+
+		gcl.anchor = GridBagConstraints.CENTER;
+		gcl.fill = GridBagConstraints.HORIZONTAL;
+
+		add(playerNameLabel, gcl);
 
 
-    	// Adding Money
-    	gcl.gridx = 100;
-    	gcl.gridy = 10000;
-    	gcl.gridwidth = 10;
-    	gcl.gridheight = 10;
+		// Adding Money
+		gcl.gridx = 100;
+		gcl.gridy = 10000;
+		gcl.gridwidth = 10;
+		gcl.gridheight = 10;
 
-    	gcl.anchor = GridBagConstraints.CENTER;
-    	gcl.fill = GridBagConstraints.HORIZONTAL;
+		gcl.anchor = GridBagConstraints.CENTER;
+		gcl.fill = GridBagConstraints.HORIZONTAL;
 
-    	add(playerMoneyLabel, gcl);
+		add(playerMoneyLabel, gcl);
 
-    	// Card 1 Info
+		// Card 1 Info
 		gcl.gridx = 0;
-    	gcl.gridy = 1;
-    	gcl.gridwidth = 1;
-    	gcl.gridheight = 1;
+		gcl.gridy = 1;
+		gcl.gridwidth = 1;
+		gcl.gridheight = 1;
 
-    	gcl.anchor = GridBagConstraints.CENTER;
-    	gcl.fill = GridBagConstraints.HORIZONTAL;
+		gcl.anchor = GridBagConstraints.CENTER;
+		gcl.fill = GridBagConstraints.HORIZONTAL;
 
-    	gcl.weightx = 1;
-    	gcl.weighty = 1;
+		gcl.weightx = 1;
+		gcl.weighty = 1;
 
-    	add(card1Label, gcl);
+		add(card1Label, gcl);
 
 		// Card 2 Info
-    	gcl.gridx = 100;
-    	gcl.gridy = 1;
-    	gcl.gridwidth = 1;
-    	gcl.gridheight = 1;
+		gcl.gridx = 100;
+		gcl.gridy = 1;
+		gcl.gridwidth = 1;
+		gcl.gridheight = 1;
 
-    	gcl.anchor = GridBagConstraints.CENTER;
-    	gcl.fill = GridBagConstraints.HORIZONTAL;
+		gcl.anchor = GridBagConstraints.CENTER;
+		gcl.fill = GridBagConstraints.HORIZONTAL;
 
-    	gcl.weightx = 1;
-    	gcl.weighty = 1;
+		gcl.weightx = 1;
+		gcl.weighty = 1;
 
-    	add(card2Label, gcl);
-    	
+		add(card2Label, gcl);
+
 //    	updatePlayer1(null);
 //    	updatePlayer2(null);
-    	
-    }
-    /**
-     * The method that updates players' information
-     */
-    public void updatePlayer1(final GameInfo gameInfo) {
-    	
+
+	}
+	/**
+	 * The method that updates players' information
+	 */
+	public void updatePlayer1(final GameInfo gameInfo) {
+
 		Player player = gameInfo.getPlayerList().get(0);
 		playerNameLabel.setText(player.getName());
 		playerMoneyLabel.setText("$ " + player.getMoney());
-    	    	
-    	ArrayList<Card> cards = player.getPlayerHands();
-    	
-        int valueOfCard1 = cards.get(0).hashCode();
-        int valueOfCard2 = cards.get(1).hashCode();
 
-        String card1 = String.valueOf(valueOfCard1);
-        String card2 = String.valueOf(valueOfCard2);
+		ArrayList<Card> cards = player.getPlayerHands();
 
-        String link1 = String.format(IMAGE_LINK_FORMAT, card1);
-        String link2 = String.format(IMAGE_LINK_FORMAT, card2);
+		int valueOfCard1 = cards.get(0).hashCode();
+		int valueOfCard2 = cards.get(1).hashCode();
 
-        ImageIcon cardImage1 = new ImageIcon(link1);
-        ImageIcon cardImage2 = new ImageIcon(link2);
+		String card1 = String.valueOf(valueOfCard1);
+		String card2 = String.valueOf(valueOfCard2);
+
+		String link1 = String.format(IMAGE_LINK_FORMAT, card1);
+		String link2 = String.format(IMAGE_LINK_FORMAT, card2);
+
+		ImageIcon cardImage1 = new ImageIcon(link1);
+		ImageIcon cardImage2 = new ImageIcon(link2);
 
 
-        if (cards.size() == 2) {
-            card1Label.setIcon(cardImage1);
-            card2Label.setIcon(cardImage2);
-        } else {
-            card1Label.setIcon(new ImageIcon("/images/back_of_card.png"));
-            card2Label.setIcon(new ImageIcon("/images/back_of_card.png"));
-        }
-    }
-    
- public void updatePlayer2(final GameInfo gameInfo) {
-    	
+		if (cards.size() == 2) {
+			card1Label.setIcon(cardImage1);
+			card2Label.setIcon(cardImage2);
+		} else {
+			card1Label.setIcon(new ImageIcon("/images/back_of_card.png"));
+			card2Label.setIcon(new ImageIcon("/images/back_of_card.png"));
+		}
+	}
+
+	public void updatePlayer2(final GameInfo gameInfo) {
+
 		Player player = gameInfo.getPlayerList().get(1);
 		playerNameLabel.setText(player.getName());
 		playerMoneyLabel.setText("$ " + player.getMoney());
-    	    	
-    	ArrayList<Card> cards = player.getPlayerHands();
-    	
-        int valueOfCard1 = cards.get(0).hashCode();
-        int valueOfCard2 = cards.get(1).hashCode();
 
-        String card1 = String.valueOf(valueOfCard1);
-        String card2 = String.valueOf(valueOfCard2);
+		ArrayList<Card> cards = player.getPlayerHands();
 
-        String link1 = String.format(IMAGE_LINK_FORMAT, card1);
-        String link2 = String.format(IMAGE_LINK_FORMAT, card2);
+		int valueOfCard1 = cards.get(0).hashCode();
+		int valueOfCard2 = cards.get(1).hashCode();
 
-        ImageIcon cardImage1 = new ImageIcon(link1);
-        ImageIcon cardImage2 = new ImageIcon(link2);
+		String card1 = String.valueOf(valueOfCard1);
+		String card2 = String.valueOf(valueOfCard2);
+
+		String link1 = String.format(IMAGE_LINK_FORMAT, card1);
+		String link2 = String.format(IMAGE_LINK_FORMAT, card2);
+
+		ImageIcon cardImage1 = new ImageIcon(link1);
+		ImageIcon cardImage2 = new ImageIcon(link2);
 
 
-        if (cards.size() == 2) {
-            card1Label.setIcon(IconManager.getCardImage(cards.get(0)));
-            card2Label.setIcon(IconManager.getCardImage(cards.get(1)));
-        } else {
-            card1Label.setIcon(IconManager.getCardImage(cards.get(0)));
-            card2Label.setIcon(IconManager.getCardImage(cards.get(1)));
-        }
-    }
+		if (cards.size() == 2) {
+			card1Label.setIcon(IconManager.getCardImage(cards.get(0)));
+			card2Label.setIcon(IconManager.getCardImage(cards.get(1)));
+		} else {
+			card1Label.setIcon(IconManager.getCardImage(cards.get(0)));
+			card2Label.setIcon(IconManager.getCardImage(cards.get(1)));
+		}
+	}
 
 	public void setPlayerPanel(GameInfo gameInfo) {
 
@@ -220,5 +220,5 @@ public class PlayerPanel extends JPanel {
 			}
 		}
 	}
-    
+
 }
