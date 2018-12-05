@@ -1,5 +1,7 @@
 package edu.sjsu.cs.cs151.Model;
 
+import edu.sjsu.cs.cs151.Message.Message;
+
 import java.util.ArrayList;
 
 /**
@@ -10,10 +12,10 @@ public class Model {
     private DeckOfCard deckOfCard;
     private Dealer cardDealer;
     private Table table;
-    private int dealerPosition = 0, currentActorPosition = 0, bigBlind = 0;
+    private int dealerPosition = 0, currentActorPosition = 0, bigBlind = 0, noOfActivePlayer;
     private ArrayList<Player> activePlayerList;
     private Player currentActor, dealerPlayer;
-    private boolean isFlop, isTurn, isRiver, isStarted, isOver, CheckIfWon;
+    private boolean isFlop, isTurn, isRiver, isStarted, isOver, isEndGame, isShowDown;
 
     public Model() {
         this.table = new Table();
@@ -29,37 +31,22 @@ public class Model {
         addPlayer(p2);
     }
 
+    /**
+     * First State of the game
+     */
     public void start() {
-        isStarted = true;
         dealerPosition = -1;
         currentActorPosition = -1;
 
-        while (true) {
-            for (Player player : playerList) {
-                if (player.getMoney() >= 0) {
-                    activePlayerList.add(player);
-                }
-            }
-            if (activePlayerList.size() > 1) {
-                playHand();
-            } else {
-                isOver = true;
-                isStarted = false;
-                break;
-            }
-        }
+        isStarted = true;
+        isEndGame = false;
 
-        // Reset Everything when oneHand is finished or the other loses all Money
-        table.reset();
-        for (Player player : playerList) {
-            player.resetHand();
-        }
+        resetHand();
     }
 
-    /**
-     * Before play a new hand, need to reset everything back to original
-     */
-    private void playHand() {
+    public void dealPreFlop() {
+        isFlop = true;
+        noOfActivePlayer = activePlayerList.size();
         resetHand();
 
         setBlind("SMALL");
@@ -68,28 +55,88 @@ public class Model {
         setBlind("BIG");
 
         cardDealer.dealPreFlopCard();
-        betting();
-        isFlop = true;
+//        nextPlayerToAct();
+    }
 
-        while (activePlayerList.size() > 1) {
-            table.setCurrentBet(0);
-            if (isFlop) {
-                cardDealer.dealFlopCard();
-                isFlop = false;
-                isTurn = true;
-            } else if (isTurn) {
-                cardDealer.dealTurnCard();
-                isTurn = false;
-                isRiver = true;
-            } else if (isRiver) {
-                cardDealer.dealRiverCard();
-                isRiver = false;
-            } else {
-                showDown();
-                break;
-            }
-            betting();
+    public void dealFlop() {
+        noOfActivePlayer = activePlayerList.size();
+        cardDealer.dealFlopCard();
+        nextPlayerToAct();
+    }
+
+    public void dealTurn() {
+        noOfActivePlayer = activePlayerList.size();
+        cardDealer.dealTurnCard();
+        nextPlayerToAct();
+    }
+
+    public void dealRiver() {
+        noOfActivePlayer = activePlayerList.size();
+        cardDealer.dealRiverCard();
+        nextPlayerToAct();
+    }
+
+
+    public void endGame() {
+        table.reset();
+        for (Player player : playerList) {
+            player.resetHand();
         }
+    }
+
+    public void check() {
+        noOfActivePlayer--;
+        nextPlayerToAct();
+    }
+
+    public void call() {
+        noOfActivePlayer--;
+        int moneyToPay = table.getCurrentBet() - currentActor.getCurrentBet();
+        if (moneyToPay > currentActor.getMoney()) moneyToPay = currentActor.getMoney();
+
+        currentActor.payMoney(moneyToPay);
+        currentActor.setCurrentBet(moneyToPay);
+        table.addMoneyToPot(currentActor, moneyToPay);
+
+        nextPlayerToAct();
+    }
+
+    public void bet(int amount) {
+        noOfActivePlayer--;
+        currentActor.payMoney(amount);
+        currentActor.setCurrentBet(amount);
+        table.addMoneyToPot(currentActor, amount);
+        nextPlayerToAct();
+    }
+
+    public void raise(int amount) {
+        noOfActivePlayer--;
+
+        int moneyToPay = amount - currentActor.getCurrentBet();
+
+        if (moneyToPay > currentActor.getMoney()) {
+            moneyToPay = currentActor.getMoney();
+        }
+        currentActor.payMoney(moneyToPay);
+        currentActor.setCurrentBet(amount);
+        table.addMoneyToPot(currentActor, moneyToPay);
+
+        nextPlayerToAct();
+    }
+
+    public void fold() {
+        noOfActivePlayer--;
+        currentActor.resetHand();
+        activePlayerList.remove(currentActor);
+        currentActorPosition--;
+
+        Player winner = activePlayerList.get(0);
+        int amount = table.getTotalMoney();
+        winner.addMoney(amount);
+        noOfActivePlayer--;
+
+        isOver = true;
+        isStarted = false;
     }
 
     private void setBlind(String blind) {
@@ -116,7 +163,7 @@ public class Model {
     public void resetHand() {
         table.reset();
         deckOfCard.shuffle(); // Shuffle the deck.
-        
+
         activePlayerList.clear();
         for (Player player : playerList) {
             player.resetHand();
@@ -125,17 +172,24 @@ public class Model {
             }
         }
 
-        // Rotate the dealer button.
-        dealerPosition = (dealerPosition + 1) % activePlayerList.size();
-        dealerPlayer = activePlayerList.get(dealerPosition);
+        if (activePlayerList.size() <= 1) {
+            isEndGame = true;
+            isStarted = false;
+        } else {
+            // Rotate the dealer button.
+            dealerPosition = (dealerPosition + 1) % activePlayerList.size();
+            dealerPlayer = activePlayerList.get(dealerPosition);
 
-        // Determine the first player to act.
-        currentActorPosition = dealerPosition;
-        currentActor = activePlayerList.get(currentActorPosition);
+            // Determine the first player to act.
+            currentActorPosition = dealerPosition;
+            currentActor = activePlayerList.get(currentActorPosition);
+        }
     }
 
-    public void showDown() {
+    public void checkWinner() {
         int bestHandValue = -1;
+        isShowDown = false;
+
         Player winner = activePlayerList.get(0);
         for (Player p : activePlayerList) {
             p.addCard(table.getCommunityCards());
@@ -145,7 +199,6 @@ public class Model {
                 winner = p;
             }
         }
-
         winner.addMoney(table.getTotalMoney());
     }
 
@@ -153,101 +206,6 @@ public class Model {
         currentActorPosition = (currentActorPosition + 1) % activePlayerList.size();
         currentActor = activePlayerList.get(currentActorPosition);
     }
-
-    public void betting() {
-    	int noOfActivePlayer = activePlayerList.size();
-    	
-    	while(noOfActivePlayer > 1) {
-    		nextPlayerToAct();
-            String action = "";
-    		//current player ALL IN
-    		if(currentActor.isAllIn()) {
-                noOfActivePlayer--;
-    			table.setCurrentActionStatus("CHECK");
-    		} else {
-                noOfActivePlayer--;
-
-                // Need to get actions from the GUI
-//                action = currentActor.getClient.act(bigBlind, bet, getAllowedAction(currentActor));
-                action = currentActor.getAction();
-
-    			//current player CHECK
-    			if (action.equals("CHECK")) {
-                    //do nothing
-                }
-
-    			// current player CALL
-    			else if(action.equals("CALL")) {
-    				int moneyToPay = table.getCurrentBet() - currentActor.getCurrentBet();
-    				if (moneyToPay > currentActor.getMoney()) moneyToPay = currentActor.getMoney();
-
-    				currentActor.payMoney(moneyToPay);
-                    currentActor.setCurrentBet(moneyToPay);
-    				table.addMoneyToPot(currentActor, moneyToPay);
-    			}
-
-    			//current player BET
-    			else if(action.equals("BET")) {
-                    // Need to set currentBet when user enter amount Input from front end and hit "BET" + set CurrentBet in Player's class
-    				int currentBet = table.getCurrentBet();
-
-    				currentActor.payMoney(currentBet);
-    				currentActor.setCurrentBet(currentBet);
-    				table.addMoneyToPot(currentActor, currentBet);
-
-                    noOfActivePlayer = activePlayerList.size();
-    			}
-
-    			//current player RAISE
-    			else if(action.equals("RAISE")) {
-                    // Need to set currentBet when user enter amount Input from front end and hit "BET" + set CurrentBet in Player's class
-                    int currentBet = table.getCurrentBet();
-
-                    int moneyToPay = currentBet - currentActor.getCurrentBet();
-
-                    if (moneyToPay > currentActor.getMoney()) {
-                        moneyToPay = currentActor.getMoney();
-                    }
-                    currentActor.payMoney(moneyToPay);
-                    currentActor.setCurrentBet(currentBet);
-                    table.addMoneyToPot(currentActor, moneyToPay);
-                    noOfActivePlayer = activePlayerList.size();
-    			}
-
-    			//current player FOLD
-    			else if(action.equals("FOLD")) {
-    				currentActor.resetHand();
-    				activePlayerList.remove(currentActor);
-    				currentActorPosition--;
-    				if(activePlayerList.size() == 1) {
-    					updateTable();
-    					Player winner = activePlayerList.get(0);
-    					int amount = table.getTotalMoney();
-    					winner.addMoney(amount);
-    					updateTable();
-    					noOfActivePlayer--;
-    				}
-    			}
-    		}
-    		currentActor.setAction(action);
-    		if(noOfActivePlayer > 0) {
-    			updateTable();
-    		}
-    	}
-
-    	//reset players' bet
-    	for(Player player: activePlayerList) player.setCurrentBet(0);
-
-    	updateTable();
-    }
-    
-    //Notify observer that the tabel has been updated
-    private void updateTable() {
-    	int pot = table.getTotalMoney();
-    	for(Player player: activePlayerList) {}
-//    		player.getObserver().tableUpdated(table, bet, pot);
-    }
-
 
     public ArrayList<String> getAllowedAction(Player player) {
         ArrayList<String> actions = new ArrayList<>();
@@ -274,27 +232,84 @@ public class Model {
         return actions;
     }
 
-    public boolean isCheckIfWon() {
-        return CheckIfWon;
-    }
-
     public boolean isFlop() {
-        return isFlop;
+        return isFlop && noOfActivePlayer == 0;
     }
 
     public boolean isTurn() {
-        return isTurn;
+        return isTurn && noOfActivePlayer == 0;
     }
 
     public boolean isRiver() {
-        return isRiver;
+        return isRiver && noOfActivePlayer == 0;
     }
 
     public boolean isStarted() {
-        return isStarted;
+        return isStarted && noOfActivePlayer == 0;
     }
 
     public boolean isOver() {
-        return isOver;
+        return isOver && noOfActivePlayer == 0;
+    }
+
+    public int getDealerPosition() {
+        return dealerPosition;
+    }
+
+    public int getBigBlind() {
+        return bigBlind;
+    }
+
+    public int getCurrentActorPosition() {
+        return currentActorPosition;
+    }
+
+    public Player getCurrentActor() {
+        return currentActor;
+    }
+
+    public Player getDealerPlayer() {
+        return dealerPlayer;
+    }
+
+    public ArrayList<Player> getActivePlayerList() {
+        return activePlayerList;
+    }
+
+    public ArrayList<Player> getPlayerList() {
+        return playerList;
+    }
+
+    public boolean isEndGame() {
+        return isEndGame && noOfActivePlayer <= 1;
+    }
+
+    public boolean isShowDown() {
+        return isShowDown && noOfActivePlayer == 0;
+    }
+    
+    public void dealCardByStage() {
+        if (isShowDown() && !isEndGame()) {
+            checkWinner();
+            resetHand();
+            dealPreFlop();
+        } else if (isFlop()) {
+            dealFlop();
+            nextPlayerToAct();
+            isFlop = false;
+            isTurn = true;
+        } else if (isTurn()) {
+            dealTurn();
+            nextPlayerToAct();
+            isTurn = false;
+            isRiver = true;
+        } else if (isRiver()) {
+            dealRiver();
+            nextPlayerToAct();
+            isRiver = false;
+            isShowDown = true;
+        } else {
+            start();
+        }
     }
 }

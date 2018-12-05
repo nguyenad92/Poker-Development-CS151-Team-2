@@ -1,6 +1,5 @@
 package edu.sjsu.cs.cs151.View;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -8,9 +7,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
-import javax.sound.sampled.Line;
-import javax.swing.ImageIcon;
+import java.util.concurrent.BlockingQueue;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.*;
@@ -21,7 +18,8 @@ import javax.swing.border.LineBorder;
 
 
 import edu.sjsu.cs.cs151.Controller.Controller;
-import edu.sjsu.cs.cs151.Model.*;
+import edu.sjsu.cs.cs151.Message.Message;
+
 /**
  * it shows community cards, amount of pots, current actions, messages
  * it needs to update informations when pot increases or player do betting,...
@@ -38,13 +36,11 @@ public class TablePanel extends JPanel {
     private static final String IMAGE_LINK_FORMAT = "/images/card_%s.png";
 
 
-    private PlayerPanel playerPanel = new PlayerPanel("Calvin", "1000");
+//    private PlayerPanel playerPanel = new PlayerPanel(queue"Calvin", "1000");
 
     private final JLabel[] cardLabels;
 
     private final JLabel messageLabel = new JLabel();
-
-    private Controller baseController;
 
     private static final Border TABLE_BORDER
             = new CompoundBorder(new LineBorder(Color.BLACK, 1), new EmptyBorder(10, 10, 10, 10));
@@ -56,8 +52,7 @@ public class TablePanel extends JPanel {
     /**
      * Constructor.
      */
-    public TablePanel(Controller baseController) {
-        this.baseController = baseController;
+    public TablePanel() {
 
         this.setBorder(TABLE_BORDER);
         this.setLayout(new GridBagLayout());
@@ -67,8 +62,8 @@ public class TablePanel extends JPanel {
         /**
          * Info Pannel
          */
-        InfoPanel infoPannel = new InfoPanel(baseController);
-        this.add(infoPannel);
+//        InfoPanel infoPannel = new InfoPanel();
+//        this.add(infoPannel);
 
         /**
          * Community Card Pannel
@@ -87,70 +82,66 @@ public class TablePanel extends JPanel {
         this.add(cardPanel);
         this.setPreferredSize(new Dimension(400,270));
 
+//        ControlPanel controlPanel = new ControlPanel(q);
+//        this.add(controlPanel);
 
         /**
          * Player pannel
          */
-        this.add(playerPanel);
+//        this.add(playerPanel);
 
         /**
-         * Button Pannel
+         * ControllPannel
          */
-        JPanel buttonPanel = new JPanel();
-        this.add(buttonPanel);
+//        JPanel buttonPanel = new JPanel();
+//        this.add(buttonPanel);
+//
+//        JButton checkbutton = new JButton("Check");
+//        buttonPanel.add(checkbutton);
+//        checkbutton.setBounds(0,260,100,40);
+//
+//        JButton callbutton = new JButton("Call");
+//        buttonPanel.add(callbutton);
+//        callbutton.setBounds(100,260,100,40);
+//
+//        JButton raisebutton = new JButton("Raise");
+//        buttonPanel.add(raisebutton);
+//        raisebutton.setBounds(200,260,100,40);
+//
+//        JButton foldbutton = new JButton("Fold");
+//        buttonPanel.add(foldbutton);
+//        foldbutton.setBounds(300,260,100,40);
+//
+//        JButton betbutton = new JButton("Bet");
+//        buttonPanel.add(betbutton);
+//        betbutton.setBounds(400,260,100,40);
 
-        JButton checkbutton = new JButton("Check");
-        buttonPanel.add(checkbutton);
-        checkbutton.setBounds(0,260,100,40);
 
-        JButton callbutton = new JButton("Call");
-        buttonPanel.add(callbutton);
-        callbutton.setBounds(100,260,100,40);
-
-        JButton raisebutton = new JButton("Raise");
-        buttonPanel.add(raisebutton);
-        raisebutton.setBounds(200,260,100,40);
-
-        JButton foldbutton = new JButton("Fold");
-        buttonPanel.add(foldbutton);
-        foldbutton.setBounds(300,260,100,40);
-
-        JButton betbutton = new JButton("Bet");
-        buttonPanel.add(betbutton);
-        betbutton.setBounds(400,260,100,40);
-
-
-        checkbutton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                baseController.getQueue().add("CHECK");
-
-            }
-        });
-        callbutton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
-        raisebutton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
-        foldbutton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
-        betbutton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
+//        checkbutton.addActionListener(new checkActionListener());
+//        callbutton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//
+//            }
+//        });
+//        raisebutton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//
+//            }
+//        });
+//        foldbutton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//
+//            }
+//        });
+//        betbutton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//
+//            }
+//        });
 
 //        update(null, 0, 0);
     }

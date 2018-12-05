@@ -1,8 +1,8 @@
 package edu.sjsu.cs.cs151.View;
 
-import edu.sjsu.cs.cs151.Controller.Controller;
-import edu.sjsu.cs.cs151.Model.Player;
-//import sun.plugin2.message.Message;
+import edu.sjsu.cs.cs151.Message.ActionCheckMessage;
+import edu.sjsu.cs.cs151.Message.Message;
+import sun.applet.Main;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -15,16 +15,13 @@ import java.util.concurrent.BlockingQueue;
  */
 public class View extends JFrame {
 
-    private TablePanel basePanel;
-    private PlayerPanel playerPanels;
-    private BlockingQueue<String> queue;
+    private static JFrame mainFrame;
+    private static BlockingQueue<Message> messageQueue;
+    private static View view;
 
-    public View(Controller baseController, BlockingQueue<String> queue) {
-        basePanel = new TablePanel(baseController);
-        this.queue = queue;
-        init();
+    public View() {
+        mainFrame = MainFrame.init(messageQueue);
     }
-
     public void dispose() {
 
     }
@@ -32,39 +29,52 @@ public class View extends JFrame {
     /**
      *  Setup Frame for the Game
      */
-    public void init() {
-        this.setContentPane(basePanel);
-        this.setSize(500, 500);
-        this.setVisible(true);
-
-//        this.add(playerPanel);
-
-        JButton buttonNewGame = new JButton("NewGame");
-        buttonNewGame.addActionListener(new NewGameListener());
-        this.add(buttonNewGame);
-    }
-    
-    public void joinedTable(List<Player> players)
-    {
-    	for(Player player : players)
-    		playerPanels.updateInfo(player);
+    public static View init(BlockingQueue<Message> queue) {
+        if (view == null) {
+            messageQueue = queue;
+            view = new View();
+        }
+        return view;
     }
 
-    public void change() {
-
+    public void setPlayerPannel(GameInfo gameInfo) {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                ((MainFrame)mainFrame).setPlayerPannel(gameInfo);
+            }
+        });
     }
+
+    public void setControlPannel(String actionName) {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                ((MainFrame)mainFrame).setControlPanel(actionName);
+            }
+        });
+    }
+
+    public void setGamePanel(GameInfo gameInfo) {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                ((MainFrame)mainFrame).setGamePanel(gameInfo);
+            }
+        });
+    }
+
+    public void setInfoPannel(GameInfo gameInfo) {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                ((MainFrame)mainFrame).setInfoPannel(gameInfo);
+            }
+        });
+    }
+
+
 
     public void addMessage() {
 
     }
 
-    public class NewGameListener implements ActionListener {
-        public void actionPerformed(ActionEvent event) {
-            try {
-                queue.put("START");
-            } catch (InterruptedException exception) {
-                exception.printStackTrace();
-            }
-        }
-    }
+
+
 }

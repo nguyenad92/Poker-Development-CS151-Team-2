@@ -3,10 +3,13 @@ package edu.sjsu.cs.cs151.View;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.concurrent.BlockingQueue;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.concurrent.BlockingQueue;
-
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
@@ -16,6 +19,7 @@ import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
 import edu.sjsu.cs.cs151.Message.Message;
+import edu.sjsu.cs.cs151.Message.NewGameMessage;
 import edu.sjsu.cs.cs151.Model.*;
  
 
@@ -25,14 +29,18 @@ import edu.sjsu.cs.cs151.Model.*;
  *
  */
 public class PlayerPanel extends JPanel {
+
 	/**  Send information to the controller from the view*/
 	private static BlockingQueue<Message> queue;
+
 	/** The frame icon of the card */
     private static final Icon CARD_FRAME_ICON =
     		IconManager.getIcon("/images/card_frame.png");
+
     /** The back of the card when it is up side down */
     private static final Icon BACK_OF_CARD_ICON =
     		IconManager.getIcon("/images/back_of_card.png");
+
     /** The format for the link to card images follow by its hashcode */
     private static final String IMAGE_LINK_FORMAT = "/images/card_%s.png";
     
@@ -53,6 +61,7 @@ public class PlayerPanel extends JPanel {
     public Color TABLE_COLOR = new Color(0, 128, 0);
     /** Set the color of text in player frame to yellow */
     public Color TEXT_COLOR = Color.YELLOW;
+
     /**
      * The panel show playeys' information included cards, name, and money 
      * @param blockingQueue
@@ -64,6 +73,7 @@ public class PlayerPanel extends JPanel {
     	setBackground(Color.RED);
 //    	playerNameLabel.setText(name);
 //    	playerMoneyLabel.setText("$" + money);
+
     	setBorder(BORDER);
     	setBackground(TABLE_COLOR);
     	
@@ -158,7 +168,17 @@ public class PlayerPanel extends JPanel {
     		card1Label.setIcon(BACK_OF_CARD_ICON);
     		card2Label.setIcon(BACK_OF_CARD_ICON);
     	}
-    		
     }
+
+	private class BetListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent event) {
+			try {
+				queue.put(new NewGameMessage());
+			} catch (InterruptedException exception) {
+				exception.printStackTrace();
+			}
+		}
+	}
     
 }

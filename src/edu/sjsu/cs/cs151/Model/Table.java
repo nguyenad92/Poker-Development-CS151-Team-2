@@ -19,18 +19,15 @@ public class Table {
     }
     
     
-    public void addCard(Card c)
-    {
+    public void addCard(Card c) {
     	communityCards.add(c);
     }
     
-    public Card showCommunityCards(int i)
-    {
+    public Card showCommunityCards(int i) {
     	return communityCards.get(i);
     }
     
-    public int sizeCard()
-    {
+    public int sizeCard() {
     	return communityCards.size();
     }
 
