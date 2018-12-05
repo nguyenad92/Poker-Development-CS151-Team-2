@@ -10,12 +10,13 @@ public class MainFrame extends JFrame {
     private static MainFrame mainFrame;
     private static BlockingQueue<Message> messageQueue;
     private JPanel basePanel = new TablePanel();
-    private JPanel infoPannel, PlayerPannel, controlPanel, GamePannel;
+    private JPanel infoPanel, playerPanel, controlPanel, gamePanel;
 
     public MainFrame() {
-        setupFrame();
+
 //        PlayerPannel = new PlayerPanel(messageQueue, "Calvin", 10000);
-        controlPanel = new ControlPanel();
+        controlPanel = new ControlPanel(messageQueue);
+        setupFrame();
     }
 
     public static MainFrame init(BlockingQueue<Message> queue) {
@@ -27,11 +28,20 @@ public class MainFrame extends JFrame {
     }
 
     public void setPlayerPannel(GameInfo gameInfo) {
-
+        System.out.println("This is Dealer Position: " + gameInfo.getDealerPlayer().getName() + ": " + gameInfo.getDealerPlayer().getMoney());
+        System.out.println("This is Dealer Position: " + gameInfo.getCurrentPlayer().getName() + ": " + gameInfo.getCurrentPlayer().getMoney());
     }
 
     public void setControlPanel(String actionName) {
         ((ControlPanel) controlPanel).setControlPanel(actionName);
+    }
+
+    public void setGamePanel(GameInfo gameInfo) {
+        ((GamePannel) gamePanel).setGamePanel(gameInfo);
+    }
+
+    public void setInfoPannel(GameInfo gameInfo) {
+        ((InfoPannel) infoPanel).setInfoPannel(gameInfo);
     }
 
 
@@ -39,6 +49,7 @@ public class MainFrame extends JFrame {
         this.setContentPane(basePanel);
         this.setSize(500, 500);
         this.setVisible(true);
+        this.add(controlPanel);
 
 //        this.add(playerPanel);
 

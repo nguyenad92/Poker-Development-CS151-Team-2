@@ -82,6 +82,8 @@ public class TablePanel extends JPanel {
         this.add(cardPanel);
         this.setPreferredSize(new Dimension(400,270));
 
+//        ControlPanel controlPanel = new ControlPanel(q);
+//        this.add(controlPanel);
 
         /**
          * Player pannel
@@ -91,55 +93,55 @@ public class TablePanel extends JPanel {
         /**
          * ControllPannel
          */
-        JPanel buttonPanel = new JPanel();
-        this.add(buttonPanel);
-
-        JButton checkbutton = new JButton("Check");
-        buttonPanel.add(checkbutton);
-        checkbutton.setBounds(0,260,100,40);
-
-        JButton callbutton = new JButton("Call");
-        buttonPanel.add(callbutton);
-        callbutton.setBounds(100,260,100,40);
-
-        JButton raisebutton = new JButton("Raise");
-        buttonPanel.add(raisebutton);
-        raisebutton.setBounds(200,260,100,40);
-
-        JButton foldbutton = new JButton("Fold");
-        buttonPanel.add(foldbutton);
-        foldbutton.setBounds(300,260,100,40);
-
-        JButton betbutton = new JButton("Bet");
-        buttonPanel.add(betbutton);
-        betbutton.setBounds(400,260,100,40);
+//        JPanel buttonPanel = new JPanel();
+//        this.add(buttonPanel);
+//
+//        JButton checkbutton = new JButton("Check");
+//        buttonPanel.add(checkbutton);
+//        checkbutton.setBounds(0,260,100,40);
+//
+//        JButton callbutton = new JButton("Call");
+//        buttonPanel.add(callbutton);
+//        callbutton.setBounds(100,260,100,40);
+//
+//        JButton raisebutton = new JButton("Raise");
+//        buttonPanel.add(raisebutton);
+//        raisebutton.setBounds(200,260,100,40);
+//
+//        JButton foldbutton = new JButton("Fold");
+//        buttonPanel.add(foldbutton);
+//        foldbutton.setBounds(300,260,100,40);
+//
+//        JButton betbutton = new JButton("Bet");
+//        buttonPanel.add(betbutton);
+//        betbutton.setBounds(400,260,100,40);
 
 
 //        checkbutton.addActionListener(new checkActionListener());
-        callbutton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
-        raisebutton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
-        foldbutton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
-        betbutton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
+//        callbutton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//
+//            }
+//        });
+//        raisebutton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//
+//            }
+//        });
+//        foldbutton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//
+//            }
+//        });
+//        betbutton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//
+//            }
+//        });
 
 //        update(null, 0, 0);
     }

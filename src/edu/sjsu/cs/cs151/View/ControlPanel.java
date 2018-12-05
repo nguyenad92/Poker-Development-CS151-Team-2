@@ -1,13 +1,17 @@
 package edu.sjsu.cs.cs151.View;
 
 import edu.sjsu.cs.cs151.Message.ActionCheckMessage;
+import edu.sjsu.cs.cs151.Message.Message;
+import edu.sjsu.cs.cs151.Message.NewGameMessage;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.concurrent.BlockingQueue;
 
 public class ControlPanel extends JPanel {
 
+    BlockingQueue<Message> messageQueue;
     /** The Check button. */
     private final JButton checkButton;
 
@@ -23,12 +27,14 @@ public class ControlPanel extends JPanel {
     /** The Fold button. */
     private final JButton foldButton;
 
-    public ControlPanel() {
-        checkButton = createActionButton("CHECK");
+    public ControlPanel(BlockingQueue<Message> queue) {
+        messageQueue = queue;
+        checkButton = createActionButton("CHECK1");
         callButton = createActionButton("CALL");
         betButton = createActionButton("BET");
         raiseButton = createActionButton("RAISE");
         foldButton = createActionButton("FOLD");
+        this.add(checkButton);
     }
 
     public void setControlPanel(String actionName) {
@@ -36,9 +42,8 @@ public class ControlPanel extends JPanel {
     }
 
     private JButton createActionButton(String buttonName) {
-        String label = buttonName;
-        JButton button = new JButton(label);
-        button.setMnemonic(label.charAt(0));
+        JButton button = new JButton(buttonName);
+        button.setMnemonic(buttonName.charAt(0));
         button.setSize(100, 30);
         button.addActionListener(new checkActionListener());
         return button;
@@ -47,7 +52,7 @@ public class ControlPanel extends JPanel {
     public class checkActionListener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
             try {
-                messageQueue.put(new ActionCheckMessage());
+                messageQueue.put(new NewGameMessage());
             } catch (InterruptedException exception) {
                 exception.printStackTrace();
             }

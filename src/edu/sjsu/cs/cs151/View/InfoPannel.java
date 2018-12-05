@@ -43,6 +43,10 @@ public class InfoPannel extends JPanel {
         infoPannel.add(amountOfBet);
     }
 
+    public void setInfoPannel(GameInfo gameInfo) {
+
+    }
+
     /**
      * Updates the current pot, bet, and community cards.
      * @param cards

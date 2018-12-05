@@ -1,5 +1,4 @@
 package edu.sjsu.cs.cs151.Controller;
-import edu.sjsu.cs.cs151.Controller.Valve.*;
 import edu.sjsu.cs.cs151.Message.*;
 import edu.sjsu.cs.cs151.Model.Model;
 import edu.sjsu.cs.cs151.View.*;
@@ -25,17 +24,21 @@ public class Controller {
         ValveResponse response = ValveResponse.EXECUTED;
         Message message = null;
 
+
         while (response != ValveResponse.FINISH) {
             try {
-                message = queue.take();
+                message = (Message) queue.take();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+
+            for (Valve valve : valves) {
+                response = valve.execute(message);
+                if (response != ValveResponse.MISS) break;
+            }
         }
-        for (Valve valve : valves) {
-            response = valve.execute(model, view, message);
-            if (response != ValveResponse.MISS) break;
-        }
+
+
     }
 
 
@@ -66,7 +69,138 @@ public class Controller {
         valves.add(new DoActionBetValve());
         valves.add(new DoActionRaiseValve());
         valves.add(new DoActionFoldValve());
-        valves.add(new DoDealCardValve());
+//        valves.add(new DoDealValve());
 
     }
+
+    private class StartNewGameValve implements Valve {
+        public ValveResponse execute(Message message) {
+            if (message.getClass() != NewGameMessage.class) {
+                return ValveResponse.MISS;
+            }
+
+            model.start();
+            model.dealPreFlop();
+
+            view.setPlayerPannel(updateGameInfo());
+            view.setControlPannel("CHECK");
+            return ValveResponse.EXECUTED;
+        }
+    }
+
+    public class DoActionBetValve implements Valve {
+
+        public ValveResponse execute(Message message) {
+            //if(!(message instanceof NewGameMessage))
+            if (message.getClass() != ActionBetMessage.class) {
+                return ValveResponse.MISS;
+            }
+
+            model.bet(message.getAmount());
+            model.nextPlayerToAct();
+
+            view.setInfoPannel(updateGameInfo());
+            view.setPlayerPannel(updateGameInfo());
+            view.setControlPannel("BET");
+
+
+            return ValveResponse.EXECUTED;
+        }
+    }
+
+    public class DoActionCallValve implements Valve {
+        
+        public ValveResponse execute(Message message) {
+            //if(!(message instanceof NewGameMessage))
+            if (message.getClass() != ActionCallMessage.class) {
+                return ValveResponse.MISS;
+            }
+            model.call();
+
+            model.dealCardByStage();
+
+            view.setInfoPannel(updateGameInfo());
+            view.setPlayerPannel(updateGameInfo());
+            view.setControlPannel("CALL");
+
+            return ValveResponse.EXECUTED;
+        }
+    }
+
+    public class DoActionCheckValve implements Valve {
+
+        public ValveResponse execute(Message message) {
+            if (message.getClass() != ActionCheckMessage.class) {
+                return ValveResponse.MISS;
+            }
+
+            model.check();
+
+            model.dealCardByStage();
+
+            view.setPlayerPannel(updateGameInfo());
+            view.setControlPannel("CHECK");
+
+            return ValveResponse.EXECUTED;
+        }
+    }
+
+    public class DoActionRaiseValve implements Valve {
+
+        public ValveResponse execute(Message message) {
+            //if(!(message instanceof NewGameMessage))
+            if (message.getClass() != ActionRaiseMessage.class) {
+                return ValveResponse.MISS;
+            }
+
+            model.raise(message.getAmount());
+            model.nextPlayerToAct();
+
+            view.setInfoPannel(updateGameInfo());
+            view.setPlayerPannel(updateGameInfo());
+            view.setControlPannel("RAISE");
+
+            return ValveResponse.EXECUTED;
+        }
+    }
+
+    public class DoActionFoldValve implements Valve {
+
+        public ValveResponse execute(Message message) {
+            //if(!(message instanceof NewGameMessage))
+            if (message.getClass() != ActionFoldMessage.class) {
+                return ValveResponse.MISS;
+            }
+
+            model.fold();
+            model.resetHand();
+            model.dealPreFlop();
+
+            view.setInfoPannel(updateGameInfo());
+            view.setPlayerPannel(updateGameInfo());
+            view.setControlPannel("CHECK");
+
+            return ValveResponse.EXECUTED;
+        }
+    }
+
+//    public class DoDealValve  implements Valve {
+//
+//        public ValveResponse execute(Message message) {
+//            if (message.getClass() != DealCardMessage.class) {
+//                return ValveResponse.MISS;
+//            }
+//
+//            if (model.isFlop()) model.dealFlop();
+//            else if (model.isTurn()) model.dealTurn();
+//            else if (model.isRiver()) {
+//                model.dealRiver();
+//            }
+//
+//            view.setGamePanel(updateGameInfo());
+//            view.setControlPannel("CHECK");
+//
+//            return ValveResponse.EXECUTED;
+//        }
+//    }
 }

@@ -52,6 +52,22 @@ public class View extends JFrame {
         });
     }
 
+    public void setGamePanel(GameInfo gameInfo) {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                ((MainFrame)mainFrame).setGamePanel(gameInfo);
+            }
+        });
+    }
+
+    public void setInfoPannel(GameInfo gameInfo) {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                ((MainFrame)mainFrame).setInfoPannel(gameInfo);
+            }
+        });
+    }
+
 
 
     public void addMessage() {

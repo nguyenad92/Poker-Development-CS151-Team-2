@@ -154,7 +154,6 @@ public class PlayerPanel extends JPanel {
 //    		card1Label.setIcon(BACK_OF_CARD_ICON);
 //    		card2Label.setIcon(BACK_OF_CARD_ICON);
     	}
-    		
     }
 
 	private class BetListener implements ActionListener {
