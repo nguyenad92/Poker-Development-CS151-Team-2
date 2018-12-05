@@ -91,19 +91,6 @@ public class Model {
         nextPlayerToAct();
     }
 
-<<<<<<< HEAD
-    /**
-     * Reset game
-     */
-    public void endGame() {
-        table.reset();
-        for (Player player : playerList) {
-            player.resetHand();
-        }
-    }
-
-=======
->>>>>>> branch 'master' of https://github.com/NivlaCuong/Poker-Development-CS151-Team-2.git
     public void check() {
         noOfActivePlayer--;
         nextPlayerToAct();

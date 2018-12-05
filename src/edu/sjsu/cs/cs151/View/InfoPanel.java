@@ -73,9 +73,6 @@ public class InfoPanel extends JPanel {
         else
             potAmount = pot;
 
-<<<<<<< HEAD
-        
-=======
 //        int communityCards = cards.size();
 //        for (int i = 0; i < NO_OF_CARDS; i++) {
 //            if (i < communityCards) {
@@ -87,7 +84,6 @@ public class InfoPanel extends JPanel {
 //            else {}
 ////                cardLabels[i].setIcon(CARD_FRAME_ICON);
 //        }
->>>>>>> branch 'master' of https://github.com/NivlaCuong/Poker-Development-CS151-Team-2.git
     }
 
 }
