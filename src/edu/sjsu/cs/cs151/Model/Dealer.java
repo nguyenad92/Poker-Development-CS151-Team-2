@@ -25,15 +25,20 @@ public class Dealer {
 
     }
 
+    /**
+     * Flop stage of the game, deal 3 cards
+     */
     public void dealFlopCard() {
         for(int i = 0; i < 3; i++)
             table.addCard(deck.deal());
     }
 
+    //Deal the 4th card
     public void dealTurnCard() {
         table.addCard(deck.deal());
     }
 
+    //Deal last card
     public void dealRiverCard() {
         table.addCard(deck.deal());
     }

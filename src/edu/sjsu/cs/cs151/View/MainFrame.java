@@ -58,20 +58,8 @@ public class MainFrame extends JFrame {
 
     private void setupFrame() {
         this.setContentPane(basePanel);
-        this.add(controlPanel);
-        this.add(infoPanel);
-        this.setSize(500, 500);
-        this.setVisible(true);
-
-//        this.add(playerPanel);
-
-
-//        this.add(playerPanel);
-//
-//        JButton buttonNewGame = new JButton("NewGame");
-//        buttonNewGame.addActionListener(new NewGameListener());
-//        this.add(buttonNewGame);
-//        return view;
+        setLocationPanel();
+        setFrameDisplay();
     }
 
 	private static BlockingQueue<Message> queue = null;
@@ -84,34 +72,19 @@ public class MainFrame extends JFrame {
 	
 	public static final int NO_OF_CARDS = 5;
 
-	private void GamePanel() {
-		setFrameDisplay();
-		setLocationPanel();
-		setVisible(true);
-	}
-
-//    private GameFrame() {
-//        //prywatne metody dla tego konstruktora
-//        setFrameDisplay();
-//        setLocationPanel();
-//        setVisible(true);
-//    }
 	
 	public void setFrameDisplay() {
 		setSize(DEFAULT_HEIGHT, DEFAULT_WIDTH);
-		
+		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
 	public void setLocationPanel() {
-		Container mainContainer = new Container();
+		Container mainContainer = this.getContentPane();
 		mainContainer.setLayout(new BorderLayout());
 		
 		topPanel = new InfoPanel(null);
 		mainContainer.add(topPanel, BorderLayout.NORTH);
-		
-//		buttonPanel = new ControlPanel();
-//		mainContainer.add(buttonPanel, BorderLayout.SOUTH);
 		
 		cardPanel = new JPanel();
         cardPanel.setLayout(new GridLayout(1, 5));
@@ -120,11 +93,12 @@ public class MainFrame extends JFrame {
 
         for (int i = 0; i < NO_OF_CARDS; i++) {
             cardLabels[i] = new JLabel("/images/card_frame.png");
-            cardLabels[i] = new JLabel();
             cardPanel.add(cardLabels[i]);
         }
-        
         mainContainer.add(cardPanel, BorderLayout.CENTER);
+        
+        controlPanel = new ControlPanel(messageQueue);
+        mainContainer.add(controlPanel, BorderLayout.SOUTH);
 
 		playerPanel1 = new PlayerPanel(messageQueue);
 		mainContainer.add(playerPanel1, BorderLayout.WEST);

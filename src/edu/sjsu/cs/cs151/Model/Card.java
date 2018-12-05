@@ -59,6 +59,10 @@ public class Card implements Comparable<Card> {
         this.suit = suit;
     }
     
+    /**
+     * Construc card by using string. For ex: 8q
+     * @param card
+     */
     public Card(String card)
     {
     	String rankSymbol = card.substring(0, 1);
@@ -80,16 +84,21 @@ public class Card implements Comparable<Card> {
     	this.suit = suit;
     }
     
+    /**
+     * Compare if two cards are equal
+     */
     public boolean equals(Object others)
     {
         return this == others;
     }
     
+    //Return rank value
     public int getRank()
     {
     	return rank;
     }
     
+    //Return suit value
     public int getSuit()
     {
     	return suit;

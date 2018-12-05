@@ -44,6 +44,10 @@ public class Model {
         resetHand();
     }
 
+    /**
+     * First round of the game, deal 2 cards to each player
+     * Set blind for specific player
+     */
     public void dealPreFlop() {
         isFlop = true;
         noOfActivePlayer = activePlayerList.size();
@@ -58,25 +62,36 @@ public class Model {
 //        nextPlayerToAct();
     }
 
+    /**
+     * Round 2nd of the game, deal 3 cards on the community cards
+     */
     public void dealFlop() {
         noOfActivePlayer = activePlayerList.size();
         cardDealer.dealFlopCard();
         nextPlayerToAct();
     }
-
+    
+    /**
+     * Round 3rd of the game, deal 1 card on the community card
+     */
     public void dealTurn() {
         noOfActivePlayer = activePlayerList.size();
         cardDealer.dealTurnCard();
         nextPlayerToAct();
     }
 
+    /**
+     * Last round of the game, deal last card on the community card
+     */
     public void dealRiver() {
         noOfActivePlayer = activePlayerList.size();
         cardDealer.dealRiverCard();
         nextPlayerToAct();
     }
 
-
+    /**
+     * Reset game
+     */
     public void endGame() {
         table.reset();
         for (Player player : playerList) {
