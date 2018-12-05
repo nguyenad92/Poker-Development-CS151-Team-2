@@ -56,34 +56,4 @@ public class InfoPanel extends JPanel {
 
         betLabel.setText("Current Bet: " + betAmount);
     }
-
-    /**
-     * Updates the current pot, bet, and community cards.
-     * @param bet
-     * @param pot
-     */
-    public void update(int bet, int pot) {
-        if (bet == 0)
-            betAmount = 0;
-        else
-            betAmount = bet;
-
-        if (pot == 0)
-            potAmount = 0;
-        else
-            potAmount = pot;
-
-//        int communityCards = cards.size();
-//        for (int i = 0; i < NO_OF_CARDS; i++) {
-//            if (i < communityCards) {
-//                int cardValue = cards.get(i).hashCode();
-//                String link = String.format(IMAGE_LINK_FORMAT, cardValue);
-//                ImageIcon cardImage = new ImageIcon(link);
-//                cardLabels[i].setIcon(cardImage);
-//            }
-//            else {}
-////                cardLabels[i].setIcon(CARD_FRAME_ICON);
-//        }
-    }
-
 }

@@ -22,6 +22,7 @@ public class View extends JFrame {
     public View() {
         mainFrame = MainFrame.init(messageQueue);
     }
+
     public void dispose() {
 
     }
