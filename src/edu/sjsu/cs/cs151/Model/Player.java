@@ -11,6 +11,7 @@ public class Player {
 	private String name;
 	private int money; 								// total money
 	private int currentBet;							// current Bet
+	private int originalMoney;
 	private PlayerHand playerHands;
 	private int currentPositionOnTable;
 
@@ -20,6 +21,7 @@ public class Player {
 	public Player(String name, int money) {
 		this.name = name;
 		this.money = money;
+		originalMoney = money;
 		ArrayList<Card> c = new ArrayList<>();
 		this.playerHands = new PlayerHand(this, c);
 		currentBet = 0;
@@ -52,6 +54,10 @@ public class Player {
 	public  void resetHand() {
 		currentBet = 0;
 		playerHands.getCard().clear();
+	}
+
+	public void resetMoney() {
+		originalMoney = money;
 	}
 
 	public void addMoney(int money) {

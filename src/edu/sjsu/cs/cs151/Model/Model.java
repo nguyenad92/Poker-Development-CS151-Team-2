@@ -174,8 +174,7 @@ public class Model {
         activePlayerList.clear();
         for (Player player : playerList) {
             player.resetHand();
-            System.out.println(player.getMoney());
-            if (player.getMoney() >= 0) {
+            if (player.getMoney() > 0) {
                 activePlayerList.add(player);
             }
         }
@@ -315,6 +314,7 @@ public class Model {
             if (!isEndGame) dealPreFlop();
             else {
                 isEndGame = false;
+                isStarted = true;
                 System.out.println("GAME OVER!");
             }
         } else if (isFlop()) {
