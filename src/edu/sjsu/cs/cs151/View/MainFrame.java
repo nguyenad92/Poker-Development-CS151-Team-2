@@ -18,7 +18,6 @@ public class MainFrame extends JFrame {
 
     private static MainFrame mainFrame;
     private static BlockingQueue<Message> messageQueue;
-    private JPanel basePanel = new TablePanel();
     private JPanel topPanel, cardPanel, controlPanel,
             playerPanel1, playerPanel2, infoPanel;
 
@@ -39,7 +38,12 @@ public class MainFrame extends JFrame {
     }
 
     public void setPlayerPannel(GameInfo gameInfo) {
+<<<<<<< HEAD
     	
+=======
+        System.out.println("This is Dealer Position: " + gameInfo.getDealerPlayer().getName() + ": " + gameInfo.getDealerPlayer().getMoney());
+        System.out.println("This is Curent Position: " + gameInfo.getCurrentPlayer().getName() + ": " + gameInfo.getCurrentPlayer().getMoney());
+>>>>>>> branch 'master' of https://github.com/NivlaCuong/Poker-Development-CS151-Team-2.git
     }
 
     public void setControlPanel(String actionName) {
@@ -56,7 +60,7 @@ public class MainFrame extends JFrame {
 
 
     private void setupFrame() {
-        this.setContentPane(basePanel);
+//        this.setContentPane(basePanel);
         setLocationPanel();
         setFrameDisplay();
     }
@@ -82,7 +86,7 @@ public class MainFrame extends JFrame {
 		Container mainContainer = this.getContentPane();
 		mainContainer.setLayout(new BorderLayout());
 		
-		topPanel = new InfoPanel(null);
+		topPanel = infoPanel;
 		mainContainer.add(topPanel, BorderLayout.NORTH);
 		
 		cardPanel = new JPanel();
@@ -96,7 +100,7 @@ public class MainFrame extends JFrame {
         }
         mainContainer.add(cardPanel, BorderLayout.CENTER);
         
-        controlPanel = new ControlPanel(messageQueue);
+//        controlPanel = new ControlPanel(messageQueue);
         mainContainer.add(controlPanel, BorderLayout.SOUTH);
 
 		playerPanel1 = new PlayerPanel(messageQueue);
