@@ -2,8 +2,8 @@ package edu.sjsu.cs.cs151.Model;
 
 import java.util.ArrayList;
 
-public class Dealer {
 
+<<<<<<< HEAD
     private Table table;
     private DeckOfCard deck;
     private ArrayList<Player> playerList;
@@ -43,3 +43,5 @@ public class Dealer {
         table.addCard(deck.deal());
     }
 }
+=======
+>>>>>>> branch 'master' of https://github.com/NivlaCuong/Poker-Development-CS151-Team-2.git

@@ -39,8 +39,7 @@ public class MainFrame extends JFrame {
     }
 
     public void setPlayerPannel(GameInfo gameInfo) {
-        System.out.println("This is Dealer Position: " + gameInfo.getDealerPlayer().getName() + ": " + gameInfo.getDealerPlayer().getMoney());
-        System.out.println("This is Dealer Position: " + gameInfo.getCurrentPlayer().getName() + ": " + gameInfo.getCurrentPlayer().getMoney());
+    	
     }
 
     public void setControlPanel(String actionName) {

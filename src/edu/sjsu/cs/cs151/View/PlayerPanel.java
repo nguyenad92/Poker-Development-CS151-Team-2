@@ -140,30 +140,35 @@ public class PlayerPanel extends JPanel {
      * The method that updates players' information
      * @param player
      */
-    public void updateInfo() {
-    	playerNameLabel.setText(" ");
-    	playerMoneyLabel.setText("$  ");
-    	ArrayList<Card> cards = player.getPlayerHands();
-    	    	
-    	int valueOfCard1 = cards.get(0).hashCode();
-    	int valueOfCard2 = cards.get(1).hashCode();
-    	
-    	String card1 = String.valueOf(valueOfCard1);
-    	String card2 = String.valueOf(valueOfCard2);
-    	
-    	String link1 = String.format(IMAGE_LINK_FORMAT, card1);
-    	String link2 = String.format(IMAGE_LINK_FORMAT, card2);
-    	
-    	ImageIcon cardImage1 = new ImageIcon(link1);
-    	ImageIcon cardImage2 = new ImageIcon(link2);
-    	
-    	
-    	if (cards.size() == 2) {
-    		card1Label.setIcon(cardImage1);
-    		card2Label.setIcon(cardImage2);
-    	} else {
-    		card1Label.setIcon(new ImageIcon("/images/back_of_card.png"));
-    		card2Label.setIcon(new ImageIcon("/images/back_of_card.png"));
+    public void updateInfo(final GameInfo gameInfo ) {
+    	for(int i = 0; i < gameInfo.getPlayerList().size(); i++) {
+	    	Player player = gameInfo.getPlayerList().get(i);
+    		playerNameLabel.setText(player.getName());
+	    	playerMoneyLabel.setText("$  " + player.getMoney());
+	    	ArrayList<Card> cards = player.getPlayerHands();
+	    	
+	    	ArrayList<Card> cards1 = player.getCard();
+	    	    	
+	    	int valueOfCard1 = cards1.get(0).hashCode();
+	    	int valueOfCard2 = cards1.get(1).hashCode();
+	    	
+	    	String card1 = String.valueOf(valueOfCard1);
+	    	String card2 = String.valueOf(valueOfCard2);
+	    	
+	    	String link1 = String.format(IMAGE_LINK_FORMAT, card1);
+	    	String link2 = String.format(IMAGE_LINK_FORMAT, card2);
+	    	
+	    	ImageIcon cardImage1 = new ImageIcon(link1);
+	    	ImageIcon cardImage2 = new ImageIcon(link2);
+	    	
+	    	
+	    	if (cards1.size() == 2) {
+	    		card1Label.setIcon(cardImage1);
+	    		card2Label.setIcon(cardImage2);
+	    	} else {
+	    		card1Label.setIcon(new ImageIcon("/images/back_of_card.png"));
+	    		card2Label.setIcon(new ImageIcon("/images/back_of_card.png"));
+	    	}
     	}
     }
 
