@@ -1,13 +1,15 @@
 package edu.sjsu.cs.cs151.View;
 
 import edu.sjsu.cs.cs151.Controller.Controller;
+import edu.sjsu.cs.cs151.Message.Message;
 import edu.sjsu.cs.cs151.Model.Card;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
+import java.util.concurrent.BlockingQueue;
 
-public class InfoPannel extends JPanel {
+public class InfoPanel extends JPanel {
 
     private JLabel betLabel;
 
@@ -19,7 +21,10 @@ public class InfoPannel extends JPanel {
 
     private Controller baseController;
 
-    public InfoPannel() {
+    private BlockingQueue<Message> messageQueue;
+
+    public InfoPanel(BlockingQueue<Message> queue) {
+        messageQueue = queue;
 
 //        this.setBorder(TABLE_BORDER);
 //        this.setBackground(TABLE_COLOR);

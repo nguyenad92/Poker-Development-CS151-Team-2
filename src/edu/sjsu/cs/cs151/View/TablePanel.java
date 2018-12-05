@@ -62,8 +62,8 @@ public class TablePanel extends JPanel {
         /**
          * Info Pannel
          */
-        InfoPannel infoPannel = new InfoPannel();
-        this.add(infoPannel);
+//        InfoPanel infoPannel = new InfoPanel();
+//        this.add(infoPannel);
 
         /**
          * Community Card Pannel
