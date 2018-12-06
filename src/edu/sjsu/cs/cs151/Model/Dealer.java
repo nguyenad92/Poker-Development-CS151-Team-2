@@ -2,4 +2,41 @@ package edu.sjsu.cs.cs151.Model;
 
 import java.util.ArrayList;
 
+public class Dealer {
 
+    private Table table;
+    private ArrayList<Player> playerList;
+    private DeckOfCard deckOfCard;
+
+    public Dealer(Table table, DeckOfCard deckOfCard, ArrayList<Player> playerList) {
+        this.table = table;
+        this.playerList = playerList;
+        this.deckOfCard = deckOfCard;
+    }
+
+    /**
+     * deal two cards to players
+     */
+    public void dealPreFlopCard() {
+        System.out.println("PreFlop round");
+        for(int i = 0; i < playerList.size(); i++) {
+            playerList.get(i).addCard(deckOfCard.deal(2));
+            System.out.println("Card of this player: " + playerList.get(i).getPlayerHands().toString());
+        }
+    }
+
+    public void dealFlopCard() {
+        System.out.println("Flop round");
+        table.addCard(deckOfCard.deal(3));
+    }
+
+    public void dealTurnCard() {
+        System.out.println("Turn round");
+        table.addCard(deckOfCard.deal(1));
+    }
+
+    public void dealRiverCard() {
+        System.out.println("River round");
+        table.addCard(deckOfCard.deal(1));
+    }
+}

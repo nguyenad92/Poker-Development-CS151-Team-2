@@ -1,10 +1,7 @@
 package edu.sjsu.cs.cs151.View;
 
 import java.util.ArrayList;
-
 import edu.sjsu.cs.cs151.Model.*;
-
-import java.util.ArrayList;
 
 public class GameInfo {
 
@@ -28,7 +25,6 @@ public class GameInfo {
         currentBet = model.getTable().getCurrentBet();
         potTotal = model.getTable().getTotalMoney();
 
-        isEndGame = model.isEndGame();
         communityCards = model.getTable().getCommunityCards();
         bigBlind = model.getBigBlind();
         currentPlayerAction = model.getCurrentActor().getCurrentAction();
@@ -63,10 +59,6 @@ public class GameInfo {
         return bigBlind;
     }
 
-    public boolean isStarted() {
-        return isStarted;
-    }
-
     public int getDealerPosition() {
         return dealerPosition;
     }
@@ -85,10 +77,6 @@ public class GameInfo {
 
     public ArrayList<Card> getCommunityCards() {
         return communityCards;
-    }
-
-    public boolean isEndGame() {
-        return isEndGame;
     }
 
     public boolean isOver() {

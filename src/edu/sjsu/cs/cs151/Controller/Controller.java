@@ -24,7 +24,6 @@ public class Controller {
         ValveResponse response = ValveResponse.EXECUTED;
         Message message = null;
 
-
         while (response != ValveResponse.FINISH) {
             try {
                 message = (Message) queue.take();
@@ -37,15 +36,8 @@ public class Controller {
                 if (response != ValveResponse.MISS) break;
             }
         }
-
-
     }
 
-
-    public GameInfo updateGameInfo() {
-        gameInfo = new GameInfo(model);
-        return gameInfo;
-    }
     public View getView() {
         return view;
     }
@@ -54,23 +46,25 @@ public class Controller {
         return model;
     }
 
-    public BlockingQueue<Message> getQueue() {
-        return queue;
+    private GameInfo updateGameInfo() {
+        gameInfo = new GameInfo(model);
+        return gameInfo;
     }
 
-    public List<Valve> getValves() {
-        return valves;
-    }
-
-    public void addAllValves() {
+    private void addAllValves() {
         valves.add(new StartNewGameValve());
         valves.add(new DoActionCheckValve());
         valves.add(new DoActionCallValve());
         valves.add(new DoActionBetValve());
         valves.add(new DoActionRaiseValve());
         valves.add(new DoActionFoldValve());
-//        valves.add(new DoDealValve());
+    }
 
+    private void updateGame(String message) {
+        view.setGamePanel(updateGameInfo());
+        view.setInfoPannel(updateGameInfo());
+        view.setPlayerPannel(updateGameInfo());
+        view.setControlPannel(updateGameInfo(), message);
     }
 
     private class StartNewGameValve implements Valve {
@@ -80,18 +74,12 @@ public class Controller {
             }
 
             model.start();
+            model.resetHand();
 
-//            model.resetHand();
-//            model.nextPlayerToAct();
             model.setIsOver(false);
             model.dealPreFlop();
 
-
-
-            view.setGamePanel(updateGameInfo());
-            view.setInfoPannel(updateGameInfo());
-            view.setPlayerPannel(updateGameInfo());
-            view.setControlPannel(gameInfo, "NEW_GAME");
+            updateGame("NEW_GAME");
 
             model.nextPlayerToAct();
 

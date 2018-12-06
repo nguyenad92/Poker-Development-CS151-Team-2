@@ -12,24 +12,26 @@ public class Model {
     private DeckOfCard deckOfCard;
     private Dealer cardDealer;
     private Table table;
-    private int dealerPosition = 0, currentActorPosition = 0, bigBlind = 0, noOfActivePlayer, bigBlindPosition = -1;
+    private int dealerPosition, currentActorPosition, bigBlind, noOfActivePlayer, bigBlindPosition;
     private ArrayList<Player> activePlayerList;
     private Player currentActor, dealerPlayer, bigBlindPlayer;
-    private boolean isFlop, isTurn, isRiver, isStarted, isOver, isEndGame, isShowDown;
+    private boolean isFlop, isTurn, isRiver, isStarted, isOver, isShowDown;
 
     public Model() {
-        this.table = new Table();
-        this.deckOfCard = new DeckOfCard();
-        this.playerList = new ArrayList<>();
+        table       = new Table();
+        deckOfCard  = new DeckOfCard();
+        playerList  = new ArrayList<>();
+
         activePlayerList = new ArrayList<>();
         bigBlind = 2000;
 
         Player p1 = new Player("Calvin Nguyen", 3000);
         Player p2 = new Player("Nhung Le", 3000);
+
         addPlayer(p1);
         addPlayer(p2);
 
-        cardDealer = new Dealer();
+        cardDealer = new Dealer(table, deckOfCard, playerList);
     }
 
     /**
@@ -38,11 +40,10 @@ public class Model {
     public void start() {
         dealerPosition = -1;
         currentActorPosition = -1;
+        bigBlindPosition = -1;
 
         isStarted = true;
         isOver = false;
-
-        resetHand();
     }
 
     /**
@@ -50,10 +51,10 @@ public class Model {
      * Set blind for specific player
      */
     public void dealPreFlop() {
-        isFlop = true;
-        table.reset();
+
         noOfActivePlayer = activePlayerList.size();
 
+        isFlop = true;
         isStarted = false;
 
         setBlind("SMALL");
@@ -307,10 +308,6 @@ public class Model {
         return bigBlindPlayer;
     }
 
-    public boolean isEndGame() {
-        return isEndGame;
-    }
-
     public boolean isShowDown() {
         return isShowDown && noOfActivePlayer == 0;
     }
@@ -331,8 +328,6 @@ public class Model {
             dealRiver();
             isRiver = false;
             isShowDown = true;
-        } else if (isEndGame) {
-            start();
         } else {
 
         }
@@ -344,35 +339,5 @@ public class Model {
 
     public int getNoOfActivePlayer() {
         return noOfActivePlayer;
-    }
-
-    public class Dealer {
-
-        /**
-         * deal two cards to players
-         */
-
-        public void dealPreFlopCard() {
-            System.out.println("PreFlop round");
-            for(int i = 0; i < playerList.size(); i++) {
-                playerList.get(i).addCard(deckOfCard.deal(2));
-                System.out.println("Card of this player: " + playerList.get(i).getPlayerHands().toString());
-            }
-        }
-
-        public void dealFlopCard() {
-            System.out.println("Flop round");
-            table.addCard(deckOfCard.deal(3));
-        }
-
-        public void dealTurnCard() {
-            System.out.println("Turn round");
-            table.addCard(deckOfCard.deal(1));
-        }
-
-        public void dealRiverCard() {
-            System.out.println("River round");
-            table.addCard(deckOfCard.deal(1));
-        }
     }
 }

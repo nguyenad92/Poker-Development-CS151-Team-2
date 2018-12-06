@@ -29,9 +29,6 @@ public class ControlPanel extends JPanel {
     /** The Fold button. */
     private JButton foldButton;
 
-    /** The ALL IN button. */
-    private JButton allInButton;
-
     private JTextField betAmount;
 
     private GameInfo gameInfo;
@@ -45,7 +42,6 @@ public class ControlPanel extends JPanel {
         betButton = createActionButton("BET");
         raiseButton = createActionButton("RAISE");
         foldButton = createActionButton("FOLD");
-//        allInButton = createActionButton("ALL_IN");
         betAmount = new JTextField(15);
 
         add(newGameButton);
@@ -54,19 +50,15 @@ public class ControlPanel extends JPanel {
     public void setControlPanel(GameInfo gameInfo, String actionName) {
         this.gameInfo = gameInfo;
         clearAllButton();
-        if (actionName.equals("NEW_GAME") && gameInfo.isOver()) {
-            add(newGameButton);
-        }
-        else if (actionName.equals("NEW_GAME") || (actionName.equals("FOLD"))) {
+        add(newGameButton);
+
+        if (actionName.equals("NEW_GAME") || (actionName.equals("FOLD"))) {
             add(callButton);
             add(raiseButton);
         } else if (actionName.equals("CHECK")) {
 
             add(checkButton);
             add(betButton);
-//            if (gameInfo.getCurrentPlayer().getMoney() <= gameInfo.getBigBlind()) {
-//                add(allInButton);
-//            }
         } else if(actionName.equals("CALL")) {
             add(checkButton);
             add(raiseButton);
@@ -74,9 +66,6 @@ public class ControlPanel extends JPanel {
             add(foldButton);
             add(callButton);
             add(raiseButton);
-//            if (gameInfo.getCurrentPlayer().getMoney() <= gameInfo.getBigBlind()) {
-//                add(allInButton);
-//            }
         }
         betAmount.setText(Integer.toString(gameInfo.getBigBlind()));
 
@@ -90,7 +79,6 @@ public class ControlPanel extends JPanel {
         remove(raiseButton);
         remove(callButton);
         remove(foldButton);
-//        remove(allInButton);
         remove(betAmount);
     }
 
@@ -98,6 +86,7 @@ public class ControlPanel extends JPanel {
         JButton button = new JButton(buttonName);
         button.setMnemonic(buttonName.charAt(0));
         button.setSize(100, 30);
+
         if (buttonName.equals("NEW GAME")) button.addActionListener(new newGameActionListener());
         if (buttonName.equals("CHECK")) button.addActionListener(new checkActionListener());
         if (buttonName.equals("CALL")) button.addActionListener(new callActionListener());

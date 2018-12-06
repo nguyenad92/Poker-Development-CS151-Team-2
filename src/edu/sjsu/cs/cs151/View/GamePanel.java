@@ -2,16 +2,10 @@ package edu.sjsu.cs.cs151.View;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.BlockingQueue;
-
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.EmptyBorder;
-
 import edu.sjsu.cs.cs151.Message.Message;
 import edu.sjsu.cs.cs151.Model.Card;
-import sun.jvm.hotspot.opto.Block;
 
 /**
  * Community Card + text that describe the state game action of previous players
@@ -21,10 +15,6 @@ public class GamePanel extends JPanel {
 	private static final int NO_OF_CARDS = 5;
 
 	BlockingQueue<Message> messageQueue;
-
-	private static final Border BORDER = new EmptyBorder(10, 10, 10, 10);
-
-	public Color TABLE_COLOR = new Color(0, 128, 0);
 
 	private JLabel[] cardLabels;
 
