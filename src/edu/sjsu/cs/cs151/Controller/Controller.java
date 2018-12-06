@@ -60,11 +60,11 @@ public class Controller {
         valves.add(new DoActionFoldValve());
     }
 
-    private void updateGame(String message) {
+    private void updateGame(String action) {
         view.setGamePanel(updateGameInfo());
         view.setInfoPannel(updateGameInfo());
         view.setPlayerPannel(updateGameInfo());
-        view.setControlPannel(updateGameInfo(), message);
+        view.setControlPannel(updateGameInfo(), action);
     }
 
     private class StartNewGameValve implements Valve {
@@ -78,10 +78,10 @@ public class Controller {
 
             model.setIsOver(false);
             model.dealPreFlop();
+            model.nextPlayerToAct();
+            view.setMessage(updateGameInfo(), "The game begins: " + updateGameInfo().getCurrentPlayer().getName() + " is the first player!");
 
             updateGame("NEW_GAME");
-
-            model.nextPlayerToAct();
 
             return ValveResponse.EXECUTED;
         }
@@ -96,13 +96,9 @@ public class Controller {
             }
 
             model.bet(message.getAmount());
-
-            view.setInfoPannel(updateGameInfo());
-            view.setPlayerPannel(updateGameInfo());
-            view.setControlPannel(gameInfo, "BET");
             view.setMessage(gameInfo, "Bet " + message.getAmount());
-
             model.nextPlayerToAct();
+            updateGame("BET");
 
             return ValveResponse.EXECUTED;
         }
@@ -120,13 +116,20 @@ public class Controller {
 
             model.dealCardByStage();
 
-            view.setGamePanel(updateGameInfo());
-            view.setInfoPannel(updateGameInfo());
-            view.setPlayerPannel(updateGameInfo());
-            view.setControlPannel(gameInfo, "CALL");
-            view.setMessage(gameInfo, "Call ");
-
-            model.nextPlayerToAct();
+            if (model.isStarted() && !model.isOver()) {
+                model.dealPreFlop();
+                view.setMessage(updateGameInfo(), updateGameInfo().getCurrentPlayer().getName() + " win a hand for " + updateGameInfo().getPotTotal());
+                model.nextPlayerToAct();
+                updateGame("CALL");
+            } else if (model.isOver()) {
+                view.setMessage(updateGameInfo(), updateGameInfo().getCurrentPlayer().getName() + " is a Winner");
+                model.resetHand();
+                view = View.init(queue);
+            } else {
+                view.setMessage(updateGameInfo(), updateGameInfo().getCurrentPlayer().getName() + " just Call!");
+                model.nextPlayerToAct();
+                updateGame("CALL");
+            }
 
             return ValveResponse.EXECUTED;
         }
@@ -144,36 +147,18 @@ public class Controller {
             model.dealCardByStage();
 
             if (model.isStarted() && !model.isOver()) {
-
                 model.dealPreFlop();
-
-                view.setControlPannel(updateGameInfo(), "CHECK");
-                view.setInfoPannel(updateGameInfo());
-                view.setGamePanel(updateGameInfo());
-                view.setPlayerPannel(updateGameInfo());
-//                view.setMessage(gameInfo, "win a hand for " + updateGameInfo().getPotTotal());
+                view.setMessage(updateGameInfo(), updateGameInfo().getCurrentPlayer().getName() + " win a hand for " + updateGameInfo().getPotTotal());
+                updateGame("CHECK");
                 model.nextPlayerToAct();
             } else if (model.isOver()) {
-
-                System.out.println("GAME OVER -> Start a new Game");
-                view = new View();
-                model = new Model();
-
-
-//                model.start();
-//                model.resetHand();
-//                model.dealPreFlop();
-
-//                view.setControlPannel(updateGameInfo(), "NEW_GAME");
-//                view.setInfoPannel(updateGameInfo());
-//                view.setGamePanel(updateGameInfo());
-//                view.setPlayerPannel(updateGameInfo());
+                view.setMessage(updateGameInfo(), updateGameInfo().getCurrentPlayer().getName() + " is a Winner");
+                model.resetHand();
+                view = View.init(queue);
             } else {
-                view.setInfoPannel(updateGameInfo());
-                view.setGamePanel(updateGameInfo());
-                view.setPlayerPannel(updateGameInfo());
-                view.setControlPannel(updateGameInfo(), "CHECK");
-//                view.setMessage(gameInfo, "Check ");
+                view.setMessage(updateGameInfo(), updateGameInfo().getCurrentPlayer().getName() + " just Check!");
+
+                updateGame("CHECK");
                 model.nextPlayerToAct();
             }
 
@@ -191,10 +176,12 @@ public class Controller {
 
             model.raise(message.getAmount());
 
-            view.setInfoPannel(updateGameInfo());
-            view.setPlayerPannel(updateGameInfo());
-            view.setControlPannel(gameInfo, "RAISE");
+            view.setMessage(updateGameInfo(), updateGameInfo().getCurrentPlayer().getName() + " Raise " + message.getAmount());
+
+            updateGame("RAISE");
+
             model.nextPlayerToAct();
+
 
             return ValveResponse.EXECUTED;
         }
@@ -214,32 +201,9 @@ public class Controller {
 
             model.dealPreFlop();
 
-            view.setGamePanel(updateGameInfo());
-            view.setInfoPannel(updateGameInfo());
-            view.setPlayerPannel(updateGameInfo());
-            view.setControlPannel(updateGameInfo(), "CHECK");
-
-
+            updateGame("CHECK");
 
             return ValveResponse.EXECUTED;
         }
     }
-//    public class DoActionAllInValve implements Valve {
-//
-//        public ValveResponse execute(Message message) {
-//            //if(!(message instanceof NewGameMessage))
-//            if (message.getClass() != AllInactionMessage.class) {
-//                return ValveResponse.MISS;
-//            }
-//
-//            model.bet(message.getAmount());
-//            model.nextPlayerToAct();
-//
-//            view.setInfoPannel(updateGameInfo());
-//            view.setPlayerPannel(updateGameInfo());
-//            view.setControlPannel(gameInfo, "ALL_IN");
-//
-//            return ValveResponse.EXECUTED;
-//        }
-//    }
 }

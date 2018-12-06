@@ -56,7 +56,6 @@ public class ControlPanel extends JPanel {
             add(callButton);
             add(raiseButton);
         } else if (actionName.equals("CHECK")) {
-
             add(checkButton);
             add(betButton);
         } else if(actionName.equals("CALL")) {

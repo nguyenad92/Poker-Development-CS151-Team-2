@@ -25,8 +25,8 @@ public class Model {
         activePlayerList = new ArrayList<>();
         bigBlind = 2000;
 
-        Player p1 = new Player("Calvin Nguyen", 3000);
-        Player p2 = new Player("Nhung Le", 3000);
+        Player p1 = new Player("Calvin Nguyen", 10000);
+        Player p2 = new Player("Nhung Le", 10000);
 
         addPlayer(p1);
         addPlayer(p2);
@@ -123,9 +123,8 @@ public class Model {
         noOfActivePlayer--;
 
         currentActor.setCurrentAction("BET");
-        int moneyToPay = amount - currentActor.getCurrentBet();
+        int moneyToPay = amount;
 
-        System.out.println(currentActor.getMoney());
         if (moneyToPay > currentActor.getMoney()) {
             moneyToPay = currentActor.getMoney();
         }
@@ -134,7 +133,7 @@ public class Model {
 
     public void raise(int amount) {
         noOfActivePlayer--;
-
+        if (noOfActivePlayer == 0) noOfActivePlayer++;
         currentActor.setCurrentAction("RAISE");
         int moneyToPay = amount - currentActor.getCurrentBet();
 
@@ -150,7 +149,6 @@ public class Model {
         currentActor.resetHand();
 
         activePlayerList.remove(currentActor);
-        currentActorPosition--;
 
         Player winner = activePlayerList.get(0);
         int amount = table.getTotalMoney();
@@ -253,15 +251,15 @@ public class Model {
     }
 
     public boolean isFlop() {
-        return isFlop && noOfActivePlayer == 0;
+        return isFlop && noOfActivePlayer <= 0;
     }
 
     public boolean isTurn() {
-        return isTurn && noOfActivePlayer == 0;
+        return isTurn && noOfActivePlayer <= 0;
     }
 
     public boolean isRiver() {
-        return isRiver && noOfActivePlayer == 0;
+        return isRiver && noOfActivePlayer <= 0;
     }
 
     public boolean isStarted() {
@@ -316,21 +314,25 @@ public class Model {
         if (isShowDown() && !isOver) {
             checkWinner();
             isStarted = true;
-        } else if (isFlop()) {
-            dealFlop();
-            isFlop = false;
-            isTurn = true;
-        } else if (isTurn()) {
-            dealTurn();
-            isTurn = false;
-            isRiver = true;
-        } else if (isRiver()) {
-            dealRiver();
-            isRiver = false;
-            isShowDown = true;
         } else {
 
+            if (isFlop()) {
+                dealFlop();
+                isFlop = false;
+                isTurn = true;
+            } else if (isTurn()) {
+                dealTurn();
+                isTurn = false;
+                isRiver = true;
+            } else if (isRiver()) {
+                dealRiver();
+                isRiver = false;
+                isShowDown = true;
+            }
+            currentActorPosition = dealerPosition;
+            currentActor = playerList.get(currentActorPosition);
         }
+
     }
 
     public Table getTable() {

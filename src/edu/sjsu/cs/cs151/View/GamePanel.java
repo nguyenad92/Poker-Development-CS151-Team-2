@@ -79,7 +79,7 @@ public class GamePanel extends JPanel {
     	if(message.length() == 0)
     		messageLabel.setText(" ");
     	else
-    		messageLabel.setText(gameInfo.getCurrentPlayer().getName() + " just " + message);
+    		messageLabel.setText(message);
     }
 
 }

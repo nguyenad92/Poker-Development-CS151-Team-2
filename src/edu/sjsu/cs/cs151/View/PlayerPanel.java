@@ -49,7 +49,6 @@ public class PlayerPanel extends JPanel {
 	private JLabel messageLabel;
 
 	/**  Send information to the controller from the view*/
-	private static BlockingQueue<Message> queue;
 	private Player player;
 
 	/**Border of player frame.
@@ -66,10 +65,8 @@ public class PlayerPanel extends JPanel {
 
 	/**
 	 * The panel show playeys' information included cards, name, and money
-	 * @param blockingQueue
 	 */
-	public PlayerPanel(BlockingQueue<Message> blockingQueue) {
-		queue = blockingQueue;
+	public PlayerPanel() {
 		initPlayerPanel();
 	}
 	/**
@@ -80,16 +77,13 @@ public class PlayerPanel extends JPanel {
 		ArrayList<Card> cards = player.getPlayerHands();
 
 		if (gameInfo.getPlayerList().size() > 0) {
-			for (int i = 0; i < gameInfo.getPlayerList().size(); i++) {
-
-				// Display Card
-				if (gameInfo.getPlayerList().get(i).equals(gameInfo.getCurrentPlayer())) {
-					card1Label.setIcon(IconManager.getCardImage(cards.get(0)));
-					card2Label.setIcon(IconManager.getCardImage(cards.get(1)));
-				} else {        // Hide Card
-					card1Label.setIcon(CARD_BACK_ICON);
-					card2Label.setIcon(CARD_BACK_ICON);
-				}
+			// Display Card
+			if (gameInfo.getPlayerList().get(position).equals(gameInfo.getCurrentPlayer())) {
+				card1Label.setIcon(IconManager.getCardImage(cards.get(0)));
+				card2Label.setIcon(IconManager.getCardImage(cards.get(1)));
+			} else {        // Hide Card
+				card1Label.setIcon(CARD_BACK_ICON);
+				card2Label.setIcon(CARD_BACK_ICON);
 			}
 		} else {
 			card1Label.setIcon(CARD_PLACEHOLDER_ICON);

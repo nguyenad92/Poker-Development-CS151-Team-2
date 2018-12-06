@@ -14,15 +14,15 @@ public class MainFrame extends JFrame {
     private static BlockingQueue<Message> messageQueue;
     private JPanel controlPanel, playerPanel1, playerPanel2, infoPanel, gamePanel;
 
-    private static final int DEFAULT_HEIGHT = 900;
-    private static final int DEFAULT_WIDTH = 600;
+    private static final int DEFAULT_HEIGHT = 500;
+    private static final int DEFAULT_WIDTH = 800;
 
     public MainFrame() {
         infoPanel       = new InfoPanel(messageQueue);
         controlPanel    = new ControlPanel(messageQueue);
         gamePanel       = new GamePanel(messageQueue);
-        playerPanel1    = new PlayerPanel(messageQueue);
-        playerPanel2    = new PlayerPanel(messageQueue);
+        playerPanel1    = new PlayerPanel();
+        playerPanel2    = new PlayerPanel();
         setupFrame();
     }
 

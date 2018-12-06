@@ -7,7 +7,6 @@ import java.util.HashMap;
  * This class will keep track the amount of each player put in
  */
 public class Pot {
-
     private int currentBet;
     private int totalMoney;
     private HashMap<Player, Integer> potContribution;
@@ -19,24 +18,18 @@ public class Pot {
     }
 
     public void addMoneyToPotContribution(Player p, int chip) {
-
         if (!potContribution.containsKey(p)) {
             potContribution.put(p, chip);
         } else {
             potContribution.put(p, chip + p.getCurrentBet());
         }
-        currentBet = chip;
-//        p.setCurrentBet(playerCurrentBet);
+        currentBet = chip + p.getCurrentBet();
         p.payMoney(chip);
         totalMoney += chip;
     }
 
     public int getTotalMoney() {
         return totalMoney;
-    }
-
-    public void setTotalMoney(int totalMoney) {
-        this.totalMoney = totalMoney;
     }
 
     public void setCurrentBet(int currentBet) {

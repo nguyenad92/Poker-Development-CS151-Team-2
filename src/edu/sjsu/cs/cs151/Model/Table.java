@@ -17,20 +17,11 @@ public class Table {
         potContribution = new Pot();
         communityCards = new ArrayList<>();
     }
-    
-    
+
     public void addCard(ArrayList<Card> c) {
             communityCards.addAll(c);
     }
     
-    public Card showCommunityCards(int i) {
-    	return communityCards.get(i);
-    }
-    
-    public int sizeCard() {
-    	return communityCards.size();
-    }
-
     public void addMoneyToPot(Player p, int betMoney) {
         potContribution.addMoneyToPotContribution(p, betMoney);
     }
