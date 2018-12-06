@@ -6,6 +6,9 @@ import edu.sjsu.cs.cs151.View.*;
 import java.util.*;
 import java.util.concurrent.*;
 
+/**
+ * Controller: will be controlling the game and have all actions of View and Model
+ */
 public class Controller {
     private BlockingQueue<Message> queue;
     private View view;
@@ -13,6 +16,12 @@ public class Controller {
     private List<Valve> valves = new LinkedList<>();
     private GameInfo gameInfo;
 
+    /**
+     * Constructor: Connect the Model, View, and message Queue
+     * @param view
+     * @param model
+     * @param queue
+     */
     public Controller(View view, Model model, BlockingQueue<Message> queue) {
         this.view = view;
         this.model = model;
@@ -20,6 +29,10 @@ public class Controller {
         addAllValves();
     }
 
+    /**
+     * Main Loop to Execute the message from the View
+     * @throws Exception
+     */
     public void mainLoop() throws Exception {
         ValveResponse response = ValveResponse.EXECUTED;
         Message message = null;
@@ -38,19 +51,34 @@ public class Controller {
         }
     }
 
+    /**
+     *
+     * @return the View of the App
+     */
     public View getView() {
         return view;
     }
 
+    /**
+     *
+     * @return the model of the App
+     */
     public Model getModel() {
         return model;
     }
 
+    /**
+     * Update the new Model
+     * @return an updated Model wih changes
+     */
     private GameInfo updateGameInfo() {
         gameInfo = new GameInfo(model);
         return gameInfo;
     }
 
+    /**
+     * Add all the Valve so the mainloop can execute the message
+     */
     private void addAllValves() {
         valves.add(new StartNewGameValve());
         valves.add(new DoActionCheckValve());
@@ -60,6 +88,10 @@ public class Controller {
         valves.add(new DoActionFoldValve());
     }
 
+    /**
+     * Update all the View Panel
+     * @param action: Current action of
+     */
     private void updateGame(String action) {
         view.setGamePanel(updateGameInfo());
         view.setInfoPannel(updateGameInfo());
@@ -67,6 +99,9 @@ public class Controller {
         view.setControlPannel(updateGameInfo(), action);
     }
 
+    /**
+     * Start a new Game
+     */
     private class StartNewGameValve implements Valve {
         public ValveResponse execute(Message message) {
             if (message.getClass() != NewGameMessage.class) {
@@ -87,6 +122,9 @@ public class Controller {
         }
     }
 
+    /**
+     * Bet Action
+     */
     public class DoActionBetValve implements Valve {
 
         public ValveResponse execute(Message message) {
@@ -104,6 +142,9 @@ public class Controller {
         }
     }
 
+    /**
+     * Call Action
+     */
     public class DoActionCallValve implements Valve {
         
         public ValveResponse execute(Message message) {
@@ -135,6 +176,9 @@ public class Controller {
         }
     }
 
+    /**
+     * Check Action
+     */
     public class DoActionCheckValve implements Valve {
 
         public ValveResponse execute(Message message) {
@@ -166,6 +210,9 @@ public class Controller {
         }
     }
 
+    /**
+     * Raise Action
+     */
     public class DoActionRaiseValve implements Valve {
 
         public ValveResponse execute(Message message) {
@@ -187,6 +234,9 @@ public class Controller {
         }
     }
 
+    /**
+     * Fold Action
+     */
     public class DoActionFoldValve implements Valve {
 
         public ValveResponse execute(Message message) {
