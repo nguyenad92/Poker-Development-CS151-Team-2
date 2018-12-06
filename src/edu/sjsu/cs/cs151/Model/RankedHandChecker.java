@@ -19,6 +19,10 @@ public class RankedHandChecker {
 
     private int setRank = -1, quadRank = -1, flushSuit = -1, highestFlushRank = -1, highestStraightCard = -1;
 
+    /**
+     * calculate the rank score
+     * @param card
+     */
     public RankedHandChecker(ArrayList<Card> card) {
         handScore = new ArrayList<>();
         pairRank = new ArrayList<>();
@@ -33,6 +37,9 @@ public class RankedHandChecker {
         }
     }
 
+    /**
+     * define the ranks based on types of cards.
+     */
     private void setRankedHandType() {
         if (isOnePair())            rankedHandType = RankedHandType.ONE_PAIR;
         else if (isTwoPair())       rankedHandType = RankedHandType.TWO_PAIRS;
@@ -47,6 +54,10 @@ public class RankedHandChecker {
 
     }
 
+    /**
+     * the suit cards list
+     * @return
+     */
     private ArrayList<Integer> getSuitDistributionList() {
         ArrayList<Integer> list = new ArrayList<>(Collections.nCopies(4, 0));
         for (int j = 0; j < cardToBeAnalyzed.size(); j++) {
@@ -57,6 +68,9 @@ public class RankedHandChecker {
         return list;
     }
 
+    /**
+     * print out the suit list and rank list
+     */
     private void initArrayList() {
         suitList = getSuitDistributionList();
         rankList = getRankDistributionList();
@@ -74,6 +88,10 @@ public class RankedHandChecker {
         getDuplicateCard();
     }
 
+    /**
+     * the list of rank cards
+     * @return
+     */
     private ArrayList<Integer> getRankDistributionList() {
         ArrayList<Integer> list = new ArrayList<>(Collections.nCopies(14, 0));
         for (int j = 0; j < cardToBeAnalyzed.size(); j++) {
@@ -84,6 +102,9 @@ public class RankedHandChecker {
         return list;
     }
 
+    /**
+     * check for the same suits
+     */
     private void getFlush() {
         for (int i = 0; i < suitList.size(); i++) {
             if (suitList.get(i) >= 5) {
@@ -98,6 +119,9 @@ public class RankedHandChecker {
         }
     }
 
+    /**
+     * check if 5 cards in sequence
+     */
     private void getStraight() {
         int size = cardToBeAnalyzed.size();
 //        System.out.println(size);
@@ -140,6 +164,9 @@ public class RankedHandChecker {
         }
     }
 
+    /**
+     * checks duplicate cards
+     */
     private void getDuplicateCard() {
         for (int i = 0; i < rankList.size(); i++) {
             if (rankList.get(i) >= 4) quadRank = i;
@@ -161,7 +188,9 @@ public class RankedHandChecker {
         }
     }
 
-    // Check for 1 Pair
+    /**
+     * Check for 1 Pair
+     */
     private boolean isOnePair() {
         if (pairRank.size() == 1) {
             rankedHandType = RankedHandType.ONE_PAIR;
@@ -178,7 +207,9 @@ public class RankedHandChecker {
         return false;
     }
 
-    // Check for 2 Pairs
+    /**
+     * Check for 2 Pairs
+     */
     private boolean isTwoPair() {
         if (pairRank.size() == 2) {
             rankedHandType = RankedHandType.TWO_PAIRS;
@@ -195,7 +226,9 @@ public class RankedHandChecker {
         return false;
     }
 
-    // Check for a Set
+    /**
+     * Check for a Set
+     */
     private boolean isSet() {
         if (setRank > 0) {
             rankedHandType = RankedHandType.THREE_OF_A_KIND;
@@ -212,7 +245,9 @@ public class RankedHandChecker {
         return false;
     }
 
-    // Check for a straight
+    /**
+     * Check for a straight
+     */
     private boolean isStraight() {
         if (highestStraightCard >= 0) {
             handScore.add(highestStraightCard);
@@ -221,7 +256,9 @@ public class RankedHandChecker {
         return false;
     }
 
-    // check for a flush
+    /**
+     * check for a flush
+     */
     private boolean isFlush() {
         if (flushSuit >= 0) {
             rankedHandType = RankedHandType.FLUSH;
@@ -236,7 +273,9 @@ public class RankedHandChecker {
         return false;
     }
 
-    // check for a full house
+    /**
+     * check for a full house
+     */
     private boolean isFullHouse() {
         if (pairRank.size() == 1 && setRank >= 0) {
             rankedHandType = RankedHandType.FULL_HOUSE;
@@ -247,7 +286,9 @@ public class RankedHandChecker {
         return false;
     }
 
-    // check for 4 of a Kind
+    /**
+     * check for 4 of a Kind
+     */
     private boolean isFourOfAKind() {
         if (quadRank > 0) {
             rankedHandType = RankedHandType.FOUR_OF_A_KIND;
@@ -264,7 +305,9 @@ public class RankedHandChecker {
         return false;
     }
 
-    // Check for straight flush
+    /**
+     * Check for straight flush
+     */
     private boolean isStraightFlush() {
         if (highestFlushRank == highestStraightCard && isStraight() && isFlush()) {
             rankedHandType = RankedHandType.STRAIGHT_FLUSH;
@@ -273,7 +316,9 @@ public class RankedHandChecker {
         }
         return false;
     }
-
+    /**
+     * Check for royal flush
+     */
     private boolean isRoyalFlush() {
         if (highestFlushRank == highestStraightCard && isStraight() && isFlush() && straightAceTop) {
             rankedHandType = RankedHandType.ROYAL_FLUSH;

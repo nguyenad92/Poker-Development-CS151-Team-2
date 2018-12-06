@@ -12,16 +12,28 @@ public class RankedHand implements Comparable<RankedHand> {
     private int rankedHandScore;
     private RankedHandType rankedHandType;
 
+    /**
+     * player's rank hand
+     * @param p
+     */
     public RankedHand(Player p) {
         initRankedHand(p.getPlayerHands());
     }
 
+    /**
+     * get the rank hand score and type of the players
+     * @param cards
+     */
     private void initRankedHand(ArrayList<Card> cards) {
         RankedHandChecker rankedHandChecker = new RankedHandChecker(cards);
         rankedHandScore = rankedHandChecker.getRankedHandScore();
-        rankedHandType = rankedHandChecker.getRankedHandType();
+        rankedHandType = rankedHandChecker.getRankType();
     }
 
+    /**
+     * get/set method
+     * @param rankedHandScore
+     */
     public void setRankedHandScore(int rankedHandScore) {
         this.rankedHandScore = rankedHandScore;
     }
@@ -38,6 +50,11 @@ public class RankedHand implements Comparable<RankedHand> {
         return rankedHandScore;
     }
 
+    /**
+     * compare rank hand
+     * @param o
+     * @return
+     */
     @Override
     public int compareTo(RankedHand o) {
         return 0;
