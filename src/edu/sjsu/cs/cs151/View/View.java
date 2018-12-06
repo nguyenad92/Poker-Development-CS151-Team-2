@@ -28,6 +28,10 @@ public class View extends JFrame {
         return view;
     }
 
+    /**
+     * Set up the Player Panel on View
+     * @param gameInfo
+     */
     public void setPlayerPannel(GameInfo gameInfo) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
@@ -36,6 +40,11 @@ public class View extends JFrame {
         });
     }
 
+    /**
+     * Set up the Control Panel on View
+     * @param gameInfo
+     * @param actionName
+     */
     public void setControlPannel(GameInfo gameInfo, String actionName) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
@@ -44,6 +53,11 @@ public class View extends JFrame {
         });
     }
 
+    /**
+     * Set up the message on View
+     * @param gameInfo
+     * @param messsage
+     */
     public void setMessage(GameInfo gameInfo, String messsage) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
@@ -52,6 +66,10 @@ public class View extends JFrame {
         });
     }
 
+    /**
+     * Set up the Game Panel on View
+     * @param gameInfo
+     */
     public void setGamePanel(GameInfo gameInfo) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
@@ -60,6 +78,10 @@ public class View extends JFrame {
         });
     }
 
+    /**
+     * Set up the Information Panel on View
+     * @param gameInfo
+     */
     public void setInfoPannel(GameInfo gameInfo) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {

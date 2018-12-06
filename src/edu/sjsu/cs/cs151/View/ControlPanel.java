@@ -33,7 +33,10 @@ public class ControlPanel extends JPanel {
 
     private GameInfo gameInfo;
 
-
+    /**
+     * The panel helps receiving action when user click on buttons
+     * @param queue
+     */
     public ControlPanel(BlockingQueue<Message> queue) {
         messageQueue = queue;
         newGameButton = createActionButton("NEW GAME");
@@ -47,6 +50,11 @@ public class ControlPanel extends JPanel {
         add(newGameButton);
     }
 
+    /**
+     * Set up the buttons when new game starts
+     * @param gameInfo
+     * @param actionName
+     */
     public void setControlPanel(GameInfo gameInfo, String actionName) {
         this.gameInfo = gameInfo;
         clearAllButton();
@@ -72,6 +80,9 @@ public class ControlPanel extends JPanel {
         add(betAmount);
     }
 
+    /**
+     * Reset all actions
+     */
     private void clearAllButton() {
         remove(newGameButton);
         remove(checkButton);
@@ -82,6 +93,11 @@ public class ControlPanel extends JPanel {
         remove(betAmount);
     }
 
+    /**
+     * Conduct the action when receiving from user
+     * @param buttonName
+     * @return
+     */
     private JButton createActionButton(String buttonName) {
         JButton button = new JButton(buttonName);
         button.setMnemonic(buttonName.charAt(0));
@@ -97,6 +113,9 @@ public class ControlPanel extends JPanel {
         return button;
     }
 
+    /**
+     * Class that do the NEW GAME action
+     */
     public class newGameActionListener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
             try {
@@ -107,6 +126,9 @@ public class ControlPanel extends JPanel {
         }
     }
 
+    /**
+     * Class that do the ALL IN action
+     */
     public class allInActionListener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
             try {
@@ -117,6 +139,9 @@ public class ControlPanel extends JPanel {
         }
     }
 
+    /**
+     * Class that do the CHECK action
+     */
     public class checkActionListener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
             try {
@@ -127,6 +152,9 @@ public class ControlPanel extends JPanel {
         }
     }
 
+    /**
+     * Class that do the CALL action
+     */
     public class callActionListener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
             try {
@@ -137,6 +165,9 @@ public class ControlPanel extends JPanel {
         }
     }
 
+    /**
+     * Class that do the BET action
+     */
     public class betActionListener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
             try {
@@ -147,6 +178,9 @@ public class ControlPanel extends JPanel {
         }
     }
 
+    /**
+     * Class that do the RAISE action
+     */
     public class raiseActionListener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
             try {
@@ -157,6 +191,9 @@ public class ControlPanel extends JPanel {
         }
     }
 
+    /**
+     * Class that do the FOLD action
+     */
     public class foldActionListener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
             try {

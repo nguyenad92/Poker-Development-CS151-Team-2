@@ -15,8 +15,7 @@ import edu.sjsu.cs.cs151.Model.*;
 
 
 /**
- * It shows players' cards, name, actions, and amount of money
- *
+ * Class that shows players' cards, name, actions, and amount of money
  */
 public class PlayerPanel extends JPanel {
 
@@ -50,6 +49,8 @@ public class PlayerPanel extends JPanel {
 
 	/**  Send information to the controller from the view*/
 	private static BlockingQueue<Message> queue;
+
+	/** Player that contains its information */
 	private Player player;
 
 	/**Border of player frame.
@@ -113,6 +114,10 @@ public class PlayerPanel extends JPanel {
 		}
 	}
 
+	/**
+	 * Setup the message for users
+	 * @param message
+	 */
 	public void setMessage(String message) {
 		if (message.length() == 0) {
 			messageLabel.setText(" ");

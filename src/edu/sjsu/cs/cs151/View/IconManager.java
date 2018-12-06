@@ -7,9 +7,8 @@ import javax.swing.ImageIcon;
 import edu.sjsu.cs.cs151.Model.*;
 
 /**
- * utility for retrieving cards images
+ * Utility for retrieving cards images
  * @author Oscar Stigter
- *
  */
 public abstract class IconManager {
 	private static final String IMAGE_PATH = "/images/card_%s.png";
