@@ -25,13 +25,22 @@ public class InfoPanel extends JPanel {
 
     public InfoPanel(BlockingQueue<Message> queue) {
         messageQueue = queue;
+        initInfoPanel();
+    }
 
-//        this.setBorder(TABLE_BORDER);
-//        this.setBackground(TABLE_COLOR);
-        this.setLayout(new GridBagLayout());
+    public void setInfoPannel(GameInfo gameInfo) {
+        betAmount = gameInfo.getCurrentBet();
+        potAmount = gameInfo.getPotTotal();
+
+        potLabel.setText("Pot: " + potAmount);
+        betLabel.setText("Current Bet: " + betAmount);
+    }
+
+    private void initInfoPanel() {
+        setLayout(new GridBagLayout());
 
         JPanel infoPannel = new JPanel();
-        this.add(infoPannel);
+        add(infoPannel);
 
         amountOfPot.setLayout(new BorderLayout());
         amountOfPot.setForeground(Color.YELLOW);
@@ -46,14 +55,5 @@ public class InfoPanel extends JPanel {
         amountOfBet.add(betLabel, BorderLayout.NORTH);
 
         infoPannel.add(amountOfBet);
-    }
-
-    public void setInfoPannel(GameInfo gameInfo) {
-        betAmount = gameInfo.getCurrentBet();
-        potAmount = gameInfo.getPotTotal();
-
-        potLabel.setText("Pot: " + potAmount);
-
-        betLabel.setText("Current Bet: " + betAmount);
     }
 }

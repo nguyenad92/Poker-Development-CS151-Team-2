@@ -24,7 +24,6 @@ public class Controller {
         ValveResponse response = ValveResponse.EXECUTED;
         Message message = null;
 
-
         while (response != ValveResponse.FINISH) {
             try {
                 message = (Message) queue.take();
@@ -37,15 +36,8 @@ public class Controller {
                 if (response != ValveResponse.MISS) break;
             }
         }
-
-
     }
 
-
-    public GameInfo updateGameInfo() {
-        gameInfo = new GameInfo(model);
-        return gameInfo;
-    }
     public View getView() {
         return view;
     }
@@ -54,23 +46,25 @@ public class Controller {
         return model;
     }
 
-    public BlockingQueue<Message> getQueue() {
-        return queue;
+    private GameInfo updateGameInfo() {
+        gameInfo = new GameInfo(model);
+        return gameInfo;
     }
 
-    public List<Valve> getValves() {
-        return valves;
-    }
-
-    public void addAllValves() {
+    private void addAllValves() {
         valves.add(new StartNewGameValve());
         valves.add(new DoActionCheckValve());
         valves.add(new DoActionCallValve());
         valves.add(new DoActionBetValve());
         valves.add(new DoActionRaiseValve());
         valves.add(new DoActionFoldValve());
-//        valves.add(new DoDealValve());
+    }
 
+    private void updateGame(String message) {
+        view.setGamePanel(updateGameInfo());
+        view.setInfoPannel(updateGameInfo());
+        view.setPlayerPannel(updateGameInfo());
+        view.setControlPannel(updateGameInfo(), message);
     }
 
     private class StartNewGameValve implements Valve {
@@ -80,13 +74,14 @@ public class Controller {
             }
 
             model.start();
+            model.resetHand();
+
+            model.setIsOver(false);
             model.dealPreFlop();
 
-            System.out.println("This is the current Bet: " + updateGameInfo().getCurrentBet());
+            updateGame("NEW_GAME");
 
-            view.setInfoPannel(updateGameInfo());
-            view.setPlayerPannel(updateGameInfo());
-            view.setControlPannel("CHECK");
+            model.nextPlayerToAct();
 
             return ValveResponse.EXECUTED;
         }
@@ -101,12 +96,13 @@ public class Controller {
             }
 
             model.bet(message.getAmount());
-            model.nextPlayerToAct();
 
             view.setInfoPannel(updateGameInfo());
             view.setPlayerPannel(updateGameInfo());
-            view.setControlPannel("BET");
+            view.setControlPannel(gameInfo, "BET");
+            view.setMessage(gameInfo, "Bet " + message.getAmount());
 
+            model.nextPlayerToAct();
 
             return ValveResponse.EXECUTED;
         }
@@ -119,13 +115,18 @@ public class Controller {
             if (message.getClass() != ActionCallMessage.class) {
                 return ValveResponse.MISS;
             }
+
             model.call();
 
             model.dealCardByStage();
 
+            view.setGamePanel(updateGameInfo());
             view.setInfoPannel(updateGameInfo());
             view.setPlayerPannel(updateGameInfo());
-            view.setControlPannel("CALL");
+            view.setControlPannel(gameInfo, "CALL");
+            view.setMessage(gameInfo, "Call ");
+
+            model.nextPlayerToAct();
 
             return ValveResponse.EXECUTED;
         }
@@ -138,14 +139,43 @@ public class Controller {
                 return ValveResponse.MISS;
             }
 
-            System.out.println("Player " + model.getCurrentActor().getName() + " just check");
             model.check();
-
 
             model.dealCardByStage();
 
-            view.setPlayerPannel(updateGameInfo());
-            view.setControlPannel("CHECK");
+            if (model.isStarted() && !model.isOver()) {
+
+                model.dealPreFlop();
+
+                view.setControlPannel(updateGameInfo(), "CHECK");
+                view.setInfoPannel(updateGameInfo());
+                view.setGamePanel(updateGameInfo());
+                view.setPlayerPannel(updateGameInfo());
+//                view.setMessage(gameInfo, "win a hand for " + updateGameInfo().getPotTotal());
+                model.nextPlayerToAct();
+            } else if (model.isOver()) {
+
+                System.out.println("GAME OVER -> Start a new Game");
+                view = new View();
+                model = new Model();
+
+
+//                model.start();
+//                model.resetHand();
+//                model.dealPreFlop();
+
+//                view.setControlPannel(updateGameInfo(), "NEW_GAME");
+//                view.setInfoPannel(updateGameInfo());
+//                view.setGamePanel(updateGameInfo());
+//                view.setPlayerPannel(updateGameInfo());
+            } else {
+                view.setInfoPannel(updateGameInfo());
+                view.setGamePanel(updateGameInfo());
+                view.setPlayerPannel(updateGameInfo());
+                view.setControlPannel(updateGameInfo(), "CHECK");
+//                view.setMessage(gameInfo, "Check ");
+                model.nextPlayerToAct();
+            }
 
             return ValveResponse.EXECUTED;
         }
@@ -160,11 +190,11 @@ public class Controller {
             }
 
             model.raise(message.getAmount());
-            model.nextPlayerToAct();
 
             view.setInfoPannel(updateGameInfo());
             view.setPlayerPannel(updateGameInfo());
-            view.setControlPannel("RAISE");
+            view.setControlPannel(gameInfo, "RAISE");
+            model.nextPlayerToAct();
 
             return ValveResponse.EXECUTED;
         }
@@ -179,32 +209,35 @@ public class Controller {
             }
 
             model.fold();
-            model.resetHand();
+
+            model.nextPlayerToAct();
+
             model.dealPreFlop();
 
+            view.setGamePanel(updateGameInfo());
             view.setInfoPannel(updateGameInfo());
             view.setPlayerPannel(updateGameInfo());
-            view.setControlPannel("CHECK");
+            view.setControlPannel(updateGameInfo(), "CHECK");
+
+
 
             return ValveResponse.EXECUTED;
         }
     }
-
-//    public class DoDealValve  implements Valve {
+//    public class DoActionAllInValve implements Valve {
 //
 //        public ValveResponse execute(Message message) {
-//            if (message.getClass() != DealCardMessage.class) {
+//            //if(!(message instanceof NewGameMessage))
+//            if (message.getClass() != AllInactionMessage.class) {
 //                return ValveResponse.MISS;
 //            }
 //
-//            if (model.isFlop()) model.dealFlop();
-//            else if (model.isTurn()) model.dealTurn();
-//            else if (model.isRiver()) {
-//                model.dealRiver();
-//            }
+//            model.bet(message.getAmount());
+//            model.nextPlayerToAct();
 //
-//            view.setGamePanel(updateGameInfo());
-//            view.setControlPannel("CHECK");
+//            view.setInfoPannel(updateGameInfo());
+//            view.setPlayerPannel(updateGameInfo());
+//            view.setControlPannel(gameInfo, "ALL_IN");
 //
 //            return ValveResponse.EXECUTED;
 //        }

@@ -1,224 +1,244 @@
 package edu.sjsu.cs.cs151.View;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.concurrent.BlockingQueue;
-import java.awt.GridLayout;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.concurrent.BlockingQueue;
 import javax.swing.Icon;
-import javax.swing.ImageIcon;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
-import edu.sjsu.cs.cs151.Message.Message;
-import edu.sjsu.cs.cs151.Message.NewGameMessage;
+import edu.sjsu.cs.cs151.Message.*;
 import edu.sjsu.cs.cs151.Model.*;
 
 
 /**
  * It shows players' cards, name, actions, and amount of money
- * @author ADNguyen
  *
  */
 public class PlayerPanel extends JPanel {
 
+	/** Empty dealer button image when player is not dealer. */
+	private static final Icon BUTTON_ABSENT_ICON =
+			IconManager.getIcon("/images/button_absent.png");
+
+	private static final Icon CARD_PLACEHOLDER_ICON =
+			IconManager.getIcon("/images/card_placeholder.png");
+
+	private static final Icon CARD_BACK_ICON =
+			IconManager.getIcon("/images/card_back.png");
+
+	/** The label with the last action performed. */
+	private JLabel actionLabel;
+
+	/** The label with the player's current bet. */
+	private JLabel betLabel;
+
+	/** The label for the first hole card. */
+	private JLabel card1Label;
+
+	/** The label for the second hole card. */
+	private JLabel card2Label;
+
+	/** The label for the dealer button image. */
+	private JLabel dealerButton;
+
+	/** Label with a custom message. */
+	private JLabel messageLabel;
+
 	/**  Send information to the controller from the view*/
 	private static BlockingQueue<Message> queue;
-
-	/** The frame icon of the card */
-//    private static final Icon CARD_FRAME_ICON = IconManager.getIcon("/images/card_frame.png");
-
-//    /** The back of the card when it is up side down */
-//    private static final Icon BACK_OF_CARD_ICON =
-//    		IconManager.getIcon("/images/back_of_card.png");
-
-	/** The format for the link to card images follow by its hashcode */
-	private static final String IMAGE_LINK_FORMAT = "/images/card_%s.png";
+	private Player player;
 
 	/**Border of player frame.
 	 * Square 10x10
 	 **/
 	private static final Border BORDER = new EmptyBorder(10, 10, 10, 10);
+
 	/** Show player's name */
-	private JLabel playerNameLabel  = new JLabel();
+	private JLabel playerNameLabel;
+	private JLabel playerPositionLabel;
+
 	/** Show player's money */
-	private JLabel playerMoneyLabel = new JLabel();
-	/** Show card #1 of player */
-	private JLabel card1Label = new JLabel();
-	/** Show card #2 of player */
-	private JLabel card2Label = new JLabel();
-
-	/** Set the color of the table to green */
-	public Color TABLE_COLOR = new Color(0, 128, 0);
-	/** Set the color of text in player frame to yellow */
-	public Color TEXT_COLOR = Color.YELLOW;
-
-	private JPanel player1Panel, player2Panel;
+	private JLabel playerMoneyLabel;
 
 	/**
-	 * The panel show playeys' information included cards, name, and money 
+	 * The panel show playeys' information included cards, name, and money
 	 * @param blockingQueue
 	 */
 	public PlayerPanel(BlockingQueue<Message> blockingQueue) {
 		queue = blockingQueue;
-
-		this.setLayout(new GridLayout(2,6));
-		setBackground(Color.RED);
-
-		setBorder(BORDER);
-		setBackground(TABLE_COLOR);
-
-		setLayout(new GridBagLayout());
-
-		GridBagConstraints gcl = new GridBagConstraints();
-
-//    	playerNameLabel = new
-//    	
-//    	card1Label = new JLabel("This is card 1");
-//    	card2Label = new JLabel("This is card 2");
-
-
-		// Player Info
-		gcl.gridx = 10;
-		gcl.gridy = 100;
-		gcl.gridwidth = 10;
-		gcl.gridheight = 10;
-
-		gcl.anchor = GridBagConstraints.CENTER;
-		gcl.fill = GridBagConstraints.HORIZONTAL;
-
-		add(playerNameLabel, gcl);
-
-
-		// Adding Money
-		gcl.gridx = 100;
-		gcl.gridy = 10000;
-		gcl.gridwidth = 10;
-		gcl.gridheight = 10;
-
-		gcl.anchor = GridBagConstraints.CENTER;
-		gcl.fill = GridBagConstraints.HORIZONTAL;
-
-		add(playerMoneyLabel, gcl);
-
-		// Card 1 Info
-		gcl.gridx = 0;
-		gcl.gridy = 1;
-		gcl.gridwidth = 1;
-		gcl.gridheight = 1;
-
-		gcl.anchor = GridBagConstraints.CENTER;
-		gcl.fill = GridBagConstraints.HORIZONTAL;
-
-		gcl.weightx = 1;
-		gcl.weighty = 1;
-
-		add(card1Label, gcl);
-
-		// Card 2 Info
-		gcl.gridx = 100;
-		gcl.gridy = 1;
-		gcl.gridwidth = 1;
-		gcl.gridheight = 1;
-
-		gcl.anchor = GridBagConstraints.CENTER;
-		gcl.fill = GridBagConstraints.HORIZONTAL;
-
-		gcl.weightx = 1;
-		gcl.weighty = 1;
-
-		add(card2Label, gcl);
-
-//    	updatePlayer1(null);
-//    	updatePlayer2(null);
-
+		initPlayerPanel();
 	}
 	/**
 	 * The method that updates players' information
 	 */
-	public void updatePlayer1(final GameInfo gameInfo) {
-
-		Player player = gameInfo.getPlayerList().get(0);
-		playerNameLabel.setText(player.getName());
-		playerMoneyLabel.setText("$ " + player.getMoney());
-
+	public void setPlayerPanel(GameInfo gameInfo, int position) {
+	 	player = gameInfo.getPlayerList().get(position);
 		ArrayList<Card> cards = player.getPlayerHands();
 
-		int valueOfCard1 = cards.get(0).hashCode();
-		int valueOfCard2 = cards.get(1).hashCode();
+		if (gameInfo.getPlayerList().size() > 0) {
+			for (int i = 0; i < gameInfo.getPlayerList().size(); i++) {
 
-		String card1 = String.valueOf(valueOfCard1);
-		String card2 = String.valueOf(valueOfCard2);
-
-		String link1 = String.format(IMAGE_LINK_FORMAT, card1);
-		String link2 = String.format(IMAGE_LINK_FORMAT, card2);
-
-		ImageIcon cardImage1 = new ImageIcon(link1);
-		ImageIcon cardImage2 = new ImageIcon(link2);
-
-
-		if (cards.size() == 2) {
-			card1Label.setIcon(cardImage1);
-			card2Label.setIcon(cardImage2);
-		} else {
-			card1Label.setIcon(new ImageIcon("/images/back_of_card.png"));
-			card2Label.setIcon(new ImageIcon("/images/back_of_card.png"));
-		}
-	}
-
-	public void updatePlayer2(final GameInfo gameInfo) {
-
-		Player player = gameInfo.getPlayerList().get(1);
-		playerNameLabel.setText(player.getName());
-		playerMoneyLabel.setText("$ " + player.getMoney());
-
-		ArrayList<Card> cards = player.getPlayerHands();
-
-		int valueOfCard1 = cards.get(0).hashCode();
-		int valueOfCard2 = cards.get(1).hashCode();
-
-		String card1 = String.valueOf(valueOfCard1);
-		String card2 = String.valueOf(valueOfCard2);
-
-		String link1 = String.format(IMAGE_LINK_FORMAT, card1);
-		String link2 = String.format(IMAGE_LINK_FORMAT, card2);
-
-		ImageIcon cardImage1 = new ImageIcon(link1);
-		ImageIcon cardImage2 = new ImageIcon(link2);
-
-
-		if (cards.size() == 2) {
-			card1Label.setIcon(IconManager.getCardImage(cards.get(0)));
-			card2Label.setIcon(IconManager.getCardImage(cards.get(1)));
-		} else {
-			card1Label.setIcon(IconManager.getCardImage(cards.get(0)));
-			card2Label.setIcon(IconManager.getCardImage(cards.get(1)));
-		}
-	}
-
-	public void setPlayerPanel(GameInfo gameInfo) {
-
-	}
-
-	private class BetListener implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent event) {
-			try {
-				queue.put(new NewGameMessage());
-			} catch (InterruptedException exception) {
-				exception.printStackTrace();
+				// Display Card
+				if (gameInfo.getPlayerList().get(i).equals(gameInfo.getCurrentPlayer())) {
+					card1Label.setIcon(IconManager.getCardImage(cards.get(0)));
+					card2Label.setIcon(IconManager.getCardImage(cards.get(1)));
+				} else {        // Hide Card
+					card1Label.setIcon(CARD_BACK_ICON);
+					card2Label.setIcon(CARD_BACK_ICON);
+				}
 			}
+		} else {
+			card1Label.setIcon(CARD_PLACEHOLDER_ICON);
+			card2Label.setIcon(CARD_PLACEHOLDER_ICON);
+		}
+
+		playerNameLabel.setText(player.getName());
+		playerNameLabel.setForeground(UIConstants.TEXT_COLOR);
+		playerMoneyLabel.setText("$ " + player.getMoney());
+
+		if (gameInfo.getCurrentPlayerBet() == 0) {
+			betLabel.setText(" ");
+		} else {
+			betLabel.setText("$ " + player.getCurrentBet());
+		}
+
+		if (gameInfo.getCurrentPlayerAction().equals("")) {
+			actionLabel.setText(" ");
+		} else {
+			actionLabel.setText(player.getCurrentAction());
 		}
 	}
 
+	public void setMessage(String message) {
+		if (message.length() == 0) {
+			messageLabel.setText(" ");
+		} else {
+			messageLabel.setText(message);
+		}
+	}
+
+	/**
+	 * Design the PlayerPanel UI
+	 * @author Oscar Stigter
+	 */
+	private void initPlayerPanel() {
+		setBorder(BORDER);
+		setBackground(UIConstants.TABLE_COLOR);
+		setLayout(new GridBagLayout());
+		GridBagConstraints gc = new GridBagConstraints();
+
+		playerNameLabel = new MyLabel();
+		playerMoneyLabel = new MyLabel();
+		actionLabel = new MyLabel();
+		betLabel = new MyLabel();
+		card1Label = new JLabel(CARD_PLACEHOLDER_ICON);
+		card2Label = new JLabel(CARD_PLACEHOLDER_ICON);
+		dealerButton = new JLabel(BUTTON_ABSENT_ICON);
+
+		gc.gridx = 0;
+		gc.gridy = 0;
+		gc.gridwidth = 2;
+		gc.gridheight = 1;
+		gc.weightx = 1.0;
+		gc.weighty = 1.0;
+		gc.anchor = GridBagConstraints.CENTER;
+		gc.fill = GridBagConstraints.NONE;
+		add(dealerButton, gc);
+
+		messageLabel = new JLabel();
+		messageLabel.setForeground(Color.YELLOW);
+		messageLabel.setHorizontalAlignment(JLabel.CENTER);
+		gc.gridx = 0;
+		gc.gridy = 3;
+		gc.gridwidth = 5;
+		gc.gridheight = 1;
+		gc.anchor = GridBagConstraints.CENTER;
+		gc.fill = GridBagConstraints.HORIZONTAL;
+		gc.weightx = 1.0;
+		gc.weighty = 1.0;
+		gc.insets = new Insets(0, 0, 0, 0);
+		add(messageLabel, gc);
+
+		gc.gridx = 0;
+		gc.gridy = 1;
+		gc.gridwidth = 1;
+		gc.gridheight = 1;
+		gc.insets = new Insets(1, 1, 1, 1);
+		gc.anchor = GridBagConstraints.CENTER;
+		gc.fill = GridBagConstraints.HORIZONTAL;
+		gc.weightx = 1.0;
+		gc.weighty = 1.0;
+		add(playerNameLabel, gc);
+
+		gc.gridx = 1;
+		gc.gridy = 1;
+		gc.gridwidth = 1;
+		gc.gridheight = 1;
+		gc.weightx = 1.0;
+		gc.weighty = 1.0;
+		gc.anchor = GridBagConstraints.CENTER;
+		gc.fill = GridBagConstraints.HORIZONTAL;
+		add(playerMoneyLabel, gc);
+		gc.gridx = 0;
+		gc.gridy = 2;
+		gc.gridwidth = 1;
+		gc.gridheight = 1;
+		gc.weightx = 1.0;
+		gc.weighty = 1.0;
+		gc.anchor = GridBagConstraints.CENTER;
+		gc.fill = GridBagConstraints.HORIZONTAL;
+		add(actionLabel, gc);
+		gc.gridx = 1;
+		gc.gridy = 2;
+		gc.gridwidth = 1;
+		gc.gridheight = 1;
+		gc.weightx = 1.0;
+		gc.weighty = 1.0;
+		gc.anchor = GridBagConstraints.CENTER;
+		gc.fill = GridBagConstraints.HORIZONTAL;
+		add(betLabel, gc);
+		gc.gridx = 0;
+		gc.gridy = 3;
+		gc.gridwidth = 1;
+		gc.gridheight = 1;
+		gc.weightx = 1.0;
+		gc.weighty = 1.0;
+		gc.anchor = GridBagConstraints.CENTER;
+		gc.fill = GridBagConstraints.NONE;
+		add(card1Label, gc);
+		gc.gridx = 1;
+		gc.gridy = 3;
+		gc.gridwidth = 1;
+		gc.gridheight = 1;
+		gc.weightx = 1.0;
+		gc.weighty = 1.0;
+		gc.anchor = GridBagConstraints.CENTER;
+		gc.fill = GridBagConstraints.NONE;
+		add(card2Label, gc);
+	}
+
+	/**
+	 * Custom label for a player panel.
+	 *
+	 * @author Oscar Stigter
+	 */
+	private static class MyLabel extends JLabel {
+
+		/** Serial version UID. */
+		private static final long serialVersionUID = 3607645928062082095L;
+
+		/**
+		 * Constructor.
+		 */
+		public MyLabel() {
+			setBorder(UIConstants.LABEL_BORDER);
+			setForeground(UIConstants.TEXT_COLOR);
+			setHorizontalAlignment(JLabel.HORIZONTAL);
+			setText(" ");
+		}
+	}
 }

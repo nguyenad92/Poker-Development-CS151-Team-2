@@ -1,13 +1,7 @@
 package edu.sjsu.cs.cs151.View;
 
-import edu.sjsu.cs.cs151.Message.ActionCheckMessage;
 import edu.sjsu.cs.cs151.Message.Message;
-import sun.applet.Main;
-
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.List;
 import java.util.concurrent.BlockingQueue;
 
 /**
@@ -21,10 +15,6 @@ public class View extends JFrame {
 
     public View() {
         mainFrame = MainFrame.init(messageQueue);
-    }
-
-    public void dispose() {
-
     }
 
     /**
@@ -46,10 +36,18 @@ public class View extends JFrame {
         });
     }
 
-    public void setControlPannel(String actionName) {
+    public void setControlPannel(GameInfo gameInfo, String actionName) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                ((MainFrame)mainFrame).setControlPanel(actionName);
+                ((MainFrame)mainFrame).setControlPanel(gameInfo, actionName);
+            }
+        });
+    }
+
+    public void setMessage(GameInfo gameInfo, String messsage) {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                ((MainFrame)mainFrame).setMessage(gameInfo, messsage);
             }
         });
     }
@@ -69,13 +67,4 @@ public class View extends JFrame {
             }
         });
     }
-
-
-
-    public void addMessage() {
-
-    }
-
-
-
 }

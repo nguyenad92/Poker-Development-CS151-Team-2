@@ -12,7 +12,7 @@ import edu.sjsu.cs.cs151.Model.*;
  *
  */
 public abstract class IconManager {
-	private static final String IMAGE_PATH = "/src/edu/sjsu/cs/cs151/images/card_%s.png";
+	private static final String IMAGE_PATH = "/images/card_%s.png";
 
     /**
      * Returns the image of a specific card.
@@ -41,8 +41,7 @@ public abstract class IconManager {
      */
     public static ImageIcon getIcon(String path) {
         URL url = IconManager.class.getResource(path);
-        if (url != null)
-        {
+        if (url != null) {
             return new ImageIcon(url);
         }
         else

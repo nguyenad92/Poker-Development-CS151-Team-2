@@ -20,11 +20,7 @@ public class Table {
     
     
     public void addCard(ArrayList<Card> c) {
-        for (Card card :
-                c) {
-            communityCards.add(card);
-        }
-
+            communityCards.addAll(c);
     }
     
     public Card showCommunityCards(int i) {
