@@ -12,12 +12,20 @@ public class Pot {
     private int totalMoney;
     private HashMap<Player, Integer> potContribution;
 
+    /**
+     * set the variables of pot
+     */
     public Pot() {
         currentBet = 0;
         potContribution = new HashMap<>();
         totalMoney = 0;
     }
 
+    /**
+     * add player's money to pot
+     * @param p
+     * @param chip
+     */
     public void addMoneyToPotContribution(Player p, int chip) {
 
         if (!potContribution.containsKey(p)) {
@@ -31,13 +39,26 @@ public class Pot {
         totalMoney += chip;
     }
 
+    /**
+     * get the amount of total money of the players
+     * @return
+     */
     public int getTotalMoney() {
         return totalMoney;
     }
 
+    /**
+     * set total money
+     * @param totalMoney
+     */
     public void setTotalMoney(int totalMoney) {
         this.totalMoney = totalMoney;
     }
+
+    /**
+     * set the current bet
+     * @param currentBet
+     */
 
     public void setCurrentBet(int currentBet) {
         this.currentBet = currentBet;
@@ -47,6 +68,9 @@ public class Pot {
         return currentBet;
     }
 
+    /**
+     * reset the amount of pot to 0.
+     */
     public void reset() {
         currentBet = 0;
         potContribution = new HashMap<>();

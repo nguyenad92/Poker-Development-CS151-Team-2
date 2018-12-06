@@ -18,10 +18,18 @@ public class PlayerHand {
         this.cards = cards;
     }
 
+    /**
+     * get 2 cards from the deck of card
+     * @return cards from the deck of card
+     */
     public ArrayList<Card> getCard() {
         return cards;
     }
 
+    /**
+     * get players
+     * @return
+     */
     public Player getPlayer() {
         return player;
     }

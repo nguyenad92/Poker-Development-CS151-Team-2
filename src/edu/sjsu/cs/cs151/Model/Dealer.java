@@ -8,6 +8,12 @@ public class Dealer {
     private ArrayList<Player> playerList;
     private DeckOfCard deckOfCard;
 
+    /**
+     * define dealer
+     * @param table given
+     * @param deckOfCard given
+     * @param playerList given
+     */
     public Dealer(Table table, DeckOfCard deckOfCard, ArrayList<Player> playerList) {
         this.table = table;
         this.playerList = playerList;
@@ -25,16 +31,25 @@ public class Dealer {
         }
     }
 
+    /**
+     * deal 3 community cards on the table.
+     */
     public void dealFlopCard() {
         System.out.println("Flop round");
         table.addCard(deckOfCard.deal(3));
     }
 
+    /**
+     * Deal 1 community card on the table.
+     */
     public void dealTurnCard() {
         System.out.println("Turn round");
         table.addCard(deckOfCard.deal(1));
     }
 
+    /**
+     * deal the last community card on the table.
+     */
     public void dealRiverCard() {
         System.out.println("River round");
         table.addCard(deckOfCard.deal(1));
