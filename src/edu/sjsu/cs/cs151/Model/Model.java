@@ -17,6 +17,9 @@ public class Model {
     private Player currentActor, dealerPlayer, bigBlindPlayer;
     private boolean isFlop, isTurn, isRiver, isStarted, isOver, isShowDown;
 
+    /**
+     * Define player's info and add players
+     */
     public Model() {
         table       = new Table();
         deckOfCard  = new DeckOfCard();
@@ -105,6 +108,9 @@ public class Model {
         cardDealer.dealRiverCard();
     }
 
+    /**
+     * player's action to not doing anything
+     */
     public void check() {
         noOfActivePlayer--;
         currentActor.setCurrentAction("CHECK");
@@ -119,6 +125,11 @@ public class Model {
         table.addMoneyToPot(currentActor, moneyToPay);
     }
 
+    /**
+     * player enters the amount of bet
+     * take the player's money bet amount to pot.
+     * @param amount
+     */
     public void bet(int amount) {
         noOfActivePlayer--;
 
@@ -131,6 +142,11 @@ public class Model {
         table.addMoneyToPot(currentActor, moneyToPay);
     }
 
+    /**
+     * player raise the bet amount
+     * take the player's money bet amount to pot.
+     * @param amount
+     */
     public void raise(int amount) {
         noOfActivePlayer--;
         if (noOfActivePlayer == 0) noOfActivePlayer++;
@@ -143,6 +159,10 @@ public class Model {
         table.addMoneyToPot(currentActor, moneyToPay);
     }
 
+    /**
+     * discard the player hand
+     * take the player's cards back and the other player win
+     */
     public void fold() {
         noOfActivePlayer--;
         currentActor.setCurrentAction("FOLD");
@@ -181,7 +201,9 @@ public class Model {
         playerList.add(player);
     }
 
-
+    /**
+     * get player's cards back
+     */
     public void resetHand() {
         table.reset();
         deckOfCard.shuffle(); // Shuffle the deck.
@@ -218,6 +240,9 @@ public class Model {
         }
     }
 
+    /**
+     * compare 2 set cards and define winner
+     */
     public void checkWinner() {
         noOfActivePlayer--;
         int bestHandValue = -1;
@@ -245,6 +270,9 @@ public class Model {
 
     }
 
+    /**
+     * get the turn of the 2 players go back and forth
+     */
     public void nextPlayerToAct() {
         currentActorPosition = (currentActorPosition + 1) % activePlayerList.size();
         currentActor = activePlayerList.get(currentActorPosition);

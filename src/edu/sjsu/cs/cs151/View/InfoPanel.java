@@ -9,6 +9,9 @@ import java.awt.*;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 
+/**
+ * Panel that shows information of the game
+ */
 public class InfoPanel extends JPanel {
 
     private JLabel betLabel;
@@ -23,11 +26,19 @@ public class InfoPanel extends JPanel {
 
     private int potAmount = 0, betAmount = 0;
 
+    /**
+     * Constructor of the class
+     * @param queue
+     */
     public InfoPanel(BlockingQueue<Message> queue) {
         messageQueue = queue;
         initInfoPanel();
     }
 
+    /**
+     * Set up the panel
+     * @param gameInfo
+     */
     public void setInfoPannel(GameInfo gameInfo) {
         betAmount = gameInfo.getCurrentBet();
         potAmount = gameInfo.getPotTotal();
@@ -36,6 +47,9 @@ public class InfoPanel extends JPanel {
         betLabel.setText("Current Bet: " + betAmount);
     }
 
+    /**
+     * Initiate the panel including pot and bet's information
+     */
     private void initInfoPanel() {
         setLayout(new GridBagLayout());
 

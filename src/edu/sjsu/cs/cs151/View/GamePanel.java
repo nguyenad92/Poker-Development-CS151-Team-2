@@ -8,7 +8,7 @@ import edu.sjsu.cs.cs151.Message.Message;
 import edu.sjsu.cs.cs151.Model.Card;
 
 /**
- * Community Card + text that describe the state game action of previous players
+ * Class that shows Community Cards and text that describe the state game action of previous players
  */
 public class GamePanel extends JPanel {
 	
@@ -20,6 +20,10 @@ public class GamePanel extends JPanel {
 
 	private JLabel messageLabel = null;
 
+	/**
+	 * Construct the class
+	 * @param queue
+	 */
 	public GamePanel(BlockingQueue<Message> queue) {
 		messageQueue = queue;
 
@@ -60,11 +64,19 @@ public class GamePanel extends JPanel {
 		add(messageLabel, gc);
 	}
 
+	/**
+	 * Set up the community cards panel
+	 * @param gameInfo
+	 */
     public void setGamePanel(GameInfo gameInfo) {
 			addCommunityCards(gameInfo.getCommunityCards());
     }
-    
-    public void addCommunityCards(ArrayList<Card> cards) {
+
+	/**
+	 * Adding the community cards into the panel
+	 * @param cards
+	 */
+	public void addCommunityCards(ArrayList<Card> cards) {
 		int noOfCards = cards.size();
 		for (int i = 0; i < NO_OF_CARDS; i++) {
 			if (i < noOfCards) {
@@ -74,7 +86,12 @@ public class GamePanel extends JPanel {
 			}
 		}
 	}
-    
+
+	/**
+	 * Showing the message on the table
+	 * @param gameInfo
+	 * @param message
+	 */
     public void setMessage(GameInfo gameInfo, String message) {
     	if(message.length() == 0)
     		messageLabel.setText(" ");
