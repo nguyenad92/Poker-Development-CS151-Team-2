@@ -27,7 +27,7 @@ public class RankedHand implements Comparable<RankedHand> {
     private void initRankedHand(ArrayList<Card> cards) {
         RankedHandChecker rankedHandChecker = new RankedHandChecker(cards);
         rankedHandScore = rankedHandChecker.getRankedHandScore();
-        rankedHandType = rankedHandChecker.getRankType();
+        rankedHandType = rankedHandChecker.getRankedHandType();
     }
 
     /**
