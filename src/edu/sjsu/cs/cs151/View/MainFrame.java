@@ -46,7 +46,7 @@ public class MainFrame extends JFrame {
      * Set up the players' panels that will be added into the frame
      * @param gameInfo
      */
-    public void setPlayerPannel(GameInfo gameInfo) {
+    public void setPlayerPanel(GameInfo gameInfo) {
     	((PlayerPanel) playerPanel1).setPlayerPanel(gameInfo, 0);
     	((PlayerPanel) playerPanel2).setPlayerPanel(gameInfo, 1);
     }
@@ -72,7 +72,7 @@ public class MainFrame extends JFrame {
      * Set up the Information Panel that will be added into the frame
      * @param gameInfo
      */
-    public void setInfoPannel(GameInfo gameInfo) {
+    public void setInfoPanel(GameInfo gameInfo) {
         ((InfoPanel) infoPanel).setInfoPannel(gameInfo);
     }
 

@@ -261,6 +261,7 @@ public class Model {
             if (rankedHand.getRankedHandScore() >= bestHandValue) {
                 bestHandValue = rankedHand.getRankedHandScore();
                 winner = p;
+                winner.setWinner();
             }
         }
         System.out.println("Before adding money: " + winner.getName() + " " + winner.getMoney());

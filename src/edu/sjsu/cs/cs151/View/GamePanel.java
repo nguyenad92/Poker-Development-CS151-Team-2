@@ -95,7 +95,17 @@ public class GamePanel extends JPanel {
     public void setMessage(GameInfo gameInfo, String message) {
     	if(message.length() == 0)
     		messageLabel.setText(" ");
-    	else
+    	else if(gameInfo.isStarted())
+    		messageLabel.setText("Game Start!!!" + gameInfo.getCurrentPlayer().getName() + " go first!");
+    	else if(gameInfo.isOver())
+		{
+			for(int i = 0; i < gameInfo.getPlayerList().size(); i++)
+				if(gameInfo.getPlayerList().get(i).isWinner())
+					messageLabel.setText("Winner is " + gameInfo.getPlayerList().get(i).getName());
+				else
+					messageLabel.setText(("Game Over"));
+		}
+		else
     		messageLabel.setText(message);
     }
 

@@ -75,38 +75,55 @@ public class PlayerPanel extends JPanel {
 	 * The method that updates players' information
 	 */
 	public void setPlayerPanel(GameInfo gameInfo, int position) {
-	 	player = gameInfo.getPlayerList().get(position);
-		ArrayList<Card> cards = player.getPlayerHands();
-
-		if (gameInfo.getPlayerList().size() > 0) {
-			// Display Card
-			if (gameInfo.getPlayerList().get(position).equals(gameInfo.getCurrentPlayer())) {
+		if(gameInfo.isShowDown())
+		{
+			for(int i = 0 ; i < gameInfo.getPlayerList().size(); i++)
+			{
+				player = gameInfo.getPlayerList().get(i);
+				ArrayList<Card> cards = player.getPlayerHands();
 				card1Label.setIcon(IconManager.getCardImage(cards.get(0)));
 				card2Label.setIcon(IconManager.getCardImage(cards.get(1)));
-			} else {        // Hide Card
-				card1Label.setIcon(CARD_BACK_ICON);
-				card2Label.setIcon(CARD_BACK_ICON);
+				playerNameLabel.setText(player.getName());
+				playerNameLabel.setForeground(UIConstants.TEXT_COLOR);
+				playerMoneyLabel.setText("$ " + player.getMoney());
 			}
-		} else {
-			card1Label.setIcon(CARD_PLACEHOLDER_ICON);
-			card2Label.setIcon(CARD_PLACEHOLDER_ICON);
+		}
+		else
+		{
+			player = gameInfo.getCurrentActor();
+			ArrayList<Card> cards = player.getPlayerHands();
+
+			if (gameInfo.getPlayerList().size() > 0) {
+				// Display Card
+				if (gameInfo.getPlayerList().get(position).equals(gameInfo.getCurrentPlayer())) {
+					card1Label.setIcon(IconManager.getCardImage(cards.get(0)));
+					card2Label.setIcon(IconManager.getCardImage(cards.get(1)));
+				} else {        // Hide Card
+					card1Label.setIcon(CARD_BACK_ICON);
+					card2Label.setIcon(CARD_BACK_ICON);
+				}
+			} else {
+				card1Label.setIcon(CARD_PLACEHOLDER_ICON);
+				card2Label.setIcon(CARD_PLACEHOLDER_ICON);
+			}
+
+			playerNameLabel.setText(player.getName());
+			playerNameLabel.setForeground(UIConstants.TEXT_COLOR);
+			playerMoneyLabel.setText("$ " + player.getMoney());
+
+			if (gameInfo.getCurrentPlayerBet() == 0) {
+				betLabel.setText(" ");
+			} else {
+				betLabel.setText("$ " + player.getCurrentBet());
+			}
+
+			if (gameInfo.getCurrentPlayerAction().equals("")) {
+				actionLabel.setText(" ");
+			} else {
+				actionLabel.setText(player.getCurrentAction());
+			}
 		}
 
-		playerNameLabel.setText(player.getName());
-		playerNameLabel.setForeground(UIConstants.TEXT_COLOR);
-		playerMoneyLabel.setText("$ " + player.getMoney());
-
-		if (gameInfo.getCurrentPlayerBet() == 0) {
-			betLabel.setText(" ");
-		} else {
-			betLabel.setText("$ " + player.getCurrentBet());
-		}
-
-		if (gameInfo.getCurrentPlayerAction().equals("")) {
-			actionLabel.setText(" ");
-		} else {
-			actionLabel.setText(player.getCurrentAction());
-		}
 	}
 
 	/**

@@ -63,6 +63,7 @@ public class ControlPanel extends JPanel {
         if (actionName.equals("NEW_GAME") || (actionName.equals("FOLD"))) {
             add(callButton);
             add(raiseButton);
+            
         } else if (actionName.equals("CHECK")) {
             add(checkButton);
             add(betButton);
