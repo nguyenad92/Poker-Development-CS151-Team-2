@@ -8,9 +8,6 @@ import edu.sjsu.cs.cs151.Model.*;
  */
 public class GameInfo {
 
-    private boolean isStarted, isOver, isFlop, isTurn, isRiver, isEndGame, isShowDown;
-    private int dealerPosition, currentActorPosition, bigBlind;
-    private Player currentPlayer, dealerPlayer, bigBlindPlayer, currentActor;
     private boolean isStarted, isOver, isFlop, isTurn, isRiver, isEndGame, hasWinner;
     private int dealerPosition, currentActorPosition, bigBlind;
     private Player currentPlayer, dealerPlayer, bigBlindPlayer, winner;
@@ -26,7 +23,6 @@ public class GameInfo {
     public GameInfo(Model model) {
         isStarted = model.isStarted();
         isOver = model.isOver();
-        isShowDown = model.isShowDown();
         dealerPosition = model.getDealerPosition();
         dealerPlayer = model.getDealerPlayer();
         bigBlindPlayer = model.getBigBlindPlayer();
@@ -42,7 +38,6 @@ public class GameInfo {
         bigBlind = model.getBigBlind();
         currentPlayerAction = model.getCurrentActor().getCurrentAction();
         currentPlayerBet = model.getCurrentActor().getCurrentBet();
-        currentActor = model.getCurrentActor();
     }
 
     /**
@@ -66,7 +61,7 @@ public class GameInfo {
      * @return
      */
     public ArrayList<Player> getPlayerList(){
-    	return playerList;
+        return playerList;
     }
 
     /**
@@ -148,16 +143,6 @@ public class GameInfo {
     public boolean isOver() {
         return isOver;
     }
-
-    /**
-     *
-     * @return
-     */
-    public boolean isStarted(){return isStarted;}
-
-    public Player getCurrentActor(){return currentActor;}
-
-    public boolean isShowDown(){return isShowDown;};
 
     public boolean isHasWinner() {
         return hasWinner;
