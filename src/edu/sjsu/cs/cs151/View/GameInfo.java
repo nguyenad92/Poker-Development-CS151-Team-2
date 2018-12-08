@@ -11,6 +11,9 @@ public class GameInfo {
     private boolean isStarted, isOver, isFlop, isTurn, isRiver, isEndGame, isShowDown;
     private int dealerPosition, currentActorPosition, bigBlind;
     private Player currentPlayer, dealerPlayer, bigBlindPlayer, currentActor;
+    private boolean isStarted, isOver, isFlop, isTurn, isRiver, isEndGame, hasWinner;
+    private int dealerPosition, currentActorPosition, bigBlind;
+    private Player currentPlayer, dealerPlayer, bigBlindPlayer, winner;
     private ArrayList<Player> playerList;
     private int currentBet, potTotal, currentPlayerBet;
     private ArrayList<Card> communityCards;
@@ -32,7 +35,9 @@ public class GameInfo {
         playerList = model.getActivePlayerList();
         currentBet = model.getTable().getCurrentBet();
         potTotal = model.getTable().getTotalMoney();
+        winner = model.getWinner();
 
+        hasWinner = model.isHasWinner();
         communityCards = model.getTable().getCommunityCards();
         bigBlind = model.getBigBlind();
         currentPlayerAction = model.getCurrentActor().getCurrentAction();
@@ -153,4 +158,12 @@ public class GameInfo {
     public Player getCurrentActor(){return currentActor;}
 
     public boolean isShowDown(){return isShowDown;};
+
+    public boolean isHasWinner() {
+        return hasWinner;
+    }
+
+    public Player getWinner() {
+        return winner;
+    }
 }

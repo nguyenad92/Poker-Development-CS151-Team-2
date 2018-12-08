@@ -26,6 +26,8 @@ public class ControlPanel extends JPanel {
     /** The Raise button. */
     private JButton raiseButton;
 
+    private JButton newHandButton;
+
     /** The Fold button. */
     private JButton foldButton;
 
@@ -45,6 +47,7 @@ public class ControlPanel extends JPanel {
         betButton = createActionButton("BET");
         raiseButton = createActionButton("RAISE");
         foldButton = createActionButton("FOLD");
+        newHandButton = createActionButton("NEW HAND");
         betAmount = new JTextField(15);
 
         add(newGameButton);
@@ -74,10 +77,39 @@ public class ControlPanel extends JPanel {
             add(foldButton);
             add(callButton);
             add(raiseButton);
+        switch (actionName) {
+            case "NEW_HAND":
+                add(newHandButton);
+                break;
+            case "NEW_GAME":
+            case "FOLD":
+                add(callButton);
+                add(betButton);
+                betAmount.setText(Integer.toString(gameInfo.getBigBlind()));
+                add(betAmount);
+                break;
+            case "CHECK":
+                add(checkButton);
+                add(betButton);
+                betAmount.setText(Integer.toString(gameInfo.getBigBlind()));
+                add(betAmount);
+                break;
+            case "CALL":
+                add(checkButton);
+                add(raiseButton);
+                betAmount.setText(Integer.toString(gameInfo.getBigBlind()));
+                add(betAmount);
+                break;
+            case "BET":
+            case "RAISE":
+                add(foldButton);
+                add(callButton);
+                add(raiseButton);
+                betAmount.setText(Integer.toString(gameInfo.getBigBlind()));
+                add(betAmount);
+                break;
         }
-        betAmount.setText(Integer.toString(gameInfo.getBigBlind()));
 
-        add(betAmount);
     }
 
     /**
@@ -90,6 +122,7 @@ public class ControlPanel extends JPanel {
         remove(raiseButton);
         remove(callButton);
         remove(foldButton);
+        remove(newHandButton);
         remove(betAmount);
     }
 
@@ -109,7 +142,7 @@ public class ControlPanel extends JPanel {
         if (buttonName.equals("RAISE")) button.addActionListener(new raiseActionListener());
         if (buttonName.equals("FOLD")) button.addActionListener(new foldActionListener());
         if (buttonName.equals("BET")) button.addActionListener(new betActionListener());
-        if (buttonName.equals("ALL_IN")) button.addActionListener(new allInActionListener());
+        if (buttonName.equals("NEW HAND")) button.addActionListener(new newHandActionListener());
         return button;
     }
 
@@ -129,10 +162,10 @@ public class ControlPanel extends JPanel {
     /**
      * Class that do the ALL IN action
      */
-    public class allInActionListener implements ActionListener {
+    public class newHandActionListener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
             try {
-                messageQueue.put(new AllInactionMessage(gameInfo.getCurrentPlayer().getMoney()));
+                messageQueue.put(new newHandActionMessage());
             } catch (InterruptedException exception) {
                 exception.printStackTrace();
             }

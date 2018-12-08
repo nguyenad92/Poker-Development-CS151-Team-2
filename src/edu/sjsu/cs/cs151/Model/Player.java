@@ -80,10 +80,6 @@ public class Player {
 		isWinner = false;
 	}
 
-	public void resetMoney() {
-		originalMoney = money;
-	}
-
 	/**
 	 * add money to player's amount
 	 * @param money given

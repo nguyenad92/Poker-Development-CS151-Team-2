@@ -75,6 +75,7 @@ public class PlayerPanel extends JPanel {
 	 * The method that updates players' information
 	 */
 	public void setPlayerPanel(GameInfo gameInfo, int position) {
+<<<<<<< HEAD
 		if(gameInfo.isShowDown())
 		{
 			for(int i = 0 ; i < gameInfo.getPlayerList().size(); i++)
@@ -106,18 +107,47 @@ public class PlayerPanel extends JPanel {
 				card1Label.setIcon(CARD_PLACEHOLDER_ICON);
 				card2Label.setIcon(CARD_PLACEHOLDER_ICON);
 			}
+=======
+		if (gameInfo.getPlayerList().size() > 1) {
+			player = gameInfo.getPlayerList().get(position);
+			ArrayList<Card> cards = player.getPlayerHands();
+
+			System.out.println(player.getCard().size());
+
+			if (player.getCard().size() >= 2) {
+				// Display Card
+				if (gameInfo.getPlayerList().get(position).equals(gameInfo.getCurrentPlayer()) || gameInfo.isHasWinner()) {
+					card1Label.setIcon(IconManager.getCardImage(cards.get(0)));
+					card2Label.setIcon(IconManager.getCardImage(cards.get(1)));
+				} else {        // Hide Card
+					card1Label.setIcon(CARD_BACK_ICON);
+					card2Label.setIcon(CARD_BACK_ICON);
+				}
+			} else {
+				card1Label.setIcon(CARD_PLACEHOLDER_ICON);
+				card2Label.setIcon(CARD_PLACEHOLDER_ICON);
+			}
+>>>>>>> 2f7d1e3215062b22976c795f141cba477a9e8486
 
 			playerNameLabel.setText(player.getName());
 			playerNameLabel.setForeground(UIConstants.TEXT_COLOR);
 			playerMoneyLabel.setText("$ " + player.getMoney());
 
+<<<<<<< HEAD
 			if (gameInfo.getCurrentPlayerBet() == 0) {
+=======
+			if (player.getCurrentBet() == 0) {
+>>>>>>> 2f7d1e3215062b22976c795f141cba477a9e8486
 				betLabel.setText(" ");
 			} else {
 				betLabel.setText("$ " + player.getCurrentBet());
 			}
 
+<<<<<<< HEAD
 			if (gameInfo.getCurrentPlayerAction().equals("")) {
+=======
+			if (player.getCurrentAction().equals("")) {
+>>>>>>> 2f7d1e3215062b22976c795f141cba477a9e8486
 				actionLabel.setText(" ");
 			} else {
 				actionLabel.setText(player.getCurrentAction());
