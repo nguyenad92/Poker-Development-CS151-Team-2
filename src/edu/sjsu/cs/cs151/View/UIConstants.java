@@ -9,9 +9,9 @@ import javax.swing.border.LineBorder;
 
 /**
  * Interface that contains some Constants variables
+ * @author Oscar Stigter
  */
-public interface UIConstants 
-{
+public interface UIConstants {
 	/** The table color. */
     Color TABLE_COLOR = new Color(0, 128, 0); // Dark green
 

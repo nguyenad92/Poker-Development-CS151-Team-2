@@ -80,7 +80,7 @@ public class PlayerPanel extends JPanel {
 
 		if (gameInfo.getPlayerList().size() > 0) {
 			// Display Card
-			if (gameInfo.getPlayerList().get(position).equals(gameInfo.getCurrentPlayer())) {
+			if (gameInfo.getPlayerList().get(position).equals(gameInfo.getCurrentPlayer()) || gameInfo.isHasWinner()) {
 				card1Label.setIcon(IconManager.getCardImage(cards.get(0)));
 				card2Label.setIcon(IconManager.getCardImage(cards.get(1)));
 			} else {        // Hide Card

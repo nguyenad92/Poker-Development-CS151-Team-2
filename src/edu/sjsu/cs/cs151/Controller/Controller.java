@@ -81,11 +81,13 @@ public class Controller {
      */
     private void addAllValves() {
         valves.add(new StartNewGameValve());
+        valves.add(new newHandValve());
         valves.add(new DoActionCheckValve());
         valves.add(new DoActionCallValve());
         valves.add(new DoActionBetValve());
         valves.add(new DoActionRaiseValve());
         valves.add(new DoActionFoldValve());
+
     }
 
     /**
@@ -134,7 +136,7 @@ public class Controller {
             }
 
             model.bet(message.getAmount());
-            view.setMessage(gameInfo, "Bet " + message.getAmount());
+            view.setMessage(gameInfo, updateGameInfo().getCurrentPlayer().getName() + " just Bet $" + message.getAmount());
             model.nextPlayerToAct();
             updateGame("BET");
 
@@ -154,23 +156,32 @@ public class Controller {
             }
 
             model.call();
-
+            view.setMessage(updateGameInfo(), updateGameInfo().getCurrentPlayer().getName() + " just Call!");
             model.dealCardByStage();
-
             if (model.isStarted() && !model.isOver()) {
                 model.dealPreFlop();
-                view.setMessage(updateGameInfo(), updateGameInfo().getCurrentPlayer().getName() + " win a hand for " + updateGameInfo().getPotTotal());
                 model.nextPlayerToAct();
                 updateGame("CALL");
             } else if (model.isOver()) {
                 view.setMessage(updateGameInfo(), updateGameInfo().getCurrentPlayer().getName() + " is a Winner");
                 model.resetHand();
                 view = View.init(queue);
-            } else {
-                view.setMessage(updateGameInfo(), updateGameInfo().getCurrentPlayer().getName() + " just Call!");
-                model.nextPlayerToAct();
-                updateGame("CALL");
             }
+            updateGame("CALL");
+
+            return ValveResponse.EXECUTED;
+        }
+    }
+
+    public class newHandValve implements Valve {
+
+        public ValveResponse execute(Message message) {
+            if (message.getClass() != newHandActionMessage.class) {
+                return ValveResponse.MISS;
+            }
+
+
+
 
             return ValveResponse.EXECUTED;
         }
@@ -187,24 +198,24 @@ public class Controller {
             }
 
             model.check();
-
+            view.setMessage(updateGameInfo(), updateGameInfo().getCurrentPlayer().getName() + " just Check!");
             model.dealCardByStage();
-
             if (model.isStarted() && !model.isOver()) {
-                model.dealPreFlop();
-                view.setMessage(updateGameInfo(), updateGameInfo().getCurrentPlayer().getName() + " win a hand for " + updateGameInfo().getPotTotal());
-                updateGame("CHECK");
-                model.nextPlayerToAct();
+                view.setMessage(updateGameInfo(), updateGameInfo().getWinner().getName() + " win a hand for " + updateGameInfo().getPotTotal());
+                updateGame("NEW_HAND");
+
+//                model.dealPreFlop();
+//                model.resetHand();
+//                model.nextPlayerToAct();
             } else if (model.isOver()) {
                 view.setMessage(updateGameInfo(), updateGameInfo().getCurrentPlayer().getName() + " is a Winner");
                 model.resetHand();
                 view = View.init(queue);
             } else {
-                view.setMessage(updateGameInfo(), updateGameInfo().getCurrentPlayer().getName() + " just Check!");
-
                 updateGame("CHECK");
-                model.nextPlayerToAct();
+
             }
+
 
             return ValveResponse.EXECUTED;
         }
