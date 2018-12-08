@@ -125,26 +125,6 @@ public class Controller {
     }
 
     /**
-     * Bet Action
-     */
-    public class DoActionBetValve implements Valve {
-
-        public ValveResponse execute(Message message) {
-
-            if (message.getClass() != ActionBetMessage.class) {
-                return ValveResponse.MISS;
-            }
-
-            model.bet(message.getAmount());
-            view.setMessage(gameInfo, updateGameInfo().getCurrentPlayer().getName() + " just Bet $" + message.getAmount());
-            model.nextPlayerToAct();
-            updateGame("BET");
-
-            return ValveResponse.EXECUTED;
-        }
-    }
-
-    /**
      * Call Action
      */
     public class DoActionCallValve implements Valve {
@@ -158,16 +138,13 @@ public class Controller {
             model.call();
             view.setMessage(updateGameInfo(), updateGameInfo().getCurrentPlayer().getName() + " just Call!");
             model.dealCardByStage();
+
             if (model.isStarted() && !model.isOver()) {
-                model.dealPreFlop();
-                model.nextPlayerToAct();
+                view.setMessage(updateGameInfo(), updateGameInfo().getWinner().getName() + " win a hand for " + updateGameInfo().getPotTotal());
+                updateGame("NEW_HAND");
+            } else {
                 updateGame("CALL");
-            } else if (model.isOver()) {
-                view.setMessage(updateGameInfo(), updateGameInfo().getCurrentPlayer().getName() + " is a Winner");
-                model.resetHand();
-                view = View.init(queue);
             }
-            updateGame("CALL");
 
             return ValveResponse.EXECUTED;
         }
@@ -180,6 +157,19 @@ public class Controller {
                 return ValveResponse.MISS;
             }
 
+            model.resetHand();
+
+            if (model.isOver()) {
+                view.setMessage(updateGameInfo(), updateGameInfo().getCurrentPlayer().getName() + " is a Winner");
+                updateGame("");
+            } else {
+                model.setIsOver(false);
+                model.dealPreFlop();
+                model.nextPlayerToAct();
+                view.setMessage(updateGameInfo(), "The game begins: " + updateGameInfo().getCurrentPlayer().getName() + " is the first player!");
+
+                updateGame("NEW_GAME");
+            }
 
 
 
@@ -200,22 +190,17 @@ public class Controller {
             model.check();
             view.setMessage(updateGameInfo(), updateGameInfo().getCurrentPlayer().getName() + " just Check!");
             model.dealCardByStage();
+
             if (model.isStarted() && !model.isOver()) {
                 view.setMessage(updateGameInfo(), updateGameInfo().getWinner().getName() + " win a hand for " + updateGameInfo().getPotTotal());
+//                model.resetHand();
                 updateGame("NEW_HAND");
 
-//                model.dealPreFlop();
-//                model.resetHand();
-//                model.nextPlayerToAct();
-            } else if (model.isOver()) {
-                view.setMessage(updateGameInfo(), updateGameInfo().getCurrentPlayer().getName() + " is a Winner");
-                model.resetHand();
-                view = View.init(queue);
+                System.out.println("New hand");
             } else {
                 updateGame("CHECK");
 
             }
-
 
             return ValveResponse.EXECUTED;
         }
@@ -236,10 +221,28 @@ public class Controller {
 
             view.setMessage(updateGameInfo(), updateGameInfo().getCurrentPlayer().getName() + " Raise " + message.getAmount());
 
+            model.nextPlayerToAct();
             updateGame("RAISE");
 
-            model.nextPlayerToAct();
+            return ValveResponse.EXECUTED;
+        }
+    }
 
+    /**
+     * Bet Action
+     */
+    public class DoActionBetValve implements Valve {
+
+        public ValveResponse execute(Message message) {
+
+            if (message.getClass() != ActionBetMessage.class) {
+                return ValveResponse.MISS;
+            }
+
+            model.bet(message.getAmount());
+            view.setMessage(updateGameInfo(), updateGameInfo().getCurrentPlayer().getName() + " just Bet $" + message.getAmount());
+            model.nextPlayerToAct();
+            updateGame("BET");
 
             return ValveResponse.EXECUTED;
         }

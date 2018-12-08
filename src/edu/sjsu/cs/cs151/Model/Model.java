@@ -21,6 +21,13 @@ public class Model {
      * Define player's info and add players
      */
     public Model() {
+
+    }
+
+    /**
+     * First State of the game
+     */
+    public void start() {
         table       = new Table();
         deckOfCard  = new DeckOfCard();
         playerList  = new ArrayList<>();
@@ -35,12 +42,7 @@ public class Model {
         addPlayer(p2);
 
         cardDealer = new Dealer(table, deckOfCard, playerList);
-    }
 
-    /**
-     * First State of the game
-     */
-    public void start() {
         dealerPosition = -1;
         currentActorPosition = -1;
         bigBlindPosition = -1;
@@ -74,7 +76,7 @@ public class Model {
      * Round 2nd of the game, deal 3 cards on the community cards
      */
     public void dealFlop() {
-        noOfActivePlayer = activePlayerList.size();
+
         table.setCurrentBet(0);
         for(Player p : activePlayerList) {
             p.setCurrentBet(0);
@@ -88,7 +90,7 @@ public class Model {
      * Round 3rd of the game, deal 1 card on the community card
      */
     public void dealTurn() {
-        noOfActivePlayer = activePlayerList.size();
+//        noOfActivePlayer = activePlayerList.size();
         table.setCurrentBet(0);
         for(Player p : activePlayerList) {
             p.setCurrentBet(0);
@@ -101,7 +103,7 @@ public class Model {
      * Last round of the game, deal last card on the community card
      */
     public void dealRiver() {
-        noOfActivePlayer = activePlayerList.size();
+//        noOfActivePlayer = activePlayerList.size();
         table.setCurrentBet(0);
         for(Player p : activePlayerList) {
             p.setCurrentBet(0);
@@ -121,9 +123,11 @@ public class Model {
 
     public void call() {
         noOfActivePlayer--;
+        System.out.println("Num of Active Player: " + noOfActivePlayer);
         currentActor.setCurrentAction("CALL");
         int moneyToPay = table.getCurrentBet() - currentActor.getCurrentBet();
         if (moneyToPay > currentActor.getMoney()) moneyToPay = currentActor.getMoney();
+
 
         table.addMoneyToPot(currentActor, moneyToPay);
     }
@@ -135,13 +139,14 @@ public class Model {
      */
     public void bet(int amount) {
         noOfActivePlayer--;
-
+        if (noOfActivePlayer == 0) noOfActivePlayer++;
         currentActor.setCurrentAction("BET");
         int moneyToPay = amount;
 
         if (moneyToPay > currentActor.getMoney()) {
             moneyToPay = currentActor.getMoney();
         }
+
         table.addMoneyToPot(currentActor, moneyToPay);
     }
 
@@ -152,6 +157,7 @@ public class Model {
      */
     public void raise(int amount) {
         noOfActivePlayer--;
+        System.out.println("Num of Active Player when raise: " + noOfActivePlayer);
         if (noOfActivePlayer == 0) noOfActivePlayer++;
         currentActor.setCurrentAction("RAISE");
         int moneyToPay = amount - currentActor.getCurrentBet();
@@ -222,10 +228,10 @@ public class Model {
         if (activePlayerList.size() <= 1) {
             isOver = true;
             isStarted = false;
-            return;
         } else if (!isOver) {
             // Rotate the dealer button.
             isStarted = true;
+            hasWinner = false;
             dealerPosition = (dealerPosition + 1) % activePlayerList.size();
 
             bigBlindPosition = (dealerPosition + 1) % activePlayerList.size();
@@ -236,10 +242,6 @@ public class Model {
             // Determine the first player to act.
             currentActorPosition = dealerPosition;
             currentActor = activePlayerList.get(currentActorPosition);
-
-            System.out.println("Dealer pos: " + dealerPosition);
-            System.out.println("Big pos: " + bigBlindPosition);
-            System.out.println("Cur pos: " + currentActorPosition);
         }
     }
 
@@ -266,9 +268,7 @@ public class Model {
                 winner = p;
             }
         }
-        System.out.println("Before adding money: " + winner.getName() + " " + winner.getMoney());
-        winner.addMoney(taable.getTotalMoney());
-        System.out.println("Winner is: " + winner.getName() + " " + winner.getMoney());
+        winner.addMoney(table.getTotalMoney());
     }
 
     /**
@@ -280,15 +280,15 @@ public class Model {
     }
 
     public boolean isFlop() {
-        return isFlop && noOfActivePlayer <= 0;
+        return isFlop && noOfActivePlayer == 0;
     }
 
     public boolean isTurn() {
-        return isTurn && noOfActivePlayer <= 0;
+        return isTurn && noOfActivePlayer == 0;
     }
 
     public boolean isRiver() {
-        return isRiver && noOfActivePlayer <= 0;
+        return isRiver && noOfActivePlayer == 0;
     }
 
     public boolean isStarted() {
@@ -340,11 +340,11 @@ public class Model {
     }
 
     public void dealCardByStage() {
-        if (isShowDown() && !isOver) {
+        if ((isShowDown() && !isOver)) {
             checkWinner();
-            System.out.println("Calling inside: " + currentActor.getName());
             isStarted = true;
             hasWinner = true;
+            isOver = false;
         } else {
             if (isFlop()) {
                 System.out.println("Just Deal Flop");
@@ -363,9 +363,11 @@ public class Model {
                 isShowDown = true;
             }
 
-            if (isFlop() || isTurn() || isRiver()) {
+            if (isFlop() || isTurn() || isRiver() || isShowDown()) {
                 currentActorPosition = dealerPosition;
                 currentActor = playerList.get(currentActorPosition);
+                noOfActivePlayer = activePlayerList.size();
+
             } else {
                 nextPlayerToAct();
             }

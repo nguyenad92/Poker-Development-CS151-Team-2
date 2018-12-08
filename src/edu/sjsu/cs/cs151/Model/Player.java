@@ -78,10 +78,6 @@ public class Player {
 		playerHands.getCard().clear();
 	}
 
-	public void resetMoney() {
-		originalMoney = money;
-	}
-
 	/**
 	 * add money to player's amount
 	 * @param money given

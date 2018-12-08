@@ -70,27 +70,32 @@ public class ControlPanel extends JPanel {
             case "NEW_GAME":
             case "FOLD":
                 add(callButton);
-                add(raiseButton);
+                add(betButton);
+                betAmount.setText(Integer.toString(gameInfo.getBigBlind()));
+                add(betAmount);
                 break;
             case "CHECK":
                 add(checkButton);
                 add(betButton);
+                betAmount.setText(Integer.toString(gameInfo.getBigBlind()));
+                add(betAmount);
                 break;
             case "CALL":
                 add(checkButton);
                 add(raiseButton);
+                betAmount.setText(Integer.toString(gameInfo.getBigBlind()));
+                add(betAmount);
                 break;
             case "BET":
             case "RAISE":
-            case "ALL_IN":
                 add(foldButton);
                 add(callButton);
                 add(raiseButton);
+                betAmount.setText(Integer.toString(gameInfo.getBigBlind()));
+                add(betAmount);
                 break;
         }
-        betAmount.setText(Integer.toString(gameInfo.getBigBlind()));
 
-        add(betAmount);
     }
 
     /**

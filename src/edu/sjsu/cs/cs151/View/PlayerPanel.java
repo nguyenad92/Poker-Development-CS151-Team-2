@@ -75,37 +75,41 @@ public class PlayerPanel extends JPanel {
 	 * The method that updates players' information
 	 */
 	public void setPlayerPanel(GameInfo gameInfo, int position) {
-	 	player = gameInfo.getPlayerList().get(position);
-		ArrayList<Card> cards = player.getPlayerHands();
+		if (gameInfo.getPlayerList().size() > 1) {
+			player = gameInfo.getPlayerList().get(position);
+			ArrayList<Card> cards = player.getPlayerHands();
 
-		if (gameInfo.getPlayerList().size() > 0) {
-			// Display Card
-			if (gameInfo.getPlayerList().get(position).equals(gameInfo.getCurrentPlayer()) || gameInfo.isHasWinner()) {
-				card1Label.setIcon(IconManager.getCardImage(cards.get(0)));
-				card2Label.setIcon(IconManager.getCardImage(cards.get(1)));
-			} else {        // Hide Card
-				card1Label.setIcon(CARD_BACK_ICON);
-				card2Label.setIcon(CARD_BACK_ICON);
+			System.out.println(player.getCard().size());
+
+			if (player.getCard().size() >= 2) {
+				// Display Card
+				if (gameInfo.getPlayerList().get(position).equals(gameInfo.getCurrentPlayer()) || gameInfo.isHasWinner()) {
+					card1Label.setIcon(IconManager.getCardImage(cards.get(0)));
+					card2Label.setIcon(IconManager.getCardImage(cards.get(1)));
+				} else {        // Hide Card
+					card1Label.setIcon(CARD_BACK_ICON);
+					card2Label.setIcon(CARD_BACK_ICON);
+				}
+			} else {
+				card1Label.setIcon(CARD_PLACEHOLDER_ICON);
+				card2Label.setIcon(CARD_PLACEHOLDER_ICON);
 			}
-		} else {
-			card1Label.setIcon(CARD_PLACEHOLDER_ICON);
-			card2Label.setIcon(CARD_PLACEHOLDER_ICON);
-		}
 
-		playerNameLabel.setText(player.getName());
-		playerNameLabel.setForeground(UIConstants.TEXT_COLOR);
-		playerMoneyLabel.setText("$ " + player.getMoney());
+			playerNameLabel.setText(player.getName());
+			playerNameLabel.setForeground(UIConstants.TEXT_COLOR);
+			playerMoneyLabel.setText("$ " + player.getMoney());
 
-		if (gameInfo.getCurrentPlayerBet() == 0) {
-			betLabel.setText(" ");
-		} else {
-			betLabel.setText("$ " + player.getCurrentBet());
-		}
+			if (player.getCurrentBet() == 0) {
+				betLabel.setText(" ");
+			} else {
+				betLabel.setText("$ " + player.getCurrentBet());
+			}
 
-		if (gameInfo.getCurrentPlayerAction().equals("")) {
-			actionLabel.setText(" ");
-		} else {
-			actionLabel.setText(player.getCurrentAction());
+			if (player.getCurrentAction().equals("")) {
+				actionLabel.setText(" ");
+			} else {
+				actionLabel.setText(player.getCurrentAction());
+			}
 		}
 	}
 
