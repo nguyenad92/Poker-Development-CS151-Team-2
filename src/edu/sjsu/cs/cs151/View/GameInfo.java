@@ -40,6 +40,10 @@ public class GameInfo {
         currentPlayerBet = model.getCurrentActor().getCurrentBet();
     }
 
+    public boolean isStarted(){
+        return isStarted;
+    }
+
     /**
      * Information of player who doing BIG BLIND
      * @return
