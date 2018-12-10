@@ -1,5 +1,8 @@
 package edu.sjsu.cs.cs151.Message;
 
+/**
+ * Action Bet Message
+ */
 public class ActionBetMessage extends Message {
 
     /**

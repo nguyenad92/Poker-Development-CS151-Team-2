@@ -45,14 +45,6 @@ public class Pot {
     }
 
     /**
-     * set total money
-     * @param totalMoney
-     */
-    public void setTotalMoney(int totalMoney) {
-        this.totalMoney = totalMoney;
-    }
-
-    /**
      * set the current bet
      * @param currentBet
      */

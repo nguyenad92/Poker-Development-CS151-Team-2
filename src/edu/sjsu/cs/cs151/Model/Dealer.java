@@ -2,8 +2,14 @@ package edu.sjsu.cs.cs151.Model;
 
 import java.util.ArrayList;
 
+/**
+ *
+ */
 public class Dealer {
 
+    /**
+     *
+     */
     private Table table;
     private ArrayList<Player> playerList;
     private DeckOfCard deckOfCard;

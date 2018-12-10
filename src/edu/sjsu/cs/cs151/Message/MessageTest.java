@@ -43,20 +43,6 @@ class MessageTest {
     }
 
     @Test
-    public void testAllIn() {
-        AllInactionMessage allInMess = new AllInactionMessage(1000);
-        assertEquals(1000, allInMess.getAmount());
-        assertEquals("All In", allInMess.getName());
-    }
-
-    @Test
-    public void dealCardMess() {
-        DealCardMessage dealCardMess = new DealCardMessage();
-        assertEquals(0, dealCardMess.getAmount());
-        assertEquals("Deal", dealCardMess.getName());
-    }
-
-    @Test
     public void testNewGame() {
         NewGameMessage newGameMess = new NewGameMessage();
         assertEquals(0, newGameMess.getAmount());

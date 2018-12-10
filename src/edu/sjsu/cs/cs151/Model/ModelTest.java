@@ -14,16 +14,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class ModelTest {
     public Model model = new Model();
 
-
-    Model a = new Model();
-
-    public void startGameTest() {
-        model.start();
-        assertTrue(model.isStarted() == true);
-        assertTrue(model.isOver() == false);
-        assertTrue(model.getPlayerList().size() > 0);
-    }
-
     /**
      * Test if player has FLUSH
      */
@@ -134,7 +124,6 @@ class ModelTest {
 
 
         RankedHand check = new RankedHand(model.getPlayerList().get(0));
-//        assertTrue(check.getRankedHandType() == RankedHandType.TWO_PAIRS);
         assertEquals(RankedHandType.TWO_PAIRS, check.getRankedHandType() );
 
     }
@@ -192,7 +181,6 @@ class ModelTest {
 
         RankedHand check = new RankedHand(model.getPlayerList().get(0));
         assertEquals(RankedHandType.FULL_HOUSE, check.getRankedHandType());
-//        assertTrue(check.getRankedHandType() == RankedHandType.FULL_HOUSE);
 
     }
 

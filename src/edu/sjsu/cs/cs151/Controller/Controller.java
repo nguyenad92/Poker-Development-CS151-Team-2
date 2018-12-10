@@ -18,9 +18,9 @@ public class Controller {
 
     /**
      * Constructor: Connect the Model, View, and message Queue
-     * @param view
-     * @param model
-     * @param queue
+     * @param view: GUI of the app
+     * @param model: model of the app
+     * @param queue: queue connecting View and Model
      */
     public Controller(View view, Model model, BlockingQueue<Message> queue) {
         this.view = view;

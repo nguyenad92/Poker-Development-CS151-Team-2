@@ -32,15 +32,7 @@ public class RankedHand implements Comparable<RankedHand> {
 
     /**
      * get/set method
-     * @param rankedHandScore
      */
-    public void setRankedHandScore(int rankedHandScore) {
-        this.rankedHandScore = rankedHandScore;
-    }
-
-    public void setRankedHandType(RankedHandType rankedHandType) {
-        this.rankedHandType = rankedHandType;
-    }
 
     public RankedHandType getRankedHandType() {
         return rankedHandType;

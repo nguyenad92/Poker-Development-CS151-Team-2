@@ -137,7 +137,6 @@ public class RankedHandChecker {
                 }
                 continuousCardCount++;
                 if (continuousCardCount > 4) {
-//                    highestStraightCard = i;
                     break;
                 }
             } else {
@@ -160,9 +159,6 @@ public class RankedHandChecker {
         if (continuousCardCount >= 5 && highestStraightCard == Card.ACE) {
             straightAceTop = true;
         }
-
-
-
     }
 
     /**
@@ -174,9 +170,6 @@ public class RankedHandChecker {
             else if (rankList.get(i) == 3) setRank = i;
             else if (rankList.get(i) == 2) pairRank.add(i);
         }
-        System.out.println("Quad found " + quadRank);
-        System.out.println("Set found " + setRank);
-        System.out.println("Pair found " + pairRank.toString());
     }
 
     /**
@@ -337,24 +330,11 @@ public class RankedHandChecker {
     /**
      * Set/Get Method
      */
-
     public RankedHandType getRankedHandType() {
         return rankedHandType;
     }
 
     public int getRankedHandScore() {
         return rankedHandScore;
-    }
-
-    public ArrayList<Card> getCardToBeAnalyzed() {
-        return cardToBeAnalyzed;
-    }
-
-    public void setCardToBeAnalyzed(ArrayList<Card> cardToBeAnalyzed) {
-        this.cardToBeAnalyzed = cardToBeAnalyzed;
-    }
-
-    public ArrayList<Integer> getSuitList() {
-        return suitList;
     }
 }
