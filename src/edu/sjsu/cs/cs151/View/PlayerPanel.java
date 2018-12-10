@@ -1,6 +1,5 @@
 package edu.sjsu.cs.cs151.View;
 
-import edu.sjsu.cs.cs151.Message.Message;
 import edu.sjsu.cs.cs151.Model.Card;
 import edu.sjsu.cs.cs151.Model.Player;
 
@@ -9,7 +8,6 @@ import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.concurrent.BlockingQueue;
 
 
 /**
@@ -45,9 +43,6 @@ public class PlayerPanel extends JPanel {
 	/** Label with a custom message. */
 	private JLabel messageLabel;
 
-	/**  Send information to the controller from the view*/
-	private static BlockingQueue<Message> queue;
-
 	/** Player that contains its information */
 	private Player player;
 
@@ -58,7 +53,6 @@ public class PlayerPanel extends JPanel {
 
 	/** Show player's name */
 	private JLabel playerNameLabel;
-	private JLabel playerPositionLabel;
 
 	/** Show player's money */
 	private JLabel playerMoneyLabel;

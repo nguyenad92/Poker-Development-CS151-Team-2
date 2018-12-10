@@ -1,12 +1,9 @@
 package edu.sjsu.cs.cs151.View;
 
-import edu.sjsu.cs.cs151.Controller.Controller;
 import edu.sjsu.cs.cs151.Message.Message;
-import edu.sjsu.cs.cs151.Model.Card;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.List;
 import java.util.concurrent.BlockingQueue;
 
 /**
@@ -22,8 +19,6 @@ public class InfoPanel extends JPanel {
 
     private JPanel amountOfBet = new JPanel();
 
-    private BlockingQueue<Message> messageQueue;
-
     private int potAmount = 0, betAmount = 0;
 
     /**
@@ -31,7 +26,6 @@ public class InfoPanel extends JPanel {
      * @param queue
      */
     public InfoPanel(BlockingQueue<Message> queue) {
-        messageQueue = queue;
         initInfoPanel();
     }
 
