@@ -27,7 +27,7 @@ public class RankedHandChecker {
         handScore = new ArrayList<>();
         pairRank = new ArrayList<>();
         cardToBeAnalyzed.addAll(card);
-//        Collections.sort(cardToBeAnalyzed);
+        Collections.sort(cardToBeAnalyzed);
         initArrayList();
 
         setRankedHandType();
@@ -127,7 +127,7 @@ public class RankedHandChecker {
         int size = rankList.size();
         int continuousCardCount = 0;
 
-        for (int i = 0; i < size; i++) {
+        for (int i = size - 1; i >= 0; i--) {
             if (rankList.get(i) >= 1) {
                 if (!inProcessStraight) {
                     // First card of the potential Straight.
@@ -136,7 +136,7 @@ public class RankedHandChecker {
                 }
                 continuousCardCount++;
                 if (continuousCardCount > 4) {
-                    highestStraightCard = i;
+//                    highestStraightCard = i;
                     break;
                 }
             } else {
