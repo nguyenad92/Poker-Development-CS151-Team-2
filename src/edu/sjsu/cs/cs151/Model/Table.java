@@ -2,16 +2,13 @@ package edu.sjsu.cs.cs151.Model;
 
 import java.util.*;
 /**
- * A class to show information of players and dealer
- * add and remove players, add money
- * start new game or return communityCards from the players to the deck
- * announce the winner
+ * Class that keeps track of money that players bet,
+ * holds the community cards
  */
 public class Table {
 
     private Pot potContribution;
     private ArrayList<Card> communityCards;
-    private String currentActionStatus;
 
     /**
      * define table

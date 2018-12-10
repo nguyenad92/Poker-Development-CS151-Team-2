@@ -5,7 +5,6 @@ import java.util.Random;
 
 /**
  * A standard, generic deck of game cards
- 
  */
 public class DeckOfCard {
     
@@ -55,18 +54,6 @@ public class DeckOfCard {
         	communityCards.add(cards[nextCard++]);
         }
         return communityCards;
-    }
-    
-    /** to string value of cards */
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        for (Card card : cards) 
-        {
-            sb.append(card);
-            sb.append(' ');
-        }
-        return sb.toString().trim();
     }
     
 }

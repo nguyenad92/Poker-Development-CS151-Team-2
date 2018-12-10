@@ -174,7 +174,7 @@ public class Model {
 
 
     /**
-     *
+     * Set a bet for player depends on player's position
      * @param blind
      */
     private void setBlind(String blind) {
@@ -258,7 +258,7 @@ public class Model {
     }
 
     /**
-     *
+     * Depends on the stage of the game, deal community cards
      */
     public void dealCardByStage() {
         if ((isShowDown() && !isOver)) {
@@ -293,7 +293,8 @@ public class Model {
     }
 
     /**
-     *
+     * Method helper using for junit test.
+     * it opt out the deal community cards
      */
     public void checkWinnerTest() {
         noOfActivePlayer--;
@@ -313,7 +314,7 @@ public class Model {
     }
 
     /**
-     * GET & SET Method for all instance vairables
+     * GETTER & SETTER Method for all instance vairables
      */
     public void nextPlayerToAct() {
         currentActorPosition = (currentActorPosition + 1) % activePlayerList.size();
@@ -344,24 +345,12 @@ public class Model {
         isOver = status;
     }
 
-    public int getDealerPosition() {
-        return dealerPosition;
-    }
-
     public int getBigBlind() {
         return bigBlind;
     }
 
-    public int getCurrentActorPosition() {
-        return currentActorPosition;
-    }
-
     public Player getCurrentActor() {
         return currentActor;
-    }
-
-    public Player getDealerPlayer() {
-        return dealerPlayer;
     }
 
     public ArrayList<Player> getActivePlayerList() {
@@ -370,10 +359,6 @@ public class Model {
 
     public ArrayList<Player> getPlayerList() {
         return playerList;
-    }
-
-    public Player getBigBlindPlayer() {
-        return bigBlindPlayer;
     }
 
     public boolean isShowDown() {

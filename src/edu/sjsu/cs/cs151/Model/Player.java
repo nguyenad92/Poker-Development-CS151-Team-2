@@ -59,7 +59,7 @@ public class Player {
 	}
 
 	/**
-	 *money get the current bet amount
+	 * money get the current bet amount
 	 * @return current bet
 	 */
 	public int getCurrentBet() {
@@ -67,7 +67,7 @@ public class Player {
 	}
 
 	/**
-	 *
+	 * Set the bet of the player
 	 * @param currentBet
 	 */
 	public void setCurrentBet(int currentBet) {
@@ -109,6 +109,10 @@ public class Player {
 	}
 
 
+	/**
+	 * Setter and getter of the class
+	 * @param currentAction
+	 */
 	public void setCurrentAction(String currentAction) {
 		this.currentAction = currentAction;
 	}

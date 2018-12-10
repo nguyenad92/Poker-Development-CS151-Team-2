@@ -45,7 +45,7 @@ public class Pot {
     }
 
     /**
-     * set the current bet
+     * setter and getter the current bet
      * @param currentBet
      */
 

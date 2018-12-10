@@ -3,7 +3,7 @@ package edu.sjsu.cs.cs151.Model;
 import java.util.ArrayList;
 
 /**
- *
+ * Class helper to do stages of the game
  */
 public class Dealer {
 
