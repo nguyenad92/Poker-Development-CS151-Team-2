@@ -11,7 +11,7 @@ public class View extends JFrame {
 
     private static JFrame mainFrame;
     private static BlockingQueue<Message> messageQueue;
-    private static View view;
+    private static View view = null;
 
     public View() {
         mainFrame = MainFrame.init(messageQueue);
@@ -32,10 +32,10 @@ public class View extends JFrame {
      * Set up the Player Panel on View
      * @param gameInfo
      */
-    public void setPlayerPannel(GameInfo gameInfo) {
+    public void setPlayerPanel(GameInfo gameInfo) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                ((MainFrame)mainFrame).setPlayerPannel(gameInfo);
+                ((MainFrame)mainFrame).setPlayerPanel(gameInfo);
             }
         });
     }
@@ -85,8 +85,9 @@ public class View extends JFrame {
     public void setInfoPannel(GameInfo gameInfo) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                ((MainFrame)mainFrame).setInfoPannel(gameInfo);
+                ((MainFrame)mainFrame).setInfoPanel(gameInfo);
             }
         });
     }
+
 }

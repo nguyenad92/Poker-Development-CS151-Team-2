@@ -15,6 +15,7 @@ public class Player {
 	private PlayerHand playerHands;
 	private int currentPositionOnTable;
 	private String currentAction;
+	private boolean isWinner;
 
 	/**
 	 * Construct a player object
@@ -76,6 +77,7 @@ public class Player {
 	public  void resetHand() {
 		currentBet = 0;
 		playerHands.getCard().clear();
+		isWinner = false;
 	}
 
 	/**
@@ -119,6 +121,10 @@ public class Player {
 	public boolean isAllIn() {
 		return playerHands.getCard().size() >= 2 && money == 0;
 	}
+
+	public void setWinner(){isWinner = true;}
+
+	public boolean isWinner(){return isWinner;}
 
 	public int getCurrentPositionOnTable() {
 		return currentPositionOnTable;

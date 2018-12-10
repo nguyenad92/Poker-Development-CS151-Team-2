@@ -97,7 +97,7 @@ public class Controller {
     private void updateGame(String action) {
         view.setGamePanel(updateGameInfo());
         view.setInfoPannel(updateGameInfo());
-        view.setPlayerPannel(updateGameInfo());
+        view.setPlayerPanel(updateGameInfo());
         view.setControlPannel(updateGameInfo(), action);
     }
 

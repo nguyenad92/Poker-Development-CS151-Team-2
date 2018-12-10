@@ -63,6 +63,21 @@ public class ControlPanel extends JPanel {
         clearAllButton();
         add(newGameButton);
 
+        if (actionName.equals("NEW_GAME") || (actionName.equals("FOLD"))) {
+            add(callButton);
+            add(raiseButton);
+
+        } else if (actionName.equals("CHECK")) {
+            add(checkButton);
+            add(betButton);
+        } else if(actionName.equals("CALL")) {
+            add(checkButton);
+            add(raiseButton);
+        } else if (actionName.equals("BET") || actionName.equals("RAISE") || actionName.equals("ALL_IN")) {
+            add(foldButton);
+            add(callButton);
+            add(raiseButton);
+        }
         switch (actionName) {
             case "NEW_HAND":
                 add(newHandButton);
