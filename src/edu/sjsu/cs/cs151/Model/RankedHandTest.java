@@ -10,6 +10,10 @@ import static org.junit.jupiter.api.Assertions.*;
 class RankedHandTest {
 
     Model model = new Model();
+
+    /**
+     * Compare players' hands if ONE PAIR wins
+     */
     @Test
     public void compareOnePairTest(){
         model.start();
@@ -45,6 +49,9 @@ class RankedHandTest {
         assertEquals(model.getPlayerList().get(1), model.getWinner());
     }
 
+    /**
+     * Compare players' hands if TWO PAIR wins
+     */
     @Test
     public void compareTwoPairsTest(){
         model.start();
@@ -82,6 +89,9 @@ class RankedHandTest {
         assertEquals(model.getPlayerList().get(1), model.getWinner());
     }
 
+    /**
+     * Compare players' hands if STRAIGHT wins
+     */
     @Test
     public void compareStraightTest(){
         model.start();
@@ -117,6 +127,9 @@ class RankedHandTest {
         assertEquals(model.getPlayerList().get(1), model.getWinner());
     }
 
+    /**
+     * Compare players' hands if FLUSH wins
+     */
     @Test
     public void compareFlushTest(){
         model.start();
@@ -156,7 +169,9 @@ class RankedHandTest {
         assertEquals(model.getPlayerList().get(1), model.getWinner());
     }
 
-
+    /**
+     * Compare players' hands if THREE OF A KIND wins
+     */
     @Test
     public void compareThreeOfKindTest(){
         model.start();
@@ -168,7 +183,7 @@ class RankedHandTest {
         player0Cards.add(new Card("3h"));
 
         player0Cards.add(new Card("3c"));
-        player0Cards.add(new Card("6h"));
+        player0Cards.add(new Card("4c"));
         player0Cards.add(new Card("7s"));
         player0Cards.add(new Card("Jc"));
         player0Cards.add(new Card("Qc"));
@@ -179,11 +194,11 @@ class RankedHandTest {
         player1Cards.add(new Card("4s"));
         player1Cards.add(new Card("4h"));
 
-        player0Cards.add(new Card("3s"));
-        player0Cards.add(new Card("4c"));
-        player0Cards.add(new Card("7s"));
-        player0Cards.add(new Card("Jc"));
-        player0Cards.add(new Card("Qc"));
+        player1Cards.add(new Card("3s"));
+        player1Cards.add(new Card("4c"));
+        player1Cards.add(new Card("7s"));
+        player1Cards.add(new Card("Jc"));
+        player1Cards.add(new Card("Qc"));
 
         model.getPlayerList().get(1).addCard(player1Cards);
 
@@ -191,7 +206,9 @@ class RankedHandTest {
 
         assertEquals(model.getPlayerList().get(1), model.getWinner());
     }
-
+    /**
+     * Compare players' hands if FOUR OF A KIND wins
+     */
     @Test
     public void compareFourOfKindTest(){
         model.start();
@@ -214,11 +231,11 @@ class RankedHandTest {
         player1Cards.add(new Card("7s"));
         player1Cards.add(new Card("7h"));
 
-        player0Cards.add(new Card("6d"));
-        player0Cards.add(new Card("6c"));
-        player0Cards.add(new Card("7c"));
-        player0Cards.add(new Card("7d"));
-        player0Cards.add(new Card("Qc"));
+        player1Cards.add(new Card("6d"));
+        player1Cards.add(new Card("6c"));
+        player1Cards.add(new Card("7c"));
+        player1Cards.add(new Card("7d"));
+        player1Cards.add(new Card("Qc"));
 
         model.getPlayerList().get(1).addCard(player1Cards);
 

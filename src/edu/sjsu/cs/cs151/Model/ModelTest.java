@@ -63,48 +63,6 @@ class ModelTest {
     }
 
     /**
-     * Test if player has FULL HOUSE
-     */
-    @Test
-    void checkFullHouse() {
-        a.start();
-        a.resetHand();
-
-        ArrayList<Card> Currentcards = new ArrayList<>();
-        Currentcards.add(new Card(0,0));
-        Currentcards.add(new Card(1,0));
-        Currentcards.add(new Card(2,1));
-        Currentcards.add(new Card(3,1));
-        Currentcards.add(new Card(2,0));
-        Currentcards.add(new Card(12,3));
-        Currentcards.add(new Card(1,0));
-
-        a.getDealerPlayer().addCard(Currentcards);
-//        a.dealPreFlop();
-
-
-        ArrayList<Card> dealerCards = new ArrayList<>();
-        dealerCards.add(new Card(12,0));
-        dealerCards.add(new Card(11,0));
-        dealerCards.add(new Card(10,0));
-        dealerCards.add(new Card(9,0));
-        dealerCards.add(new Card(8,0));
-        dealerCards.add(new Card(10,1));
-        dealerCards.add(new Card(1,1));
-
-        a.getBigBlindPlayer().addCard(dealerCards);
-
-        a.checkWinnerTest();
-
-        RankedHand check1 = new RankedHand(a.getDealerPlayer());
-        RankedHand check2 = new RankedHand(a.getBigBlindPlayer());
-        assertEquals(check1.getRankedHandType(), RankedHandType.STRAIGHT);
-        assertEquals(check2.getRankedHandType(), RankedHandType.FLUSH);
-        assertEquals(a.getBigBlindPlayer(), a.getWinner());
-        assertTrue(check1.getRankedHandType() == RankedHandType.STRAIGHT);
-    }
-
-    /**
      * Test if player has STRAIGHT
      */
     @Test
