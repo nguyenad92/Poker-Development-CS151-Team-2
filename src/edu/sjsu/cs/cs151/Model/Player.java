@@ -15,6 +15,9 @@ public class Player {
 	private PlayerHand playerHands;
 	private int currentPositionOnTable;
 	private String currentAction;
+	private boolean isWinner;
+
+	private RankedHand rankedHand;
 
 	/**
 	 * Construct a player object
@@ -76,6 +79,7 @@ public class Player {
 	public  void resetHand() {
 		currentBet = 0;
 		playerHands.getCard().clear();
+		isWinner = false;
 	}
 
 	/**
@@ -120,11 +124,23 @@ public class Player {
 		return playerHands.getCard().size() >= 2 && money == 0;
 	}
 
+	public void setWinner(){isWinner = true;}
+
+	public boolean isWinner(){return isWinner;}
+
 	public int getCurrentPositionOnTable() {
 		return currentPositionOnTable;
 	}
 
 	public void setCurrentPositionOnTable(int currentPositionOnTable) {
 		this.currentPositionOnTable = currentPositionOnTable;
+	}
+
+	public void setRankedHand(RankedHand rankedHand) {
+		this.rankedHand = rankedHand;
+	}
+
+	public RankedHand getRankedHand() {
+		return rankedHand;
 	}
 }

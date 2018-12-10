@@ -174,13 +174,11 @@ public class Model {
 
         activePlayerList.remove(currentActor);
 
-        Player winner = activePlayerList.get(0);
+        winner = activePlayerList.get(0);
         int amount = table.getTotalMoney();
         winner.addMoney(amount);
-        noOfActivePlayer--;
+        hasWinner = true;
 
-        isOver = true;
-        isStarted = false;
     }
 
 
@@ -192,7 +190,7 @@ public class Model {
             blindAmount = bigBlind / 2;
         }
         if (blindAmount > currentActor.getMoney()) blindAmount = currentActor.getMoney();
-        currentActor.setCurrentAction(blind + "BLIND");
+        currentActor.setCurrentAction(blind + " BLIND");
         table.addMoneyToPot(currentActor, blindAmount);
     }
 
@@ -250,17 +248,15 @@ public class Model {
         winner = activePlayerList.get(0);
 
         for (Player p : activePlayerList) {
-//            p.addCard(table.getCommunityCards());
+            p.addCard(table.getCommunityCards());
 
-            System.out.println("Card of this player: " + p.getPlayerHands().toString());
             RankedHand rankedHand = new RankedHand(p);
-            System.out.println(p.getName() + " : score = " +  rankedHand.getRankedHandScore() +
-                    " type Hand: " + rankedHand.getRankedHandType().getHandType());
-            System.out.println();
 
             if (rankedHand.getRankedHandScore() >= bestHandValue) {
                 bestHandValue = rankedHand.getRankedHandScore();
                 winner = p;
+                winner.setWinner();
+                winner.setRankedHand(rankedHand);
             }
         }
         winner.addMoney(table.getTotalMoney());
@@ -404,5 +400,29 @@ public class Model {
 
     public Player getWinner() {
         return winner;
+    }
+
+    public void checkWinnerTest() {
+        noOfActivePlayer--;
+        int bestHandValue = -1;
+        isShowDown = false;
+        winner = activePlayerList.get(0);
+
+        for (Player p : activePlayerList) {
+//            p.addCard(table.getCommunityCards());
+
+//            System.out.println("Card of this player: " + p.getPlayerHands().toString());
+            RankedHand rankedHand = new RankedHand(p);
+//            System.out.println(p.getName() + " : score = " +  rankedHand.getRankedHandScore() +
+//                    " type Hand: " + rankedHand.getRankedHandType().getHandType());
+//            System.out.println();
+
+            if (rankedHand.getRankedHandScore() >= bestHandValue) {
+                bestHandValue = rankedHand.getRankedHandScore();
+                winner = p;
+                winner.setWinner();
+            }
+        }
+        winner.addMoney(table.getTotalMoney());
     }
 }

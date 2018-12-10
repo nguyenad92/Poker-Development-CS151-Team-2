@@ -1,7 +1,10 @@
 package edu.sjsu.cs.cs151.View;
 
+import edu.sjsu.cs.cs151.Model.Card;
+import edu.sjsu.cs.cs151.Model.Model;
+import edu.sjsu.cs.cs151.Model.Player;
+
 import java.util.ArrayList;
-import edu.sjsu.cs.cs151.Model.*;
 
 /**
  * Class that stores all information of the game
@@ -40,6 +43,10 @@ public class GameInfo {
         currentPlayerBet = model.getCurrentActor().getCurrentBet();
     }
 
+    public boolean isStarted(){
+        return isStarted;
+    }
+
     /**
      * Information of player who doing BIG BLIND
      * @return
@@ -61,7 +68,7 @@ public class GameInfo {
      * @return
      */
     public ArrayList<Player> getPlayerList(){
-    	return playerList;
+        return playerList;
     }
 
     /**

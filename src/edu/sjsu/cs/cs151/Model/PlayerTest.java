@@ -17,16 +17,6 @@
 //
 //    }
 //
-//    void testForFullHouse() {
-//        Model a = new Model();
-//        a.start();
-//        a.resetHand();
-//
-//
-//        a.getCurrentActor().
-//        dealer.
-//    }
-//
 //    @Test
 //    void payMoney() {
 //        player.payMoney(1000);
@@ -45,7 +35,7 @@
 //
 //    @Test
 //    void getMoney() {
-//        assertEquals(5000, player.getMoney());
+////        assertEquals(5000, player.getMoney());
 //
 //    }
 //
@@ -63,8 +53,8 @@
 //
 //    @Test
 //    void resetMoney() {
-//        player.resetMoney();
-//        assertEquals(0, player.getCurrentBet());
+////        player.resetMoney();
+////        assertEquals(0, player.getCurrentBet());
 //    }
 //
 //    @Test
@@ -92,3 +82,4 @@
 //    }
 //
 //}
+//

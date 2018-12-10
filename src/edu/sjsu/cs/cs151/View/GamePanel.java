@@ -1,11 +1,12 @@
 package edu.sjsu.cs.cs151.View;
 
+import edu.sjsu.cs.cs151.Message.Message;
+import edu.sjsu.cs.cs151.Model.Card;
+
+import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.concurrent.BlockingQueue;
-import javax.swing.*;
-import edu.sjsu.cs.cs151.Message.Message;
-import edu.sjsu.cs.cs151.Model.Card;
 
 /**
  * Class that shows Community Cards and text that describe the state game action of previous players
@@ -92,11 +93,11 @@ public class GamePanel extends JPanel {
 	 * @param gameInfo
 	 * @param message
 	 */
-    public void setMessage(GameInfo gameInfo, String message) {
-    	if(message.length() == 0)
-    		messageLabel.setText(" ");
-    	else
-    		messageLabel.setText(message);
-    }
+	public void setMessage(GameInfo gameInfo, String message) {
+		if(message.length() == 0)
+			messageLabel.setText(" ");
+		else
+			messageLabel.setText(message);
+	}
 
 }

@@ -107,6 +107,7 @@ public class PlayerPanel extends JPanel {
 				actionLabel.setText(player.getCurrentAction());
 			}
 		}
+
 	}
 
 	/**

@@ -97,7 +97,7 @@ public class Controller {
     private void updateGame(String action) {
         view.setGamePanel(updateGameInfo());
         view.setInfoPannel(updateGameInfo());
-        view.setPlayerPannel(updateGameInfo());
+        view.setPlayerPanel(updateGameInfo());
         view.setControlPannel(updateGameInfo(), action);
     }
 
@@ -192,7 +192,7 @@ public class Controller {
             model.dealCardByStage();
 
             if (model.isStarted() && !model.isOver()) {
-                view.setMessage(updateGameInfo(), updateGameInfo().getWinner().getName() + " win a hand for " + updateGameInfo().getPotTotal());
+                view.setMessage(updateGameInfo(), updateGameInfo().getWinner().getName() + " win a hand for " + updateGameInfo().getPotTotal() + " with a " + updateGameInfo().getWinner().getRankedHand().getRankedHandType().getHandType());
                 updateGame("NEW_HAND");
 
             } else {
@@ -259,11 +259,11 @@ public class Controller {
 
             model.fold();
 
+            view.setMessage(updateGameInfo(), updateGameInfo().getWinner().getName() + " win a hand for " + updateGameInfo().getPotTotal());
             model.nextPlayerToAct();
 
-            model.dealPreFlop();
-
-            updateGame("CHECK");
+            System.out.println(model.getCurrentActor().getName());
+            updateGame("NEW_HAND");
 
             return ValveResponse.EXECUTED;
         }

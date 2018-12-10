@@ -123,6 +123,7 @@ public class RankedHandChecker {
      * check if 5 cards in sequence
      */
     private void getStraight() {
+
         boolean inProcessStraight = false;
         int size = rankList.size();
         int continuousCardCount = 0;
@@ -159,6 +160,7 @@ public class RankedHandChecker {
         if (continuousCardCount >= 5 && highestStraightCard == Card.ACE) {
             straightAceTop = true;
         }
+
 
 
     }
