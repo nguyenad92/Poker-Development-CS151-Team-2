@@ -1,7 +1,5 @@
 package edu.sjsu.cs.cs151.Model;
 
-import edu.sjsu.cs.cs151.Message.Message;
-
 import java.util.ArrayList;
 
 /**
@@ -117,13 +115,11 @@ public class Model {
      */
     public void check() {
         noOfActivePlayer--;
-        System.out.println(currentActor.getName() + " just check");
         currentActor.setCurrentAction("CHECK");
     }
 
     public void call() {
         noOfActivePlayer--;
-        System.out.println("Num of Active Player: " + noOfActivePlayer);
         currentActor.setCurrentAction("CALL");
         int moneyToPay = table.getCurrentBet() - currentActor.getCurrentBet();
         if (moneyToPay > currentActor.getMoney()) moneyToPay = currentActor.getMoney();
@@ -157,7 +153,6 @@ public class Model {
      */
     public void raise(int amount) {
         noOfActivePlayer--;
-        System.out.println("Num of Active Player when raise: " + noOfActivePlayer);
         if (noOfActivePlayer == 0) noOfActivePlayer++;
         currentActor.setCurrentAction("RAISE");
         int moneyToPay = amount - currentActor.getCurrentBet();
@@ -255,13 +250,13 @@ public class Model {
         winner = activePlayerList.get(0);
 
         for (Player p : activePlayerList) {
-            p.addCard(table.getCommunityCards());
+//            p.addCard(table.getCommunityCards());
 
-//            System.out.println("Card of this player: " + p.getPlayerHands().toString());
+            System.out.println("Card of this player: " + p.getPlayerHands().toString());
             RankedHand rankedHand = new RankedHand(p);
-//            System.out.println(p.getName() + " : score = " +  rankedHand.getRankedHandScore() +
-//                    " type Hand: " + rankedHand.getRankedHandType().getHandType());
-//            System.out.println();
+            System.out.println(p.getName() + " : score = " +  rankedHand.getRankedHandScore() +
+                    " type Hand: " + rankedHand.getRankedHandType().getHandType());
+            System.out.println();
 
             if (rankedHand.getRankedHandScore() >= bestHandValue) {
                 bestHandValue = rankedHand.getRankedHandScore();
@@ -348,17 +343,14 @@ public class Model {
             isOver = false;
         } else {
             if (isFlop()) {
-                System.out.println("Just Deal Flop");
                 dealFlop();
                 isFlop = false;
                 isTurn = true;
             } else if (isTurn()) {
-                System.out.println("Just Deal Turn");
                 dealTurn();
                 isTurn = false;
                 isRiver = true;
             } else if (isRiver()) {
-                System.out.println("Just Deal River");
                 dealRiver();
                 isRiver = false;
                 isShowDown = true;

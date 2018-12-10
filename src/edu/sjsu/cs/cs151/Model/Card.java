@@ -111,10 +111,11 @@ public class Card implements Comparable<Card> {
     }
     
     //Compare two single card by hash codes
-    public int compareTo(Card card) 
-    {
-        int thisValue = hashCode();
-        int otherValue = card.hashCode();
+    public int compareTo(Card card) {
+//        int thisValue = hashCode();
+//        int otherValue = card.hashCode();
+        int thisValue = this.rank;
+        int otherValue = card.rank;
         if (thisValue > otherValue) {
             return -1;
         } else if (thisValue < otherValue) {

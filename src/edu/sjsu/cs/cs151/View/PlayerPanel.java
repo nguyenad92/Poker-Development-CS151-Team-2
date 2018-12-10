@@ -1,17 +1,15 @@
 package edu.sjsu.cs.cs151.View;
 
+import edu.sjsu.cs.cs151.Message.Message;
+import edu.sjsu.cs.cs151.Model.Card;
+import edu.sjsu.cs.cs151.Model.Player;
+
+import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.concurrent.BlockingQueue;
-import javax.swing.Icon;
-
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.border.Border;
-import javax.swing.border.EmptyBorder;
-
-import edu.sjsu.cs.cs151.Message.*;
-import edu.sjsu.cs.cs151.Model.*;
 
 
 /**
@@ -111,8 +109,6 @@ public class PlayerPanel extends JPanel {
 		if (gameInfo.getPlayerList().size() > 1) {
 			player = gameInfo.getPlayerList().get(position);
 			ArrayList<Card> cards = player.getPlayerHands();
-
-			System.out.println(player.getCard().size());
 
 			if (player.getCard().size() >= 2) {
 				// Display Card

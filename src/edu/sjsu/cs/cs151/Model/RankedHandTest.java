@@ -125,7 +125,7 @@ class RankedHandTest {
 
         ArrayList<Card>  player0Cards = new ArrayList<>();
         player0Cards.add(new Card("3s"));
-        player0Cards.add(new Card("Ts"));
+        player0Cards.add(new Card("Tc"));
 
         player0Cards.add(new Card("5s"));
         player0Cards.add(new Card("6h"));
@@ -139,18 +139,23 @@ class RankedHandTest {
         player1Cards.add(new Card("4s"));
         player1Cards.add(new Card("Ks"));
 
-        player0Cards.add(new Card("5s"));
-        player0Cards.add(new Card("6h"));
-        player0Cards.add(new Card("5d"));
-        player0Cards.add(new Card("Js"));
-        player0Cards.add(new Card("Qs"));
+        player1Cards.add(new Card("5s"));
+        player1Cards.add(new Card("6h"));
+        player1Cards.add(new Card("5d"));
+        player1Cards.add(new Card("Js"));
+        player1Cards.add(new Card("Qs"));
 
         model.getPlayerList().get(1).addCard(player1Cards);
 
         model.checkWinnerTest();
 
+        RankedHand hand1 = new RankedHand(model.getPlayerList().get(0));
+        RankedHand hand2 = new RankedHand(model.getPlayerList().get(1));
+        System.out.println(hand1.getRankedHandType());
+        System.out.println(hand2.getRankedHandType());
         assertEquals(model.getPlayerList().get(1), model.getWinner());
     }
+
 
     @Test
     public void compareThreeOfKindTest(){
