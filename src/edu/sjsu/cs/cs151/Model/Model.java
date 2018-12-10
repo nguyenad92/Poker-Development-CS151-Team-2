@@ -250,7 +250,7 @@ public class Model {
         winner = activePlayerList.get(0);
 
         for (Player p : activePlayerList) {
-//            p.addCard(table.getCommunityCards());
+            p.addCard(table.getCommunityCards());
 
             System.out.println("Card of this player: " + p.getPlayerHands().toString());
             RankedHand rankedHand = new RankedHand(p);
