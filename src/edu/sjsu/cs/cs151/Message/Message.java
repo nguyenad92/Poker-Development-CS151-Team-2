@@ -1,7 +1,7 @@
 package edu.sjsu.cs.cs151.Message;
 
 /**
- *
+ * Parent class that keeps message of stages of game
  */
 public class Message {
 
