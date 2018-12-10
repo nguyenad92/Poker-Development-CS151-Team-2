@@ -35,7 +35,6 @@ public class Dealer {
      * deal 3 community cards on the table.
      */
     public void dealFlopCard() {
-        System.out.println("Flop round");
         table.addCard(deckOfCard.deal(3));
     }
 
@@ -43,7 +42,6 @@ public class Dealer {
      * Deal 1 community card on the table.
      */
     public void dealTurnCard() {
-        System.out.println("Turn round");
         table.addCard(deckOfCard.deal(1));
     }
 
@@ -51,7 +49,6 @@ public class Dealer {
      * deal the last community card on the table.
      */
     public void dealRiverCard() {
-        System.out.println("River round");
         table.addCard(deckOfCard.deal(1));
     }
 }
