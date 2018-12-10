@@ -11,25 +11,18 @@ import java.util.ArrayList;
  */
 public class GameInfo {
 
-    private boolean isStarted, isOver, isFlop, isTurn, isRiver, isEndGame, hasWinner;
-    private int dealerPosition, currentActorPosition, bigBlind;
-    private Player currentPlayer, dealerPlayer, bigBlindPlayer, winner;
+    private boolean hasWinner;
+    private int bigBlind;
+    private Player currentPlayer, winner;
     private ArrayList<Player> playerList;
-    private int currentBet, potTotal, currentPlayerBet;
+    private int currentBet, potTotal;
     private ArrayList<Card> communityCards;
-    private String currentPlayerAction;
 
     /**
      * Constructor of the class
      * @param model
      */
     public GameInfo(Model model) {
-        isStarted = model.isStarted();
-        isOver = model.isOver();
-        dealerPosition = model.getDealerPosition();
-        dealerPlayer = model.getDealerPlayer();
-        bigBlindPlayer = model.getBigBlindPlayer();
-        currentActorPosition = model.getCurrentActorPosition();
         currentPlayer = model.getCurrentActor();
         playerList = model.getActivePlayerList();
         currentBet = model.getTable().getCurrentBet();
@@ -39,28 +32,6 @@ public class GameInfo {
         hasWinner = model.isHasWinner();
         communityCards = model.getTable().getCommunityCards();
         bigBlind = model.getBigBlind();
-        currentPlayerAction = model.getCurrentActor().getCurrentAction();
-        currentPlayerBet = model.getCurrentActor().getCurrentBet();
-    }
-
-    public boolean isStarted(){
-        return isStarted;
-    }
-
-    /**
-     * Information of player who doing BIG BLIND
-     * @return
-     */
-    public Player getBigBlindPlayer() {
-        return bigBlindPlayer;
-    }
-
-    /**
-     * ACTION of player
-     * @return
-     */
-    public String getCurrentPlayerAction() {
-        return currentPlayerAction;
     }
 
     /**
@@ -72,14 +43,6 @@ public class GameInfo {
     }
 
     /**
-     * Information of PLAYER BET
-     * @return
-     */
-    public int getCurrentPlayerBet() {
-        return currentPlayerBet;
-    }
-
-    /**
      * Information of CURRENT PLAYER
      * @return
      */
@@ -88,35 +51,11 @@ public class GameInfo {
     }
 
     /**
-     * Information of DEALER
-     * @return
-     */
-    public Player getDealerPlayer() {
-        return dealerPlayer;
-    }
-
-    /**
      * Information of BIG BLIND of player
      * @return
      */
     public int getBigBlind() {
         return bigBlind;
-    }
-
-    /**
-     * Information of POSITION of player
-     * @return
-     */
-    public int getDealerPosition() {
-        return dealerPosition;
-    }
-
-    /**
-     * Information of ACTOR position
-     * @return
-     */
-    public int getCurrentActorPosition() {
-        return currentActorPosition;
     }
 
     /**
@@ -141,14 +80,6 @@ public class GameInfo {
      */
     public ArrayList<Card> getCommunityCards() {
         return communityCards;
-    }
-
-    /**
-     * Information if game is OVER
-     * @return
-     */
-    public boolean isOver() {
-        return isOver;
     }
 
     public boolean isHasWinner() {
