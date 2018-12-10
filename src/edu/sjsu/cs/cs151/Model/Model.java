@@ -16,13 +16,6 @@ public class Model {
     private boolean isFlop, isTurn, isRiver, isStarted, isOver, isShowDown, hasWinner;
 
     /**
-     * Define player's info and add players
-     */
-    public Model() {
-
-    }
-
-    /**
      * First State of the game
      */
     public void start() {
@@ -88,7 +81,6 @@ public class Model {
      * Round 3rd of the game, deal 1 card on the community card
      */
     public void dealTurn() {
-//        noOfActivePlayer = activePlayerList.size();
         table.setCurrentBet(0);
         for(Player p : activePlayerList) {
             p.setCurrentBet(0);
@@ -101,7 +93,6 @@ public class Model {
      * Last round of the game, deal last card on the community card
      */
     public void dealRiver() {
-//        noOfActivePlayer = activePlayerList.size();
         table.setCurrentBet(0);
         for(Player p : activePlayerList) {
             p.setCurrentBet(0);
@@ -174,16 +165,18 @@ public class Model {
 
         activePlayerList.remove(currentActor);
 
-        Player winner = activePlayerList.get(0);
+        winner = activePlayerList.get(0);
         int amount = table.getTotalMoney();
         winner.addMoney(amount);
-        noOfActivePlayer--;
+        hasWinner = true;
 
-        isOver = true;
-        isStarted = false;
     }
 
 
+    /**
+     *
+     * @param blind
+     */
     private void setBlind(String blind) {
         int blindAmount;
         if (blind.equals("BIG")) {
@@ -192,7 +185,7 @@ public class Model {
             blindAmount = bigBlind / 2;
         }
         if (blindAmount > currentActor.getMoney()) blindAmount = currentActor.getMoney();
-        currentActor.setCurrentAction(blind + "BLIND");
+        currentActor.setCurrentAction(blind + " BLIND");
         table.addMoneyToPot(currentActor, blindAmount);
     }
 
@@ -252,12 +245,64 @@ public class Model {
         for (Player p : activePlayerList) {
             p.addCard(table.getCommunityCards());
 
-            System.out.println("Card of this player: " + p.getPlayerHands().toString());
             RankedHand rankedHand = new RankedHand(p);
-            System.out.println(p.getName() + " : score = " +  rankedHand.getRankedHandScore() +
-                    " type Hand: " + rankedHand.getRankedHandType().getHandType());
-            System.out.println();
 
+            if (rankedHand.getRankedHandScore() >= bestHandValue) {
+                bestHandValue = rankedHand.getRankedHandScore();
+                winner = p;
+                winner.setWinner();
+                winner.setRankedHand(rankedHand);
+            }
+        }
+        winner.addMoney(table.getTotalMoney());
+    }
+
+    /**
+     *
+     */
+    public void dealCardByStage() {
+        if ((isShowDown() && !isOver)) {
+            checkWinner();
+            isStarted = true;
+            hasWinner = true;
+            isOver = false;
+        } else {
+            if (isFlop()) {
+                dealFlop();
+                isFlop = false;
+                isTurn = true;
+            } else if (isTurn()) {
+                dealTurn();
+                isTurn = false;
+                isRiver = true;
+            } else if (isRiver()) {
+                dealRiver();
+                isRiver = false;
+                isShowDown = true;
+            }
+
+            if (isFlop() || isTurn() || isRiver() || isShowDown()) {
+                currentActorPosition = dealerPosition;
+                currentActor = playerList.get(currentActorPosition);
+                noOfActivePlayer = activePlayerList.size();
+
+            } else {
+                nextPlayerToAct();
+            }
+        }
+    }
+
+    /**
+     *
+     */
+    public void checkWinnerTest() {
+        noOfActivePlayer--;
+        int bestHandValue = -1;
+        isShowDown = false;
+        winner = activePlayerList.get(0);
+
+        for (Player p : activePlayerList) {
+            RankedHand rankedHand = new RankedHand(p);
             if (rankedHand.getRankedHandScore() >= bestHandValue) {
                 bestHandValue = rankedHand.getRankedHandScore();
                 winner = p;
@@ -268,7 +313,7 @@ public class Model {
     }
 
     /**
-     * get the turn of the 2 players go back and forth
+     * GET & SET Method for all instance vairables
      */
     public void nextPlayerToAct() {
         currentActorPosition = (currentActorPosition + 1) % activePlayerList.size();
@@ -335,68 +380,8 @@ public class Model {
         return isShowDown && noOfActivePlayer == 0;
     }
 
-    public void dealCardByStage() {
-        if ((isShowDown() && !isOver)) {
-            checkWinner();
-            isStarted = true;
-            hasWinner = true;
-            isOver = false;
-        } else {
-            if (isFlop()) {
-                dealFlop();
-                isFlop = false;
-                isTurn = true;
-            } else if (isTurn()) {
-                dealTurn();
-                isTurn = false;
-                isRiver = true;
-            } else if (isRiver()) {
-                dealRiver();
-                isRiver = false;
-                isShowDown = true;
-            }
-
-            if (isFlop() || isTurn() || isRiver() || isShowDown()) {
-                currentActorPosition = dealerPosition;
-                currentActor = playerList.get(currentActorPosition);
-                noOfActivePlayer = activePlayerList.size();
-
-            } else {
-                nextPlayerToAct();
-            }
-        }
-    }
-
     public Table getTable() {
         return table;
-    }
-
-    public int getNoOfActivePlayer() {
-        return noOfActivePlayer;
-    }
-
-    public void setFlop(boolean flop) {
-        isFlop = flop;
-    }
-
-    public void setTurn(boolean turn) {
-        isTurn = turn;
-    }
-
-    public void setRiver(boolean river) {
-        isRiver = river;
-    }
-
-    public void setShowDown(boolean showDown) {
-        isShowDown = showDown;
-    }
-
-    public void setStarted(boolean started) {
-        isStarted = started;
-    }
-
-    public void setOver(boolean over) {
-        isOver = over;
     }
 
     public boolean isHasWinner() {
@@ -405,29 +390,5 @@ public class Model {
 
     public Player getWinner() {
         return winner;
-    }
-
-    public void checkWinnerTest() {
-        noOfActivePlayer--;
-        int bestHandValue = -1;
-        isShowDown = false;
-        winner = activePlayerList.get(0);
-
-        for (Player p : activePlayerList) {
-//            p.addCard(table.getCommunityCards());
-
-//            System.out.println("Card of this player: " + p.getPlayerHands().toString());
-            RankedHand rankedHand = new RankedHand(p);
-//            System.out.println(p.getName() + " : score = " +  rankedHand.getRankedHandScore() +
-//                    " type Hand: " + rankedHand.getRankedHandType().getHandType());
-//            System.out.println();
-
-            if (rankedHand.getRankedHandScore() >= bestHandValue) {
-                bestHandValue = rankedHand.getRankedHandScore();
-                winner = p;
-                winner.setWinner();
-            }
-        }
-        winner.addMoney(table.getTotalMoney());
     }
 }

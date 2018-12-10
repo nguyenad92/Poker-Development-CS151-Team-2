@@ -1,5 +1,8 @@
 package edu.sjsu.cs.cs151.Message;
 
+/**
+ *
+ */
 public class Message {
 
     /** The action's name. */
@@ -8,15 +11,29 @@ public class Message {
     /** The amount (if appropriate). */
     private final int amount;
 
+    /**
+     *
+     * @param name
+     * @param amount
+     */
     public Message(String name, int amount) {
         this.name = name;
         this.amount = amount;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getAmount() {
         return amount;
     }
 
+
+    /**
+     *
+     * @return
+     */
     public String getName() {
         return name;
     }

@@ -1,6 +1,5 @@
 package edu.sjsu.cs.cs151.Model;
 
-
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -37,8 +36,7 @@ public class DeckOfCard {
      * Shuffles the deck.
      */
     public void shuffle() {
-    	for(int oldValue = 0; oldValue < NO_OF_CARDS; oldValue++)
-    	{
+    	for(int oldValue = 0; oldValue < NO_OF_CARDS; oldValue++) {
     		int newValue = random.nextInt(NO_OF_CARDS);
     		Card tempCard = cards[oldValue];
     		cards[oldValue] = cards[newValue];
@@ -46,23 +44,6 @@ public class DeckOfCard {
     	}
        
     	nextCard = 0;
-    }
-
-    /**
-     * Resets the deck.
-     * 
-     */
-    public void reset() 
-    {
-        nextCard = 0;
-    }
-    
-    /**
-     * Deals a single card.
-     */
-    public Card deal() 
-    {
-        return cards[nextCard++];
     }
     
     /**

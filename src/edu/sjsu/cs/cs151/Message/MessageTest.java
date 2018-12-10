@@ -1,9 +1,8 @@
 package edu.sjsu.cs.cs151.Message;
 
-import org.junit.Before;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class MessageTest {
 
@@ -41,20 +40,6 @@ class MessageTest {
         ActionRaiseMessage raiseMess = new ActionRaiseMessage(700);
         assertEquals(700, raiseMess.getAmount());
         assertEquals("Raise", raiseMess.getName());
-    }
-
-    @Test
-    public void testAllIn() {
-        AllInactionMessage allInMess = new AllInactionMessage(1000);
-        assertEquals(1000, allInMess.getAmount());
-        assertEquals("All In", allInMess.getName());
-    }
-
-    @Test
-    public void dealCardMess() {
-        DealCardMessage dealCardMess = new DealCardMessage();
-        assertEquals(0, dealCardMess.getAmount());
-        assertEquals("Deal", dealCardMess.getName());
     }
 
     @Test

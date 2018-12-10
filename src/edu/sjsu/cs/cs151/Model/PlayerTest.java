@@ -1,21 +1,14 @@
 package edu.sjsu.cs.cs151.Model;
 
-import org.junit.Before;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.Assert.*;
-import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
+
+import static org.junit.Assert.assertEquals;
 
 class PlayerTest {
 
     private Player player = new Player("ADN", 5000   );;
-    @Before
-    public void setUp() throws Exception {
-
-    }
 
     @Test
     void payMoney() {
@@ -34,12 +27,6 @@ class PlayerTest {
     }
 
     @Test
-    void getMoney() {
-//        assertEquals(5000, player.getMoney());
-
-    }
-
-    @Test
     void getCurrentBet() {
         player.setCurrentBet(30);
         assertEquals(30, player.getCurrentBet());
@@ -49,12 +36,6 @@ class PlayerTest {
     void resetHand() {
         player.resetHand();
         assertEquals(0, player.getCurrentBet());
-    }
-
-    @Test
-    void resetMoney() {
-//        player.resetMoney();
-//        assertEquals(0, player.getCurrentBet());
     }
 
     @Test

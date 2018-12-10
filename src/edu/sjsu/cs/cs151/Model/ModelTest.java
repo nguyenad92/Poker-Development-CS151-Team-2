@@ -1,17 +1,11 @@
 package edu.sjsu.cs.cs151.Model;
 
-import org.junit.Before;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
-
-
-import java.sql.SQLOutput;
-import java.util.ArrayList;
 
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * This class to test the Model of the game
@@ -19,20 +13,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ModelTest {
     public Model model = new Model();
-
-
-    Model a = new Model();
-
-    /**
-     * Test if game starts correctly
-     */
-    @Test
-    public void startGameTest() {
-        model.start();
-        assertTrue(model.isStarted() == true);
-        assertTrue(model.isOver() == false);
-        assertTrue(model.getPlayerList().size() > 0);
-    }
 
     /**
      * Test if player has FLUSH
@@ -144,7 +124,6 @@ class ModelTest {
 
 
         RankedHand check = new RankedHand(model.getPlayerList().get(0));
-//        assertTrue(check.getRankedHandType() == RankedHandType.TWO_PAIRS);
         assertEquals(RankedHandType.TWO_PAIRS, check.getRankedHandType() );
 
     }
@@ -202,7 +181,6 @@ class ModelTest {
 
         RankedHand check = new RankedHand(model.getPlayerList().get(0));
         assertEquals(RankedHandType.FULL_HOUSE, check.getRankedHandType());
-//        assertTrue(check.getRankedHandType() == RankedHandType.FULL_HOUSE);
 
     }
 

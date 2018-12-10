@@ -30,37 +30,12 @@ public class Table {
     }
 
     /**
-     * display the community cards
-     * @param i
-     * @return
-     */
-    public Card showCommunityCards(int i) {
-    	return communityCards.get(i);
-    }
-
-    /**
-     * check for the size of card
-     * @return
-     */
-    public int sizeCard() {
-    	return communityCards.size();
-    }
-
-    /**
      * add money to the pot
      * @param p
      * @param betMoney
      */
     public void addMoneyToPot(Player p, int betMoney) {
         potContribution.addMoneyToPotContribution(p, betMoney);
-    }
-
-    /**
-     * get the pot contribution
-     * @return
-     */
-    public Pot getPotContribution() {
-        return potContribution;
     }
 
     /**
@@ -93,22 +68,6 @@ public class Table {
      */
     public int getCurrentBet() {
         return potContribution.getCurrentBet();
-    }
-
-    /**
-     * check the current active status
-     * @return
-     */
-    public String getCurrentActionStatus() {
-        return currentActionStatus;
-    }
-
-    /**
-     * set the active status
-     * @param currentActionStatus
-     */
-    public void setCurrentActionStatus(String currentActionStatus) {
-        this.currentActionStatus = currentActionStatus;
     }
 
     /**

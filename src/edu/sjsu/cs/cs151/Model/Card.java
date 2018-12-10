@@ -5,13 +5,13 @@ package edu.sjsu.cs.cs151.Model;
  * 
  * Its value is determined first by rank, then by suit.
  * 
- * @author 
+ * @author Oscar Stigter
  */
 public class Card implements Comparable<Card> {
-    
+
     /** The number of ranks in a deck. */
     public static final int NO_OF_RANKS = 13;
-    
+
     /** The number of suits in a deck. */
     public static final int NO_OF_SUITS = 4;
     
@@ -53,8 +53,7 @@ public class Card implements Comparable<Card> {
     /**
      * Constructor rank and suit based on its integer value.
      */
-    public Card(int rank, int suit) 
-    {
+    public Card(int rank, int suit) {
         this.rank = rank;
         this.suit = suit;
     }
@@ -63,8 +62,7 @@ public class Card implements Comparable<Card> {
      * Construc card by using string. For ex: 8q
      * @param card
      */
-    public Card(String card)
-    {
+    public Card(String card) {
     	String rankSymbol = card.substring(0, 1);
     	char suitSymbol = card.charAt(1);
     	

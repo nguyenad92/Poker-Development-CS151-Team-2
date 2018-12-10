@@ -1,7 +1,10 @@
 package edu.sjsu.cs.cs151.View;
 
+import edu.sjsu.cs.cs151.Model.Card;
+import edu.sjsu.cs.cs151.Model.Model;
+import edu.sjsu.cs.cs151.Model.Player;
+
 import java.util.ArrayList;
-import edu.sjsu.cs.cs151.Model.*;
 
 /**
  * Class that stores all information of the game

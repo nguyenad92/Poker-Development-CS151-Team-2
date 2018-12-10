@@ -1,11 +1,10 @@
 package edu.sjsu.cs.cs151.Model;
 
-import org.junit.Before;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class RankedHandTest {
 

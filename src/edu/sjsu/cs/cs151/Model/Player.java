@@ -8,14 +8,18 @@ import java.util.ArrayList;
  */
 public class Player {
 
+	/**
+	 * Instance variable of the Plaer
+	 */
 	private String name;
 	private int money; 								// total money
 	private int currentBet;							// current Bet
-	private int originalMoney;
 	private PlayerHand playerHands;
 	private int currentPositionOnTable;
 	private String currentAction;
 	private boolean isWinner;
+
+	private RankedHand rankedHand;
 
 	/**
 	 * Construct a player object
@@ -23,7 +27,6 @@ public class Player {
 	public Player(String name, int money) {
 		this.name = name;
 		this.money = money;
-		originalMoney = money;
 		ArrayList<Card> c = new ArrayList<>();
 		this.playerHands = new PlayerHand(this, c);
 		currentBet = 0;
@@ -118,19 +121,13 @@ public class Player {
 		return playerHands.getCard();
 	}
 
-	public boolean isAllIn() {
-		return playerHands.getCard().size() >= 2 && money == 0;
-	}
-
 	public void setWinner(){isWinner = true;}
 
-	public boolean isWinner(){return isWinner;}
-
-	public int getCurrentPositionOnTable() {
-		return currentPositionOnTable;
+	public void setRankedHand(RankedHand rankedHand) {
+		this.rankedHand = rankedHand;
 	}
 
-	public void setCurrentPositionOnTable(int currentPositionOnTable) {
-		this.currentPositionOnTable = currentPositionOnTable;
+	public RankedHand getRankedHand() {
+		return rankedHand;
 	}
 }
