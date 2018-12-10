@@ -193,10 +193,8 @@ public class Controller {
 
             if (model.isStarted() && !model.isOver()) {
                 view.setMessage(updateGameInfo(), updateGameInfo().getWinner().getName() + " win a hand for " + updateGameInfo().getPotTotal());
-//                model.resetHand();
                 updateGame("NEW_HAND");
 
-                System.out.println("New hand");
             } else {
                 updateGame("CHECK");
 

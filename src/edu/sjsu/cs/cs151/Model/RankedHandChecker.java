@@ -27,7 +27,7 @@ public class RankedHandChecker {
         handScore = new ArrayList<>();
         pairRank = new ArrayList<>();
         cardToBeAnalyzed.addAll(card);
-        Collections.sort(cardToBeAnalyzed);
+//        Collections.sort(cardToBeAnalyzed);
         initArrayList();
 
         setRankedHandType();
@@ -41,15 +41,15 @@ public class RankedHandChecker {
      * define the ranks based on types of cards.
      */
     private void setRankedHandType() {
-        if (isOnePair())            rankedHandType = RankedHandType.ONE_PAIR;
-        else if (isTwoPair())       rankedHandType = RankedHandType.TWO_PAIRS;
-        else if (isSet())           rankedHandType = RankedHandType.THREE_OF_A_KIND;
-        else if (isStraight())      rankedHandType = RankedHandType.STRAIGHT;
-        else if (isFlush())         rankedHandType = RankedHandType.FLUSH;
-        else if (isFullHouse())     rankedHandType = RankedHandType.FULL_HOUSE;
-        else if (isFourOfAKind())   rankedHandType = RankedHandType.FOUR_OF_A_KIND;
+        if (isRoyalFlush())    rankedHandType = RankedHandType.ROYAL_FLUSH;
         else if (isStraightFlush()) rankedHandType = RankedHandType.STRAIGHT_FLUSH;
-        else if (isRoyalFlush())    rankedHandType = RankedHandType.ROYAL_FLUSH;
+        else if (isFourOfAKind())   rankedHandType = RankedHandType.FOUR_OF_A_KIND;
+        else if (isFullHouse())     rankedHandType = RankedHandType.FULL_HOUSE;
+        else if (isFlush())         rankedHandType = RankedHandType.FLUSH;
+        else if (isStraight())      rankedHandType = RankedHandType.STRAIGHT;
+        else if (isSet())           rankedHandType = RankedHandType.THREE_OF_A_KIND;
+        else if (isTwoPair())       rankedHandType = RankedHandType.TWO_PAIRS;
+        else if (isOnePair())            rankedHandType = RankedHandType.ONE_PAIR;
         else                        getHighCard();
 
     }
@@ -93,7 +93,7 @@ public class RankedHandChecker {
      * @return
      */
     private ArrayList<Integer> getRankDistributionList() {
-        ArrayList<Integer> list = new ArrayList<>(Collections.nCopies(14, 0));
+        ArrayList<Integer> list = new ArrayList<>(Collections.nCopies(13, 0));
         for (int j = 0; j < cardToBeAnalyzed.size(); j++) {
             int currRank = cardToBeAnalyzed.get(j).getRank();
             int currValue = list.get(currRank);
@@ -123,45 +123,79 @@ public class RankedHandChecker {
      * check if 5 cards in sequence
      */
     private void getStraight() {
+        boolean inProcessStraight = false;
         int size = cardToBeAnalyzed.size();
-//        System.out.println(size);
-        int nextRank = cardToBeAnalyzed.get(size - 1).getRank() + 1;
-        int count = 1;
-        for (int i = cardToBeAnalyzed.size() - 1; i > 0; i--) {
-            // Check if there's a Ace Straight
-            if (cardToBeAnalyzed.get(0).getRank() == 12) {
-                boolean a = cardToBeAnalyzed.get(i).getRank() == 0 &&
-                        cardToBeAnalyzed.get(i - 1).getRank() == 1 &&
-                        cardToBeAnalyzed.get(i - 2).getRank() == 2 &&
-                        cardToBeAnalyzed.get(i - 3).getRank() == 3;
+        int continuousCardCount = 0;
 
-                boolean b = cardToBeAnalyzed.get(i).getRank() == 8 &&
-                        cardToBeAnalyzed.get(i - 1).getRank() == 9 &&
-                        cardToBeAnalyzed.get(i - 2).getRank() == 10 &&
-                        cardToBeAnalyzed.get(i - 3).getRank() == 11;
-                if (a) {
-                    straightAceBottom = true;
-                    highestStraightCard = 3;
-                } else if (b) {
-                    straightAceTop = true;
-                    highestStraightCard = 12;
+        for (int i = size - 1; i >= 0; i--) {
+            if (rankList.get(i) >= 1) {
+                if (!inProcessStraight) {
+                    // First card of the potential Straight.
+                    inProcessStraight = true;
+                    highestStraightCard = i;
                 }
-            }
-
-            if (cardToBeAnalyzed.get(i).getRank() == nextRank) {
-                nextRank++;
-                count++;
-                highestStraightCard = cardToBeAnalyzed.get(i).getRank();
+                continuousCardCount++;
+                if (continuousCardCount > 4) {
+                    highestStraightCard = i;
+                    break;
+                }
             } else {
-                count = 1;
-                nextRank = cardToBeAnalyzed.get(i).getRank() + 1;
-                highestStraightCard = -1;
-            }
-
-            if (count > 5) {
-                handScore.add(highestStraightCard);
+                inProcessStraight = false;
+                continuousCardCount = 0;
             }
         }
+
+        if (continuousCardCount == 4 && (highestStraightCard == Card.DEUCE) && (rankList.get(12) >= 1)) {
+            straightAceBottom = true;
+            highestStraightCard = Card.FIVE;
+        }
+
+        if (continuousCardCount > 5) {
+            handScore.add(highestStraightCard);
+        }
+
+
+
+
+
+//        System.out.println(size);
+//        int nextRank = cardToBeAnalyzed.get(size - 1).getRank() + 1;
+//        int count = 1;
+//        for (int i = cardToBeAnalyzed.size() - 1; i > 0; i--) {
+//            // Check if there's a Ace Straight
+//            if (cardToBeAnalyzed.get(0).getRank() == 12) {
+//                boolean a = cardToBeAnalyzed.get(i).getRank() == 0 &&
+//                        cardToBeAnalyzed.get(i - 1).getRank() == 1 &&
+//                        cardToBeAnalyzed.get(i - 2).getRank() == 2 &&
+//                        cardToBeAnalyzed.get(i - 3).getRank() == 3;
+//
+//                boolean b = cardToBeAnalyzed.get(i).getRank() == 8 &&
+//                        cardToBeAnalyzed.get(i - 1).getRank() == 9 &&
+//                        cardToBeAnalyzed.get(i - 2).getRank() == 10 &&
+//                        cardToBeAnalyzed.get(i - 3).getRank() == 11;
+//                if (a) {
+//                    straightAceBottom = true;
+//                    highestStraightCard = 3;
+//                } else if (b) {
+//                    straightAceTop = true;
+//                    highestStraightCard = 12;
+//                }
+//            }
+//
+//            if (cardToBeAnalyzed.get(i).getRank() == nextRank) {
+//                nextRank++;
+//                count++;
+//                highestStraightCard = cardToBeAnalyzed.get(i).getRank();
+//            } else {
+//                count = 1;
+//                nextRank = cardToBeAnalyzed.get(i).getRank() + 1;
+//                highestStraightCard = -1;
+//            }
+//
+//            if (count > 5) {
+//                handScore.add(highestStraightCard);
+//            }
+//        }
     }
 
     /**
